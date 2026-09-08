@@ -1,15 +1,19 @@
-# Contact data
+# Contact & ordering links
 
-Real business details are wired in:
+All real:
 
 - **Phone** `(667) 324-7743` → `tel:+16673247743` (header drawer, hero, visit section, footer, floating call button).
 - **Email** `chateauderockvillecafe@gmail.com` (footer).
 - **Address** The Shops at Congressional Village, 1701 Rockville Pike, Suite A-11, Rockville, MD 20852 (visit section, footer, "Get Directions" map-search link).
-- **DoorDash** pickup/delivery link (nav drawer, visit section, footer) currently points to a DoorDash *search* results page (`doordash.com/search/?query=Chateau+Rockville+Cafe...`) rather than a direct store page, since the exact DoorDash store URL wasn't provided. Send the real store link and I'll swap it in as a direct deep link — search for `doordash.com/search` in `index.html` to find all three spots.
+- **DoorDash** pickup/delivery — direct store link (nav drawer, visit section, footer).
+- **Instagram** [@chateauderockville](https://www.instagram.com/chateauderockville/) (nav drawer, footer).
+- **Yelp** [reviews page](https://m.yelp.com/biz/chateau-de-rockville-cafe-rockville) (nav drawer, footer) — used a generic star icon rather than Yelp's trademarked logo mark.
 
-# Still placeholder — needs real data
+Facebook and TikTok icons were removed rather than left as dead `#` links — say the word (with the handles) and they go back in.
 
-- **Social links** (Instagram / Facebook / TikTok, in the nav drawer and footer) all point to `#`. Send the café's real profile URLs (or say if a different platform — Yelp, X, OpenTable — should be used instead) and I'll wire them in. Search for `data-social` in `index.html`.
+# Possible name mismatch — worth checking
+
+The DoorDash and Yelp URLs you sent both use the slug **"chateau-de-rockville"** (e.g. "Chateau de Rockville Bakery & Cafe" on DoorDash), which matches the email address, but the site's displayed name is currently **"Chateau Rockville"** (title, nav wordmark, hero copy, footer, and all EN/FR/ES translations). If the business actually goes by "Chateau de Rockville," say so and I'll rename it everywhere — it's a find/replace across `index.html` and `js/i18n.js`, not a redesign.
 
 # Third-party code
 
