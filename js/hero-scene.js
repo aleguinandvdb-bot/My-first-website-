@@ -34,15 +34,18 @@ function initScene(canvas) {
   var scene = new THREE.Scene();
   scene.environment = getStudioEnvironment(renderer);
 
-  var camera = new THREE.PerspectiveCamera(36, 1, 0.1, 50);
+  var camera = new THREE.PerspectiveCamera(34, 1, 0.1, 50);
   /* Framing solved by projecting the saucer's own near/far edges through
-     the camera and checking the resulting margins numerically (not by
-     eye) — the earlier angle put the saucer's near edge within 35px of
-     the panel's bottom edge while leaving 228px of dead space above it.
-     Aiming further below the cup, at the saucer's own level, rather than
-     just reducing the downward angle, is what actually balances that. */
-  camera.position.set(0, 5.8, 6.75);
-  camera.lookAt(0, -1.5, 0);
+     the camera and checking the resulting panel margins numerically. A
+     steeper angle balanced those margins better but made the opaque cup
+     occlude nearly all of the saucer behind it — an effect no camera
+     angle removes entirely (any downward-looking shot of a tall object
+     on a flat plate shows more of the plate in front than behind; that's
+     real occlusion, not a framing bug), but a shallower angle keeps it
+     from being severe. This is the balance point within that shallower
+     range. */
+  camera.position.set(0, 3.5, 9.5);
+  camera.lookAt(0, -1.1, 0);
 
   // ---- Lighting: warm, café-glow ----
   var hemi = new THREE.HemisphereLight(0xfff1de, 0x6b4a33, 0.9);
@@ -175,15 +178,16 @@ function initScene(canvas) {
   // ---- Animation loop ----
   var clock = new THREE.Clock();
   var running = true;
-  /* A fixed, composed angle rather than a continuous spin. The handle is
-     an asymmetric lobe sticking out to one side of an otherwise round
-     cup+saucer silhouette — spinning forever meant that at some points in
-     every rotation the handle swung out to the side and dragged the
-     visual weight of the whole composition off-center within the panel.
-     This angle (found by testing a spread of fixed values) keeps the
-     handle visibly in frame without unbalancing it. Mouse parallax still
-     eases around it, so the scene stays interactive. */
-  var baseRotY = -0.7;
+  /* Turn the handle to point straight back, away from the camera, so it
+     tucks behind the cup body instead of sticking out to one side. Every
+     angle that showed it — even ones measured to keep the saucer's own
+     left/right edges perfectly even — still put a bright gold lobe on one
+     side of an otherwise round, radially symmetric silhouette, which reads
+     as "off-center" regardless of what the underlying pixel math says.
+     Hiding it removes the asymmetry outright instead of trying to balance
+     it. Mouse parallax still eases around this, so the scene stays
+     interactive. */
+  var baseRotY = Math.PI / 2;
 
   function animate() {
     if (!running) return;

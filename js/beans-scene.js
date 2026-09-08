@@ -60,14 +60,39 @@ function initScene(canvas, reduceMotion) {
   var BEAN_COUNT = 8;
   var beans = [];
 
+  /* Pure random X/Z with no minimum spacing regularly landed two or three
+     beans close enough to overlap — with only 8 tries in a modest area,
+     that's not a rare edge case, it happens often. Reject-and-retry a
+     candidate spot until it clears every bean already placed, so they
+     read as a scattered handful instead of a clump. */
+  var placed = [];
+  function pickSpot(spreadX, spreadZ, minDist) {
+    var x, z, ok, tries;
+    for (tries = 0; tries < 40; tries++) {
+      x = (Math.random() - 0.5) * spreadX;
+      z = (Math.random() - 0.5) * spreadZ;
+      ok = true;
+      for (var j = 0; j < placed.length; j++) {
+        var dx = x - placed[j][0], dz = z - placed[j][1];
+        if (dx * dx + dz * dz < minDist * minDist) { ok = false; break; }
+      }
+      if (ok) break;
+    }
+    placed.push([x, z]);
+    return [x, z];
+  }
+
   for (var i = 0; i < BEAN_COUNT; i++) {
     var mat = makeBeanMaterial(roastBump, i);
     var mesh = makeBeanMesh(mat, creaseMat);
 
-    var startX = (Math.random() - 0.5) * 4.2;
-    var startZ = (Math.random() - 0.5) * 2.2;
-    var endX = startX + (Math.random() - 0.5) * 1.2;
-    var endZ = startZ + (Math.random() - 0.5) * 0.8;
+    var startSpot = pickSpot(5.0, 2.6, 1.15);
+    var startX = startSpot[0];
+    var startZ = startSpot[1];
+    // Small drift from a well-spaced start keeps the end positions apart
+    // too, without needing to space-check them separately.
+    var endX = startX + (Math.random() - 0.5) * 0.5;
+    var endZ = startZ + (Math.random() - 0.5) * 0.35;
 
     var scale = 0.55 + Math.random() * 0.35;
     mesh.scale.setScalar(scale);
