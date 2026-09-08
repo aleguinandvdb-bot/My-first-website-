@@ -57,14 +57,34 @@ export function makeCreaseMaterial() {
 export function makeBeanMesh(material, creaseMaterial) {
   var bean = new THREE.Group();
 
-  // Slightly asymmetric ellipsoid (real beans aren't perfectly smooth ovals)
-  var bodyGeo = new THREE.SphereGeometry(0.5, 24, 18);
+  /* A real bean isn't a symmetric ellipsoid with a ridge stuck on top —
+     it has one rounded, convex back and one flatter belly with a
+     lengthwise groove actually cut into it. Sculpting that into the
+     geometry itself (instead of gluing a raised capsule onto a plain
+     ellipsoid) is what makes it read as a bean instead of a pebble with
+     a seam on it. */
+  var bodyGeo = new THREE.SphereGeometry(0.5, 32, 24);
   var pos = bodyGeo.attributes.position;
+  var v = new THREE.Vector3();
   for (var i = 0; i < pos.count; i++) {
-    var nx = pos.getX(i), ny = pos.getY(i), nz = pos.getZ(i);
-    var bulge = 1 + 0.05 * Math.sin(ny * 6) * Math.max(0, nz);
-    pos.setX(i, nx * bulge);
-    pos.setZ(i, nz * bulge);
+    v.fromBufferAttribute(pos, i);
+
+    // Gentle asymmetric bulge so the silhouette isn't a perfect ellipsoid
+    var bulge = 1 + 0.05 * Math.sin(v.y * 6) * Math.max(0, v.z);
+    v.x *= bulge;
+    v.z *= bulge;
+
+    if (v.z > 0) {
+      // Flatten the belly side relative to the rounded back
+      v.z *= 0.72;
+      // Carve the groove: a narrow dip along x=0 that fades out near the
+      // two tips (y near ±0.5), only on the flattened belly face
+      var seam = Math.exp(-(v.x * v.x) / (2 * 0.018));
+      var tipFalloff = Math.max(0, 1 - Math.pow(Math.abs(v.y) * 1.9, 2));
+      v.z -= 0.1 * seam * tipFalloff * Math.max(0, v.z);
+    }
+
+    pos.setXYZ(i, v.x, v.y, v.z);
   }
   bodyGeo.computeVertexNormals();
 
@@ -73,9 +93,11 @@ export function makeBeanMesh(material, creaseMaterial) {
   body.castShadow = true;
   bean.add(body);
 
-  var crease = new THREE.Mesh(new THREE.CapsuleGeometry(0.045, 0.48, 4, 8), creaseMaterial);
+  // A thin dark line sitting in the carved groove for contrast — not a
+  // raised ridge, since the groove is now real geometry underneath it.
+  var crease = new THREE.Mesh(new THREE.CapsuleGeometry(0.018, 0.4, 4, 8), creaseMaterial);
   crease.rotation.z = Math.PI / 2;
-  crease.position.z = 0.39;
+  crease.position.z = 0.5 * 0.72 * 0.8 * 0.86;
   bean.add(crease);
 
   return bean;

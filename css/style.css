@@ -590,20 +590,6 @@ section[id], footer[id] { scroll-margin-top: var(--banner-height); }
   height: 100%;
   touch-action: pan-y;
 }
-.hero__visual-caption {
-  position: absolute;
-  left: var(--space-md);
-  bottom: var(--space-md);
-  font-family: var(--font-outlier);
-  font-size: 0.65rem;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--color-muted);
-  background: color-mix(in oklch, var(--color-paper) 78%, transparent);
-  padding: var(--space-3xs) var(--space-xs);
-  border-radius: var(--radius-sm);
-}
-
 @media (prefers-reduced-motion: reduce) {
   .hero__canvas { display: none; }
   .hero__visual { background:

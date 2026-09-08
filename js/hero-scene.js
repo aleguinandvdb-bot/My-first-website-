@@ -35,11 +35,14 @@ function initScene(canvas) {
   scene.environment = getStudioEnvironment(renderer);
 
   var camera = new THREE.PerspectiveCamera(32, 1, 0.1, 50);
-  // A steeper downward angle than a plain side-on shot — the latte art on
-  // the coffee's surface is the point, so the camera needs to actually see
-  // down into the cup, matching the reference photo's angle.
-  camera.position.set(0, 4.3, 6.2);
-  camera.lookAt(0, 0.05, 0);
+  /* Angled down enough to see the latte art on the coffee's surface, but
+     not so steep that the cup — much taller than the flat saucer beneath
+     it — visually "leans forward" off the saucer's center under
+     perspective. Pulled back a bit further than a first pass for the
+     same reason: more steepness needs more distance to keep that in
+     check. */
+  camera.position.set(0, 3.5, 7.4);
+  camera.lookAt(0, -0.1, 0);
 
   // ---- Lighting: warm, café-glow ----
   var hemi = new THREE.HemisphereLight(0xfff1de, 0x6b4a33, 0.9);
@@ -172,7 +175,15 @@ function initScene(canvas) {
   // ---- Animation loop ----
   var clock = new THREE.Clock();
   var running = true;
-  var baseRotY = 0;
+  /* A fixed, composed angle rather than a continuous spin. The handle is
+     an asymmetric lobe sticking out to one side of an otherwise round
+     cup+saucer silhouette — spinning forever meant that at some points in
+     every rotation the handle swung out to the side and dragged the
+     visual weight of the whole composition off-center within the panel.
+     This angle (found by testing a spread of fixed values) keeps the
+     handle visibly in frame without unbalancing it. Mouse parallax still
+     eases around it, so the scene stays interactive. */
+  var baseRotY = -0.7;
 
   function animate() {
     if (!running) return;
@@ -181,7 +192,6 @@ function initScene(canvas) {
     var dt = clock.getDelta();
     var t = clock.elapsedTime;
 
-    baseRotY += dt * 0.18;
     group.rotation.y += (baseRotY + targetRotY - group.rotation.y) * 0.06;
     group.rotation.x += (targetRotX - group.rotation.x) * 0.06;
 

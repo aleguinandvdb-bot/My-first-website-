@@ -1,5 +1,5 @@
-/* Chateau de Rockville Cafe — shared canvas textures for coffee surfaces.
-   Used by both the hero cup and the finale cup so the two match. */
+/* Chateau de Rockville Cafe — canvas textures for the hero cup's coffee
+   surface and its rising-steam glow. */
 import * as THREE from "./vendor/three.module.min.js";
 
 export function makeSoftDotTexture() {
@@ -18,51 +18,33 @@ export function makeSoftDotTexture() {
   return tex;
 }
 
-// Plain black espresso with mottled crema — the coffee surface before milk
-// is poured in.
-export function makeCremaTexture() {
-  var size = 512;
-  var c = document.createElement("canvas");
-  c.width = c.height = size;
-  var ctx = c.getContext("2d");
-  ctx.fillStyle = "#2b1810";
-  ctx.fillRect(0, 0, size, size);
-  for (var i = 0; i < 90; i++) {
-    var r = 10 + Math.random() * 30;
-    var x = Math.random() * size;
-    var y = Math.random() * size;
-    var g = ctx.createRadialGradient(x, y, 0, x, y, r);
-    g.addColorStop(0, "rgba(120,80,50,0.10)");
-    g.addColorStop(1, "rgba(120,80,50,0)");
-    ctx.fillStyle = g;
-    ctx.beginPath();
-    ctx.arc(x, y, r, 0, Math.PI * 2);
-    ctx.fill();
-  }
-  var tex = new THREE.CanvasTexture(c);
-  tex.colorSpace = THREE.SRGBColorSpace;
-  tex.needsUpdate = true;
-  return tex;
-}
-
-// Latte-art heart poured into the espresso, painted onto the coffee
-// surface's own texture map — matching the real cup photo (heart rosetta
-// in microfoam) rather than a flat crema ring.
+// Latte-art heart poured into a milk-forward latte, painted onto the
+// coffee surface's own texture map — a proper latte (lots of steamed
+// milk stretched into the espresso) reads as a warm caramel-tan surface,
+// not near-black crema, so the heart has room to actually show.
 export function makeLatteArtTexture() {
   var size = 512;
   var c = document.createElement("canvas");
   c.width = c.height = size;
   var ctx = c.getContext("2d");
 
-  ctx.fillStyle = "#2b1810";
+  ctx.fillStyle = "#8a6239";
   ctx.fillRect(0, 0, size, size);
-  for (var i = 0; i < 90; i++) {
-    var r = 10 + Math.random() * 30;
+  // Milk-swirl mottling — some patches darker (more espresso showing
+  // through), some lighter (more milk pooled), instead of a flat tint.
+  for (var i = 0; i < 70; i++) {
+    var r = 14 + Math.random() * 34;
     var x = Math.random() * size;
     var y = Math.random() * size;
+    var darker = Math.random() < 0.5;
     var g = ctx.createRadialGradient(x, y, 0, x, y, r);
-    g.addColorStop(0, "rgba(120,80,50,0.10)");
-    g.addColorStop(1, "rgba(120,80,50,0)");
+    if (darker) {
+      g.addColorStop(0, "rgba(75,48,26,0.16)");
+      g.addColorStop(1, "rgba(75,48,26,0)");
+    } else {
+      g.addColorStop(0, "rgba(196,163,120,0.18)");
+      g.addColorStop(1, "rgba(196,163,120,0)");
+    }
     ctx.fillStyle = g;
     ctx.beginPath();
     ctx.arc(x, y, r, 0, Math.PI * 2);
