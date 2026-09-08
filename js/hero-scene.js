@@ -1,6 +1,7 @@
 /* Chateau de Rockville Cafe — hero 3D scene: a procedural coffee cup with rising steam.
    Built with Three.js primitives (no external model files). */
 import * as THREE from "./vendor/three.module.min.js";
+import { getStudioEnvironment } from "./studio-env.js";
 
 var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 var canvas = document.getElementById("heroCanvas");
@@ -102,13 +103,14 @@ function initScene(canvas) {
   renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 
   var scene = new THREE.Scene();
+  scene.environment = getStudioEnvironment(renderer);
 
   var camera = new THREE.PerspectiveCamera(32, 1, 0.1, 50);
   // A steeper downward angle than a plain side-on shot — the latte art on
   // the coffee's surface is the point, so the camera needs to actually see
   // down into the cup, matching the reference photo's angle.
-  camera.position.set(0, 3.1, 5.9);
-  camera.lookAt(0, 0.15, 0);
+  camera.position.set(0, 3.4, 6.7);
+  camera.lookAt(0, 0.05, 0);
 
   // ---- Lighting: warm, café-glow ----
   var hemi = new THREE.HemisphereLight(0xfff1de, 0x6b4a33, 0.9);
@@ -217,11 +219,10 @@ function initScene(canvas) {
     new THREE.Vector3(0.74, -0.20, 0)
   ]);
   var handleGeo = new THREE.TubeGeometry(handleCurve, 40, 0.09, 14, false);
-  // Without a real environment map, full metalness reads as near-black
-  // (metals only reflect light sources, not ambient) — dialed back to
-  // 0.75 so the gold color still reads under the scene's point lights.
+  // Now that the scene carries a PMREM studio environment, this can be a
+  // true metal — it has something real to reflect.
   var goldMat = new THREE.MeshPhysicalMaterial({
-    color: 0xd4af37, roughness: 0.25, metalness: 0.75
+    color: 0xd4af37, roughness: 0.22, metalness: 1, envMapIntensity: 1.4
   });
   var handle = new THREE.Mesh(handleGeo, goldMat);
   handle.castShadow = true;

@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 600" width="600" height="600" role="img" aria-label="Placeholder for a Street window photo">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#cedee2"/>
+      <stop offset="1" stop-color="#e0ecef"/>
+    </linearGradient>
+  </defs>
+  <rect width="600" height="600" fill="url(#g)"/>
+  <g transform="translate(242 242) scale(1.3000)" fill="none" stroke="#02424e" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" opacity="0.42"><path d="M20 44h80l-6 18H26z"/><path d="M26 62v40h68V62M60 62v40M26 82h68"/><path opacity="0.7" d="M20 44l8-4M32 44l8-4M44 44l8-4M56 44l8-4M68 44l8-4M80 44l8-4M92 44l8-4"/></g>
+</svg>

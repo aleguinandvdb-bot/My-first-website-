@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1200" width="1200" height="1200" role="img" aria-label="Placeholder for a Espresso bar photo">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#cedee2"/>
+      <stop offset="1" stop-color="#e0ecef"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="1200" fill="url(#g)"/>
+  <g transform="translate(483 483) scale(2.6000)" fill="none" stroke="#02424e" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" opacity="0.42"><path d="M32 46h56l-4 46a8 8 0 01-8 7H44a8 8 0 01-8-7l-4-46z"/><path d="M88 52h6a10 10 0 010 20h-7"/><ellipse cx="60" cy="103" rx="30" ry="5"/><path opacity="0.75" d="M46 30c-4 4-4 8 0 12M60 26c-4 4-4 8 0 12M74 30c-4 4-4 8 0 12"/></g>
+</svg>

@@ -43,6 +43,26 @@ Vendored under `js/vendor/` (no CDN dependency, works offline):
 | --- | --- | --- | --- |
 | `three.module.min.js` | [three.js](https://threejs.org) | 0.160.0 | MIT |
 | `gsap.min.js`, `ScrollTrigger.min.js` | [GSAP](https://gsap.com) | 3.12.5 | [Standard "no charge" license](https://gsap.com/standard-license) — free for this kind of client site |
-| `vanilla-tilt.min.js` | [vanilla-tilt.js](https://micku7zu.github.io/vanilla-tilt.js/) | 1.8.1 | MIT |
+| `RoomEnvironment.js` | three.js addon | 0.160.0 | MIT |
 
 Fonts (Fraunces, IBM Plex Sans, Geist Mono) are loaded from Google Fonts at runtime — no local files needed.
+
+# Gallery photos — how the café swaps in their own
+
+Every gallery tile is a real `<img>` pointing at a file in `assets/gallery/`. The files there now are plain branded placeholders. **To use a real photo, save it over the matching filename — nothing in the HTML or CSS needs to change.**
+
+| File | Best size | Tile |
+| --- | --- | --- |
+| `espresso-bar.svg` | 1200 × 1200 (square) | Large feature tile |
+| `pastry-case.svg` | 1200 × 600 (2:1 wide) | Wide tile |
+| `single-origin.svg` | 600 × 600 (square) | Small tile |
+| `street-window.svg` | 600 × 600 (square) | Small tile |
+| `pour-over.svg` | 1200 × 600 (2:1 wide) | Wide tile |
+| `weekend-tarts.svg` | 1200 × 600 (2:1 wide) | Wide tile |
+
+Notes:
+
+- JPG or PNG is fine — save as e.g. `espresso-bar.jpg`, then change that one `src=` in `index.html` from `.svg` to `.jpg`. (Keeping the same extension avoids even that edit.)
+- Photos are cropped to fill the tile from the centre, so keep the subject roughly centred.
+- Once a real photo is in, delete that tile's `<span class="bento__slot">Photo goes here</span>` line in `index.html` — that badge only exists to mark an empty slot.
+- The tile captions ("The Espresso Bar", "Warm light, quiet hum") are ordinary translated text in `js/i18n.js` under the `gallery.*` keys; change them to whatever the photo actually shows.

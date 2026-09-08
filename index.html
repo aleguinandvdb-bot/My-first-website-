@@ -347,6 +347,10 @@
           </div>
           <h3 class="process__stage-title" data-i18n="process.stage1Title">Ground to order</h3>
           <p class="process__stage-desc" data-i18n="process.stage1Desc">Whole beans, weighed and ground the moment your order comes in — never sitting stale in a hopper.</p>
+          <button type="button" class="btn btn--primary process__grind" id="grindButton">
+            <svg aria-hidden="true"><use href="#icon-bag"/></svg>
+            <span data-grind-label data-i18n="process.grindButton">Grind the beans</span>
+          </button>
         </div>
 
         <div class="process__stage" data-reveal>
@@ -371,33 +375,54 @@
         <p class="section__lede" data-i18n="gallery.lede">A few corners of the café.</p>
       </div>
 
+      <!-- Photo slots. Drop a real photo into assets/gallery/ with the
+           matching filename and it replaces the placeholder automatically —
+           no code change needed. See VENDOR-NOTICE.md for sizes. -->
       <div class="bento">
-        <div class="bento__tile bento__tile--a" data-tilt data-reveal>
-          <svg class="bento__motif" viewBox="0 0 120 120" aria-hidden="true"><use href="#motif-cup"/></svg>
-          <span class="bento__label" data-i18n="gallery.tile1">The Espresso Bar</span>
-          <span class="bento__sub" data-i18n="gallery.tile1sub">Warm light, quiet hum</span>
-        </div>
-        <div class="bento__tile bento__tile--b" data-reveal>
-          <svg class="bento__motif" viewBox="0 0 120 120" aria-hidden="true"><use href="#motif-croissant"/></svg>
-          <span class="bento__label" data-i18n="gallery.tile2">The Pastry Case</span>
-          <span class="bento__sub" data-i18n="gallery.tile2sub">Fresh every morning</span>
-        </div>
-        <div class="bento__tile bento__tile--c" data-tilt data-reveal>
-          <svg class="bento__motif" viewBox="0 0 120 120" aria-hidden="true"><use href="#motif-sprig"/></svg>
-          <span class="bento__label" data-i18n="gallery.tile3">Single-Origin</span>
-        </div>
-        <div class="bento__tile bento__tile--d" data-reveal>
-          <svg class="bento__motif" viewBox="0 0 120 120" aria-hidden="true"><use href="#motif-window"/></svg>
-          <span class="bento__label" data-i18n="gallery.tile4">Street-Side Window</span>
-        </div>
-        <div class="bento__tile bento__tile--e" data-reveal>
-          <svg class="bento__motif" viewBox="0 0 120 120" aria-hidden="true"><use href="#motif-pour"/></svg>
-          <span class="bento__label" data-i18n="gallery.tile5">Slow Pour-Over</span>
-        </div>
-        <div class="bento__tile bento__tile--f" data-tilt data-reveal>
-          <svg class="bento__motif" viewBox="0 0 120 120" aria-hidden="true"><use href="#motif-pastry"/></svg>
-          <span class="bento__label" data-i18n="gallery.tile6">Weekend Tarts</span>
-        </div>
+        <figure class="bento__tile bento__tile--a" data-reveal>
+          <img class="bento__photo" src="assets/gallery/espresso-bar.svg" alt="" width="1200" height="1200" loading="lazy" />
+            <span class="bento__slot" data-i18n="gallery.slot">Photo goes here</span>
+          <figcaption class="bento__caption">
+            <span class="bento__label" data-i18n="gallery.tile1">The Espresso Bar</span>
+            <span class="bento__sub" data-i18n="gallery.tile1sub">Warm light, quiet hum</span>
+          </figcaption>
+        </figure>
+        <figure class="bento__tile bento__tile--b" data-reveal>
+          <img class="bento__photo" src="assets/gallery/pastry-case.svg" alt="" width="1200" height="600" loading="lazy" />
+            <span class="bento__slot" data-i18n="gallery.slot">Photo goes here</span>
+          <figcaption class="bento__caption">
+            <span class="bento__label" data-i18n="gallery.tile2">The Pastry Case</span>
+            <span class="bento__sub" data-i18n="gallery.tile2sub">Fresh every morning</span>
+          </figcaption>
+        </figure>
+        <figure class="bento__tile bento__tile--c" data-reveal>
+          <img class="bento__photo" src="assets/gallery/single-origin.svg" alt="" width="600" height="600" loading="lazy" />
+            <span class="bento__slot" data-i18n="gallery.slot">Photo goes here</span>
+          <figcaption class="bento__caption">
+            <span class="bento__label" data-i18n="gallery.tile3">Single-Origin</span>
+          </figcaption>
+        </figure>
+        <figure class="bento__tile bento__tile--d" data-reveal>
+          <img class="bento__photo" src="assets/gallery/street-window.svg" alt="" width="600" height="600" loading="lazy" />
+            <span class="bento__slot" data-i18n="gallery.slot">Photo goes here</span>
+          <figcaption class="bento__caption">
+            <span class="bento__label" data-i18n="gallery.tile4">Street-Side Window</span>
+          </figcaption>
+        </figure>
+        <figure class="bento__tile bento__tile--e" data-reveal>
+          <img class="bento__photo" src="assets/gallery/pour-over.svg" alt="" width="1200" height="600" loading="lazy" />
+            <span class="bento__slot" data-i18n="gallery.slot">Photo goes here</span>
+          <figcaption class="bento__caption">
+            <span class="bento__label" data-i18n="gallery.tile5">Slow Pour-Over</span>
+          </figcaption>
+        </figure>
+        <figure class="bento__tile bento__tile--f" data-reveal>
+          <img class="bento__photo" src="assets/gallery/weekend-tarts.svg" alt="" width="1200" height="600" loading="lazy" />
+            <span class="bento__slot" data-i18n="gallery.slot">Photo goes here</span>
+          <figcaption class="bento__caption">
+            <span class="bento__label" data-i18n="gallery.tile6">Weekend Tarts</span>
+          </figcaption>
+        </figure>
       </div>
     </div>
   </section>
@@ -499,7 +524,6 @@
   <svg aria-hidden="true"><use href="#icon-phone"/></svg>
 </a>
 
-<script src="js/vendor/vanilla-tilt.min.js"></script>
 <script src="js/vendor/gsap.min.js"></script>
 <script src="js/vendor/ScrollTrigger.min.js"></script>
 <script src="js/i18n.js"></script>

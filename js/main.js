@@ -91,21 +91,6 @@
   });
 
   /* ----------------------------------------------------------
-     Vanilla-Tilt on selected surfaces
-     ---------------------------------------------------------- */
-  if (window.VanillaTilt && !reduceMotion) {
-    var tiltEls = document.querySelectorAll("[data-tilt]");
-    if (tiltEls.length) {
-      window.VanillaTilt.init(Array.prototype.slice.call(tiltEls), {
-        max: 6,
-        speed: 400,
-        glare: false,
-        scale: 1.02
-      });
-    }
-  }
-
-  /* ----------------------------------------------------------
      GSAP entrance + scroll reveals
      ---------------------------------------------------------- */
   if (window.gsap) {

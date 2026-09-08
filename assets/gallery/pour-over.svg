@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600" width="1200" height="600" role="img" aria-label="Placeholder for a Pour-over photo">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#cedee2"/>
+      <stop offset="1" stop-color="#e0ecef"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="600" fill="url(#g)"/>
+  <g transform="translate(542 242) scale(1.3000)" fill="none" stroke="#02424e" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" opacity="0.42"><path d="M32 18h56l-20 32H52z"/><path d="M60 50c-2 6 2 8 0 14"/><path d="M40 78h40l-4 26a6 6 0 01-6 5H50a6 6 0 01-6-5z"/><ellipse cx="60" cy="112" rx="26" ry="4"/></g>
+</svg>
