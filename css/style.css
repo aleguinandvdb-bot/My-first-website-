@@ -1,4 +1,4 @@
-/* Hallmark · macrostructure: Split-Studio (diptych hero) + Tabular-Spec-Sheet (menu) + Bento (gallery) + Letter-Close (footer) · theme: studied warm-château (custom, source: brief) */
+/* Hallmark · macrostructure: Split-Studio (diptych hero) + Tabular-Spec-Sheet (menu) + Bento (gallery) + Letter-Close (footer) · theme: studied-DNA (source: Chateau de Rockville logo, sampled teal oklch(35% 0.061 215)) */
 /* Hallmark · pre-emit critique: P4 H4 E4 S4 R4 V4 */
 
 /* ============================================================
@@ -29,26 +29,26 @@ input, select { font: inherit; }
    TOKENS
    ============================================================ */
 :root {
-  /* Colour — warm château anchor, hue 50 */
-  --color-paper:      oklch(97%  0.014 75);
-  --color-paper-2:     oklch(93.5% 0.017 72);
-  --color-paper-3:     oklch(89%  0.020 70);
-  --color-rule:        oklch(80%  0.022 65);
-  --color-neutral:      oklch(55%  0.020 55);
-  --color-muted:        oklch(40%  0.020 50);
-  --color-ink:          oklch(19%  0.020 42);
-  --color-accent:       oklch(48%  0.150 35);
-  --color-accent-strong: oklch(40% 0.150 33);
-  --color-accent-ink:   oklch(98%  0.010 75);
-  --color-focus:        oklch(55%  0.180 40);
+  /* Colour — teal anchor, hue 215 (sampled from the real Chateau de Rockville logo) */
+  --color-paper:      oklch(97%  0.010 215);
+  --color-paper-2:     oklch(93.5% 0.014 215);
+  --color-paper-3:     oklch(89%  0.018 215);
+  --color-rule:        oklch(80%  0.020 215);
+  --color-neutral:      oklch(55%  0.022 215);
+  --color-muted:        oklch(40%  0.020 215);
+  --color-ink:          oklch(19%  0.022 215);
+  --color-accent:       oklch(35%  0.061 215);
+  --color-accent-strong: oklch(27% 0.055 215);
+  --color-accent-ink:   oklch(98%  0.008 215);
+  --color-focus:        oklch(55%  0.100 215);
 
   /* Dark panel (footer) — same hue, inverted lightness */
-  --color-paper-dark:   oklch(17%  0.014 42);
-  --color-paper-dark-2: oklch(21%  0.016 42);
-  --color-rule-dark:    oklch(32%  0.016 42);
-  --color-ink-dark:     oklch(94%  0.012 75);
-  --color-muted-dark:   oklch(74%  0.012 70);
-  --color-accent-dark:  oklch(66%  0.130 40);
+  --color-paper-dark:   oklch(16%  0.020 215);
+  --color-paper-dark-2: oklch(20%  0.022 215);
+  --color-rule-dark:    oklch(31%  0.020 215);
+  --color-ink-dark:     oklch(94%  0.012 215);
+  --color-muted-dark:   oklch(74%  0.012 215);
+  --color-accent-dark:  oklch(64%  0.075 215);
 
   /* Type */
   --font-display: "Fraunces", ui-serif, Georgia, serif;
@@ -282,7 +282,7 @@ section[id], footer[id] { scroll-margin-top: var(--banner-height); }
 }
 .site-header.is-scrolled {
   border-bottom-color: var(--color-rule);
-  box-shadow: 0 8px 24px -18px oklch(20% 0.02 40 / 0.4);
+  box-shadow: 0 8px 24px -18px oklch(20% 0.02 215 / 0.4);
 }
 
 .site-header__row {
@@ -305,10 +305,14 @@ section[id], footer[id] { scroll-margin-top: var(--banner-height); }
   flex: none;
 }
 .wordmark__text {
-  display: flex;
+  display: none;
   flex-direction: column;
   gap: 0;
   line-height: 1;
+  white-space: nowrap;
+}
+@media (min-width: 30rem) {
+  .wordmark__text { display: flex; }
 }
 .wordmark__name {
   font-family: var(--font-display);
@@ -362,7 +366,7 @@ section[id], footer[id] { scroll-margin-top: var(--banner-height); }
   background: var(--color-paper);
   border: 1px solid var(--color-rule);
   border-radius: var(--radius-md);
-  box-shadow: 0 20px 40px -16px oklch(20% 0.02 40 / 0.35);
+  box-shadow: 0 20px 40px -16px oklch(20% 0.02 215 / 0.35);
   padding: var(--space-3xs);
   opacity: 0;
   visibility: hidden;
@@ -434,7 +438,7 @@ section[id], footer[id] { scroll-margin-top: var(--banner-height); }
 .nav-drawer__scrim {
   position: absolute;
   inset: 0;
-  background: oklch(15% 0.02 40 / 0.45);
+  background: oklch(15% 0.02 215 / 0.45);
   opacity: 0;
   transition: opacity var(--dur-med) var(--ease-standard);
 }
@@ -881,7 +885,7 @@ section[id], footer[id] { scroll-margin-top: var(--banner-height); }
   align-items: center;
   justify-content: center;
   border: 1px solid var(--color-ink);
-  box-shadow: 0 12px 28px -12px oklch(20% 0.02 40 / 0.5);
+  box-shadow: 0 12px 28px -12px oklch(20% 0.02 215 / 0.5);
 }
 .call-fab svg { width: 24px; height: 24px; }
 .call-fab:hover { background: var(--color-accent-strong); border-color: var(--color-accent-strong); }

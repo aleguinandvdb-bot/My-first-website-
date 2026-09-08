@@ -20,7 +20,7 @@ The real logo (a teal crest with two horses and a croissant) is cropped from the
 - the footer mark (`.footer__mark`)
 - the browser favicon (`assets/favicon-32.png`, `favicon.png` at 64px, `favicon-180.png` as the Apple touch icon)
 
-**Worth flagging:** the site's color palette (warm cream/terracotta) was designed before the real logo was available and doesn't match the logo's teal. I kept the existing palette for this pass rather than redoing every color token unasked — say the word if you'd like the whole site re-themed around the teal from the actual brand mark.
+The site is re-themed around the logo's teal — every color is an OKLCH token anchored to hue 215, sampled directly from the logo (`--color-accent: oklch(35% 0.061 215)`). Paper, ink, rules, and the dark footer panel all share that hue at different lightness/chroma, per `css/style.css`'s `:root` block. The 3D coffee cup in the hero keeps its literal warm ceramic/coffee coloring — that's the object's real-world color, independent of brand chrome.
 
 # Third-party code
 
