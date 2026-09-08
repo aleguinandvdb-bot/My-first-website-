@@ -1,4 +1,4 @@
-/* Chateau Rockville Cafe — language switcher (EN default, FR, ES) */
+/* Chateau de Rockville Cafe — language switcher (EN default, FR, ES) */
 (function () {
   "use strict";
 
@@ -22,10 +22,10 @@
       "hero.caption": "3D · rendered live",
       "about.eyebrow": "Our Story",
       "about.title": "A corner of Provence in downtown Rockville",
-      "about.p1": "Chateau Rockville Cafe opened as a small corner of Provence in downtown Rockville — a place for stone-milled pastry, patient espresso, and mornings that don't feel rushed.",
+      "about.p1": "Chateau de Rockville Cafe opened as a small corner of Provence in downtown Rockville — a place for stone-milled pastry, patient espresso, and mornings that don't feel rushed.",
       "about.p2": "Everything on the counter is baked, brewed, or built in-house, in small batches, every day.",
       "about.quote": "We wanted a café that felt like a doorway to somewhere slower.",
-      "about.quoteCite": "— The founders, Chateau Rockville Cafe",
+      "about.quoteCite": "— The founders, Chateau de Rockville Cafe",
       "menu.eyebrow": "On the Counter",
       "menu.title": "Our Menu",
       "menu.lede": "Baked each morning. Poured to order.",
@@ -72,7 +72,7 @@
       "footer.orderLabel": "Order Online",
       "footer.orderValue": "DoorDash pickup & delivery",
       "footer.followLabel": "Follow Along",
-      "footer.copyright": "© 2026 Chateau Rockville Cafe. All rights reserved.",
+      "footer.copyright": "© 2026 Chateau de Rockville Cafe. All rights reserved.",
       "footer.madeWith": "Rockville, Maryland"
     },
     fr: {
@@ -92,10 +92,10 @@
       "hero.caption": "3D · en direct",
       "about.eyebrow": "Notre histoire",
       "about.title": "Un coin de Provence au cœur de Rockville",
-      "about.p1": "Chateau Rockville Cafe a ouvert comme un petit coin de Provence au centre de Rockville — un lieu pour la pâtisserie à la meule de pierre, l'espresso patient, et des matins sans précipitation.",
+      "about.p1": "Chateau de Rockville Cafe a ouvert comme un petit coin de Provence au centre de Rockville — un lieu pour la pâtisserie à la meule de pierre, l'espresso patient, et des matins sans précipitation.",
       "about.p2": "Tout ce qui est au comptoir est cuit, préparé ou brassé sur place, en petites quantités, chaque jour.",
       "about.quote": "Nous voulions un café qui donne l'impression d'une porte vers un lieu plus lent.",
-      "about.quoteCite": "— Les fondateurs, Chateau Rockville Cafe",
+      "about.quoteCite": "— Les fondateurs, Chateau de Rockville Cafe",
       "menu.eyebrow": "Au comptoir",
       "menu.title": "Notre carte",
       "menu.lede": "Cuit chaque matin. Servi à la commande.",
@@ -135,14 +135,14 @@
       "visit.directions": "Itinéraire",
       "visit.doordash": "Commander sur DoorDash",
       "visit.call": "Appeler le café",
-      "footer.signature": "À bientôt — au Chateau Rockville.",
+      "footer.signature": "À bientôt — au Chateau de Rockville.",
       "footer.callLabel": "Appelez-nous",
       "footer.emailLabel": "Écrivez-nous",
       "footer.addressLabel": "Adresse",
       "footer.orderLabel": "Commander en ligne",
       "footer.orderValue": "Retrait et livraison DoorDash",
       "footer.followLabel": "Suivez-nous",
-      "footer.copyright": "© 2026 Chateau Rockville Cafe. Tous droits réservés.",
+      "footer.copyright": "© 2026 Chateau de Rockville Cafe. Tous droits réservés.",
       "footer.madeWith": "Rockville, Maryland"
     },
     es: {
@@ -162,10 +162,10 @@
       "hero.caption": "3D · en vivo",
       "about.eyebrow": "Nuestra historia",
       "about.title": "Un rincón de Provenza en el centro de Rockville",
-      "about.p1": "Chateau Rockville Cafe abrió como un pequeño rincón de Provenza en el centro de Rockville — un lugar para repostería de piedra molida, espresso paciente y mañanas sin prisa.",
+      "about.p1": "Chateau de Rockville Cafe abrió como un pequeño rincón de Provenza en el centro de Rockville — un lugar para repostería de piedra molida, espresso paciente y mañanas sin prisa.",
       "about.p2": "Todo en el mostrador se hornea, prepara o elabora en casa, en pequeños lotes, cada día.",
       "about.quote": "Queríamos un café que se sintiera como una puerta hacia un lugar más tranquilo.",
-      "about.quoteCite": "— Los fundadores, Chateau Rockville Cafe",
+      "about.quoteCite": "— Los fundadores, Chateau de Rockville Cafe",
       "menu.eyebrow": "En el mostrador",
       "menu.title": "Nuestra carta",
       "menu.lede": "Horneado cada mañana. Servido al momento.",
@@ -205,14 +205,14 @@
       "visit.directions": "Cómo llegar",
       "visit.doordash": "Pedir por DoorDash",
       "visit.call": "Llamar al café",
-      "footer.signature": "Hasta pronto — en Chateau Rockville.",
+      "footer.signature": "Hasta pronto — en Chateau de Rockville.",
       "footer.callLabel": "Llámanos",
       "footer.emailLabel": "Escríbenos",
       "footer.addressLabel": "Dirección",
       "footer.orderLabel": "Pedir en línea",
       "footer.orderValue": "Recogida y entrega por DoorDash",
       "footer.followLabel": "Síguenos",
-      "footer.copyright": "© 2026 Chateau Rockville Cafe. Todos los derechos reservados.",
+      "footer.copyright": "© 2026 Chateau de Rockville Cafe. Todos los derechos reservados.",
       "footer.madeWith": "Rockville, Maryland"
     }
   };

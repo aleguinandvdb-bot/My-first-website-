@@ -295,6 +295,17 @@ section[id], footer[id] { scroll-margin-top: var(--banner-height); }
 
 .wordmark {
   display: flex;
+  align-items: center;
+  gap: var(--space-2xs);
+}
+.wordmark__logo {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  flex: none;
+}
+.wordmark__text {
+  display: flex;
   flex-direction: column;
   gap: 0;
   line-height: 1;
@@ -908,4 +919,4 @@ section[id], footer[id] { scroll-margin-top: var(--banner-height); }
 /* ============================================================
    FOOTER MOTIF ICON
    ============================================================ */
-.footer__mark { width: 34px; height: 34px; color: var(--color-accent-dark); margin-block-end: var(--space-md); }
+.footer__mark { width: 56px; height: 56px; border-radius: 50%; margin-block-end: var(--space-md); }

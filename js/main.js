@@ -1,4 +1,4 @@
-/* Chateau Rockville Cafe — interactions: nav drawer, language menu, tilt, motion */
+/* Chateau de Rockville Cafe — interactions: nav drawer, language menu, tilt, motion */
 (function () {
   "use strict";
 

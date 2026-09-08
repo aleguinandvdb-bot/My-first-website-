@@ -1,4 +1,4 @@
-/* Chateau Rockville Cafe — hero 3D scene: a procedural coffee cup with rising steam.
+/* Chateau de Rockville Cafe — hero 3D scene: a procedural coffee cup with rising steam.
    Built with Three.js primitives (no external model files). */
 import * as THREE from "./vendor/three.module.min.js";
 

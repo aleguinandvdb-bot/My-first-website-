@@ -4,9 +4,11 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <script>document.documentElement.classList.add("js-anim");</script>
-<title>Chateau Rockville Cafe — Rockville, Maryland</title>
-<meta name="description" content="Chateau Rockville Cafe: stone-milled pastry, single-origin espresso, and a garden terrace in the heart of Rockville, Maryland." />
-<link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+<title>Chateau de Rockville Cafe — Rockville, Maryland</title>
+<meta name="description" content="Chateau de Rockville Cafe: stone-milled pastry, single-origin espresso, and a garden terrace in the heart of Rockville, Maryland." />
+<link rel="icon" href="assets/favicon-32.png" type="image/png" sizes="32x32" />
+<link rel="icon" href="assets/favicon.png" type="image/png" sizes="64x64" />
+<link rel="apple-touch-icon" href="assets/favicon-180.png" />
 <meta name="theme-color" content="#f7f1ea" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -89,10 +91,6 @@
     <circle cx="60" cy="52" r="14"/>
     <path opacity="0.6" d="M50 52h20M60 42v20"/>
   </symbol>
-  <symbol id="motif-bean" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
-    <path d="M12 2c5 3 7 7 7 11a7 7 0 11-14 0c0-4 2-8 7-11z"/>
-    <path opacity="0.7" d="M12 4c-3 4-3 8-3 9M12 4c3 4 3 8 3 9"/>
-  </symbol>
 </svg>
 
 <!-- ============================================================
@@ -101,8 +99,11 @@
 <header class="site-header" id="siteHeader">
   <div class="wrap site-header__row">
     <a class="wordmark" href="#main">
-      <span class="wordmark__name">Chateau Rockville</span>
-      <span class="wordmark__tag">Café · Est. 2024</span>
+      <img class="wordmark__logo" src="assets/logo.png" alt="" width="40" height="40" />
+      <span class="wordmark__text">
+        <span class="wordmark__name">Chateau de Rockville</span>
+        <span class="wordmark__tag">Café · Est. 2024</span>
+      </span>
     </a>
 
     <div class="header__controls">
@@ -207,12 +208,12 @@
         <span class="section__eyebrow" data-i18n="about.eyebrow">Our Story</span>
         <h2 class="section__title" data-i18n="about.title">A corner of Provence in downtown Rockville</h2>
         <div class="about__body">
-          <p data-i18n="about.p1">Chateau Rockville Cafe opened as a small corner of Provence in downtown Rockville — a place for stone-milled pastry, patient espresso, and mornings that don't feel rushed.</p>
+          <p data-i18n="about.p1">Chateau de Rockville Cafe opened as a small corner of Provence in downtown Rockville — a place for stone-milled pastry, patient espresso, and mornings that don't feel rushed.</p>
           <p data-i18n="about.p2">Everything on the counter is baked, brewed, or built in-house, in small batches, every day.</p>
         </div>
         <blockquote class="about__quote">
           <p data-i18n="about.quote">We wanted a café that felt like a doorway to somewhere slower.</p>
-          <cite data-i18n="about.quoteCite">— The founders, Chateau Rockville Cafe</cite>
+          <cite data-i18n="about.quoteCite">— The founders, Chateau de Rockville Cafe</cite>
         </blockquote>
       </div>
     </div>
@@ -379,7 +380,7 @@
             <p class="visit__note" data-i18n="visit.note">Pickup and delivery available on DoorDash.</p>
           </div>
           <div class="visit__actions">
-            <a class="btn btn--outline" href="https://www.google.com/maps/search/?api=1&amp;query=Chateau+Rockville+Cafe%2C+1701+Rockville+Pike+A-11%2C+Rockville%2C+MD+20852" target="_blank" rel="noopener">
+            <a class="btn btn--outline" href="https://www.google.com/maps/search/?api=1&amp;query=Chateau+de+Rockville%2C+1701+Rockville+Pike+A-11%2C+Rockville%2C+MD+20852" target="_blank" rel="noopener">
               <span data-i18n="visit.directions">Get Directions</span>
             </a>
             <a class="btn btn--outline" href="https://www.doordash.com/store/chateau-de-rockville-bakery-cafe-rockville-48681921/?srsltid=AfmBOorQmGLJPCQoownV_1_bVtnaYomn2jJmXx8WT1RxkINsE0gXAuMM" target="_blank" rel="noopener">
@@ -403,7 +404,7 @@
      ============================================================ -->
 <footer class="site-footer" id="contact">
   <div class="wrap">
-    <svg class="footer__mark" aria-hidden="true"><use href="#motif-bean"/></svg>
+    <img class="footer__mark" src="assets/logo.png" alt="" width="56" height="56" />
     <p class="footer__signature" data-i18n="footer.signature">À bientôt — see you soon.</p>
 
     <div class="footer__contact">
@@ -433,14 +434,14 @@
     </div>
 
     <div class="footer__bottom">
-      <span data-i18n="footer.copyright">© 2026 Chateau Rockville Cafe. All rights reserved.</span>
+      <span data-i18n="footer.copyright">© 2026 Chateau de Rockville Cafe. All rights reserved.</span>
       <span data-i18n="footer.madeWith">Rockville, Maryland</span>
     </div>
   </div>
 </footer>
 
 <!-- Floating click-to-call button (mobile) -->
-<a class="call-fab" href="tel:+16673247743" aria-label="Call Chateau Rockville Cafe">
+<a class="call-fab" href="tel:+16673247743" aria-label="Call Chateau de Rockville Cafe">
   <span class="call-fab__ring" aria-hidden="true"></span>
   <svg aria-hidden="true"><use href="#icon-phone"/></svg>
 </a>
