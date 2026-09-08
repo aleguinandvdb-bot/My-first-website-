@@ -52,6 +52,10 @@
     <path d="M14 3v10.6a3.3 3.3 0 11-2.7-3.25"/>
     <path d="M14 3c.4 2.7 2.3 4.5 4.7 4.8"/>
   </symbol>
+  <symbol id="icon-bag" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M6 8h12l1 12.5a1.5 1.5 0 01-1.5 1.5h-11A1.5 1.5 0 015 20.5L6 8z"/>
+    <path d="M9 8V6.5a3 3 0 016 0V8"/>
+  </symbol>
   <symbol id="motif-cup" viewBox="0 0 120 120" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
     <path d="M32 46h56l-4 46a8 8 0 01-8 7H44a8 8 0 01-8-7l-4-46z"/>
     <path d="M88 52h6a10 10 0 010 20h-7"/>
@@ -149,9 +153,13 @@
       <li><a class="nav-drawer__link" href="#contact" data-i18n="nav.contact">Contact</a></li>
     </ul>
     <div class="nav-drawer__foot">
-      <a class="btn btn--primary nav-drawer__call" href="tel:+13015550142">
+      <a class="btn btn--primary nav-drawer__call" href="tel:+16673247743">
         <svg aria-hidden="true"><use href="#icon-phone"/></svg>
-        <span data-i18n="nav.call">Call (301) 555-0142</span>
+        <span data-i18n="nav.call">Call (667) 324-7743</span>
+      </a>
+      <a class="btn btn--outline nav-drawer__call" href="https://www.doordash.com/search/?query=Chateau%20Rockville%20Cafe%20Rockville%20MD" target="_blank" rel="noopener">
+        <svg aria-hidden="true"><use href="#icon-bag"/></svg>
+        <span data-i18n="nav.doordash">Order on DoorDash</span>
       </a>
       <div class="nav-drawer__socials">
         <a class="social-link" href="#" aria-label="Instagram" data-social="instagram"><svg aria-hidden="true"><use href="#icon-instagram"/></svg></a>
@@ -178,7 +186,7 @@
             <span data-i18n="hero.cta1">View the Menu</span>
             <svg aria-hidden="true"><use href="#icon-arrow"/></svg>
           </a>
-          <a class="btn btn--outline" href="tel:+13015550142">
+          <a class="btn btn--outline" href="tel:+16673247743">
             <svg aria-hidden="true"><use href="#icon-phone"/></svg>
             <span data-i18n="hero.cta2">Call to Reserve</span>
           </a>
@@ -371,14 +379,19 @@
         <div class="visit__card" data-reveal>
           <svg class="visit__pin" aria-hidden="true"><use href="#icon-pin"/></svg>
           <div>
-            <p class="visit__address" data-i18n="visit.address">Rockville Town Center, Rockville, MD</p>
-            <p class="visit__note" data-i18n="visit.note">Exact address to follow — placeholder for now.</p>
+            <p class="visit__venue" data-i18n="visit.venue">The Shops at Congressional Village</p>
+            <p class="visit__address" data-i18n="visit.address">1701 Rockville Pike, Suite A-11, Rockville, MD 20852</p>
+            <p class="visit__note" data-i18n="visit.note">Pickup and delivery available on DoorDash.</p>
           </div>
           <div class="visit__actions">
-            <a class="btn btn--outline" href="https://www.google.com/maps/search/?api=1&amp;query=Chateau+Rockville+Cafe%2C+Rockville%2C+MD" target="_blank" rel="noopener">
+            <a class="btn btn--outline" href="https://www.google.com/maps/search/?api=1&amp;query=Chateau+Rockville+Cafe%2C+1701+Rockville+Pike+A-11%2C+Rockville%2C+MD+20852" target="_blank" rel="noopener">
               <span data-i18n="visit.directions">Get Directions</span>
             </a>
-            <a class="btn btn--primary" href="tel:+13015550142">
+            <a class="btn btn--outline" href="https://www.doordash.com/search/?query=Chateau%20Rockville%20Cafe%20Rockville%20MD" target="_blank" rel="noopener">
+              <svg aria-hidden="true"><use href="#icon-bag"/></svg>
+              <span data-i18n="visit.doordash">Order on DoorDash</span>
+            </a>
+            <a class="btn btn--primary" href="tel:+16673247743">
               <svg aria-hidden="true"><use href="#icon-phone"/></svg>
               <span data-i18n="visit.call">Call the Café</span>
             </a>
@@ -401,15 +414,19 @@
     <div class="footer__contact">
       <div class="footer__item">
         <span class="footer__item-label" data-i18n="footer.callLabel">Call Us</span>
-        <a class="footer__item-value" href="tel:+13015550142">(301) 555-0142</a>
+        <a class="footer__item-value" href="tel:+16673247743">(667) 324-7743</a>
       </div>
       <div class="footer__item">
         <span class="footer__item-label" data-i18n="footer.emailLabel">Email Us</span>
-        <a class="footer__item-value" href="mailto:bonjour@chateaurockvillecafe.example">bonjour@chateaurockvillecafe.example</a>
+        <a class="footer__item-value" href="mailto:chateauderockvillecafe@gmail.com">chateauderockvillecafe@gmail.com</a>
       </div>
       <div class="footer__item">
         <span class="footer__item-label" data-i18n="footer.addressLabel">Address</span>
-        <span class="footer__item-value" data-i18n="visit.address">Rockville Town Center, Rockville, MD</span>
+        <span class="footer__item-value" data-i18n="visit.address">1701 Rockville Pike, Suite A-11, Rockville, MD 20852</span>
+      </div>
+      <div class="footer__item">
+        <span class="footer__item-label" data-i18n="footer.orderLabel">Order Online</span>
+        <a class="footer__item-value" href="https://www.doordash.com/search/?query=Chateau%20Rockville%20Cafe%20Rockville%20MD" target="_blank" rel="noopener" data-i18n="footer.orderValue">DoorDash pickup &amp; delivery</a>
       </div>
       <div class="footer__item">
         <span class="footer__item-label" data-i18n="footer.followLabel">Follow Along</span>
@@ -429,7 +446,7 @@
 </footer>
 
 <!-- Floating click-to-call button (mobile) -->
-<a class="call-fab" href="tel:+13015550142" aria-label="Call Chateau Rockville Cafe">
+<a class="call-fab" href="tel:+16673247743" aria-label="Call Chateau Rockville Cafe">
   <span class="call-fab__ring" aria-hidden="true"></span>
   <svg aria-hidden="true"><use href="#icon-phone"/></svg>
 </a>

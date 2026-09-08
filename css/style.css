@@ -776,8 +776,17 @@ section[id], footer[id] { scroll-margin-top: var(--banner-height); }
   gap: var(--space-md);
 }
 .visit__pin { width: 44px; height: 44px; color: var(--color-accent); }
+.visit__venue {
+  font-family: var(--font-body);
+  font-size: var(--text-xs);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-neutral);
+  margin-block-end: var(--space-3xs);
+}
 .visit__address { font-size: var(--text-md); font-family: var(--font-display); font-weight: 600; }
-.visit__note { color: var(--color-muted); font-size: var(--text-sm); }
+.visit__note { color: var(--color-muted); font-size: var(--text-sm); margin-block-start: var(--space-2xs); }
 .visit__actions { display: flex; flex-wrap: wrap; gap: var(--space-sm); margin-block-start: var(--space-2xs); }
 
 /* ============================================================

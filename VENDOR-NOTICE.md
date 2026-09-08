@@ -1,3 +1,16 @@
+# Contact data
+
+Real business details are wired in:
+
+- **Phone** `(667) 324-7743` → `tel:+16673247743` (header drawer, hero, visit section, footer, floating call button).
+- **Email** `chateauderockvillecafe@gmail.com` (footer).
+- **Address** The Shops at Congressional Village, 1701 Rockville Pike, Suite A-11, Rockville, MD 20852 (visit section, footer, "Get Directions" map-search link).
+- **DoorDash** pickup/delivery link (nav drawer, visit section, footer) currently points to a DoorDash *search* results page (`doordash.com/search/?query=Chateau+Rockville+Cafe...`) rather than a direct store page, since the exact DoorDash store URL wasn't provided. Send the real store link and I'll swap it in as a direct deep link — search for `doordash.com/search` in `index.html` to find all three spots.
+
+# Still placeholder — needs real data
+
+- **Social links** (Instagram / Facebook / TikTok, in the nav drawer and footer) all point to `#`. Send the café's real profile URLs (or say if a different platform — Yelp, X, OpenTable — should be used instead) and I'll wire them in. Search for `data-social` in `index.html`.
+
 # Third-party code
 
 Vendored under `js/vendor/` (no CDN dependency, works offline):
@@ -9,15 +22,3 @@ Vendored under `js/vendor/` (no CDN dependency, works offline):
 | `vanilla-tilt.min.js` | [vanilla-tilt.js](https://micku7zu.github.io/vanilla-tilt.js/) | 1.8.1 | MIT |
 
 Fonts (Fraunces, IBM Plex Sans, Geist Mono) are loaded from Google Fonts at runtime — no local files needed.
-
-# Placeholder data — replace before going live
-
-This build ships with clearly fictional placeholders so nothing here can be mistaken for a real business's real contact details:
-
-- **Phone number** `(301) 555-0142` — the `555-01xx` block is reserved for fiction/placeholder use in the US. Replace every `tel:+13015550142` (header drawer, hero, visit section, footer, floating call button) with the café's real number.
-- **Address** — only a generic "Rockville Town Center, Rockville, MD" is used, with a note in the Visit section saying the exact address is still a placeholder. Add the real street address once known, and consider embedding a real map.
-- **Email** `bonjour@chateaurockvillecafe.example` — the `.example` TLD is reserved by IANA and never resolves. Replace with a real address.
-- **Social links** (Instagram / Facebook / TikTok, in the nav drawer and footer) all point to `#`. Swap in the café's real profile URLs.
-
-Search the codebase for these strings to find every spot:
-`+13015550142`, `chateaurockvillecafe.example`, `href="#" ... data-social`.
