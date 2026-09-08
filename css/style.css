@@ -713,6 +713,47 @@ section[id], footer[id] { scroll-margin-top: var(--banner-height); }
 }
 
 /* ============================================================
+   THE PROCESS — two scroll-scrubbed 3D stages
+   ============================================================ */
+.process__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-2xl);
+}
+@media (min-width: 48rem) {
+  .process__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+.process__scene-wrap {
+  position: relative;
+  aspect-ratio: 1 / 1;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  border: var(--border-hairline);
+  background:
+    radial-gradient(120% 90% at 70% 15%, oklch(70% 0.05 215 / 0.3), transparent 60%),
+    linear-gradient(180deg, var(--color-paper-3), var(--color-paper-2));
+  margin-block-end: var(--space-md);
+}
+.process__scene {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  touch-action: pan-y;
+}
+@media (prefers-reduced-motion: reduce) {
+  .process__scene-wrap { background: linear-gradient(180deg, var(--color-paper-3), var(--color-paper-2)); }
+}
+
+.process__stage-title { font-size: var(--text-lg); }
+.process__stage-desc {
+  margin-block-start: var(--space-xs);
+  color: var(--color-muted);
+  max-width: 48ch;
+}
+
+/* ============================================================
    GALLERY — bento grid, irregular spans, custom line art
    ============================================================ */
 .bento {

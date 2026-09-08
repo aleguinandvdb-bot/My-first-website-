@@ -145,6 +145,7 @@
       <li><a class="nav-drawer__link" href="#main" data-i18n="nav.home">Home</a></li>
       <li><a class="nav-drawer__link" href="#story" data-i18n="nav.story">Our Story</a></li>
       <li><a class="nav-drawer__link" href="#menu" data-i18n="nav.menu">Menu</a></li>
+      <li><a class="nav-drawer__link" href="#process" data-i18n="nav.process">The Process</a></li>
       <li><a class="nav-drawer__link" href="#gallery" data-i18n="nav.gallery">Gallery</a></li>
       <li><a class="nav-drawer__link" href="#visit" data-i18n="nav.visit">Visit Us</a></li>
       <li><a class="nav-drawer__link" href="#contact" data-i18n="nav.contact">Contact</a></li>
@@ -329,6 +330,37 @@
   </section>
 
   <!-- ============================================================
+       THE PROCESS — beans ground, milk steamed
+       ============================================================ -->
+  <section class="section" id="process">
+    <div class="wrap">
+      <div class="section__head">
+        <span class="section__eyebrow" data-i18n="process.eyebrow">Behind the Counter</span>
+        <h2 class="section__title" data-i18n="process.title">The Process</h2>
+        <p class="section__lede" data-i18n="process.lede">Our coffee, to you.</p>
+      </div>
+
+      <div class="process__grid">
+        <div class="process__stage" data-reveal>
+          <div class="process__scene-wrap">
+            <canvas class="process__scene" id="grinderCanvas" role="img" aria-label="Illustration of coffee beans being ground fresh into a portafilter"></canvas>
+          </div>
+          <h3 class="process__stage-title" data-i18n="process.stage1Title">Ground to order</h3>
+          <p class="process__stage-desc" data-i18n="process.stage1Desc">Whole beans, weighed and ground the moment your order comes in — never sitting stale in a hopper.</p>
+        </div>
+
+        <div class="process__stage" data-reveal>
+          <div class="process__scene-wrap">
+            <canvas class="process__scene" id="milkCanvas" role="img" aria-label="Illustration of milk being steamed and foamed under a steam wand"></canvas>
+          </div>
+          <h3 class="process__stage-title" data-i18n="process.stage2Title">Steamed to silk</h3>
+          <p class="process__stage-desc" data-i18n="process.stage2Desc">Cold milk, stretched and steamed to a silky microfoam — the kind that holds a heart.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
        GALLERY — bento, custom line art (no stock photography)
        ============================================================ -->
   <section class="section" id="gallery">
@@ -474,5 +506,6 @@
 <script src="js/main.js"></script>
 <script type="module" src="js/hero-scene.js"></script>
 <script type="module" src="js/beans-scene.js"></script>
+<script type="module" src="js/process-scene.js"></script>
 </body>
 </html>
