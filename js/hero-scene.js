@@ -2,6 +2,8 @@
    Built with Three.js primitives (no external model files). */
 import * as THREE from "./vendor/three.module.min.js";
 import { getStudioEnvironment } from "./studio-env.js";
+import { makeCupMesh, makeSaucerMesh, makeHandleMesh, CUP_INTERIOR_RADIUS, CUP_RIM_Y } from "./cup-mesh.js";
+import { makeSoftDotTexture, makeLatteArtTexture } from "./latte-art.js";
 
 var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 var canvas = document.getElementById("heroCanvas");
@@ -10,79 +12,6 @@ if (!canvas || reduceMotion) {
   // CSS already hides the canvas under prefers-reduced-motion; skip WebGL entirely.
 } else {
   initScene(canvas);
-}
-
-function makeSoftDotTexture() {
-  var size = 128;
-  var c = document.createElement("canvas");
-  c.width = c.height = size;
-  var ctx = c.getContext("2d");
-  var g = ctx.createRadialGradient(size / 2, size / 2, 0, size / 2, size / 2, size / 2);
-  g.addColorStop(0, "rgba(255,255,255,0.9)");
-  g.addColorStop(0.4, "rgba(255,255,255,0.35)");
-  g.addColorStop(1, "rgba(255,255,255,0)");
-  ctx.fillStyle = g;
-  ctx.fillRect(0, 0, size, size);
-  var tex = new THREE.CanvasTexture(c);
-  tex.needsUpdate = true;
-  return tex;
-}
-
-// Latte-art heart poured into the espresso, painted onto the coffee
-// surface's own texture map — matching the real cup photo (heart rosetta
-// in microfoam) rather than a flat crema ring.
-function makeLatteArtTexture() {
-  var size = 512;
-  var c = document.createElement("canvas");
-  c.width = c.height = size;
-  var ctx = c.getContext("2d");
-
-  // Espresso base with soft crema mottling
-  ctx.fillStyle = "#2b1810";
-  ctx.fillRect(0, 0, size, size);
-  for (var i = 0; i < 90; i++) {
-    var r = 10 + Math.random() * 30;
-    var x = Math.random() * size;
-    var y = Math.random() * size;
-    var g = ctx.createRadialGradient(x, y, 0, x, y, r);
-    g.addColorStop(0, "rgba(120,80,50,0.10)");
-    g.addColorStop(1, "rgba(120,80,50,0)");
-    ctx.fillStyle = g;
-    ctx.beginPath();
-    ctx.arc(x, y, r, 0, Math.PI * 2);
-    ctx.fill();
-  }
-
-  function heartPath(cx, cy, s) {
-    ctx.beginPath();
-    ctx.moveTo(cx, cy + s * 0.3);
-    ctx.bezierCurveTo(cx, cy, cx - s, cy, cx - s, cy + s * 0.3);
-    ctx.bezierCurveTo(cx - s, cy + s * 0.75, cx, cy + s * 0.75, cx, cy + s * 1.15);
-    ctx.bezierCurveTo(cx, cy + s * 0.75, cx + s, cy + s * 0.75, cx + s, cy + s * 0.3);
-    ctx.bezierCurveTo(cx + s, cy, cx, cy, cx, cy + s * 0.3);
-    ctx.closePath();
-  }
-
-  var cx = size * 0.52, cy = size * 0.34;
-  ctx.filter = "blur(10px)";
-  heartPath(cx, cy, size * 0.3);
-  ctx.fillStyle = "rgba(238,222,196,0.9)";
-  ctx.fill();
-
-  ctx.filter = "blur(2px)";
-  heartPath(cx, cy, size * 0.24);
-  ctx.fillStyle = "rgba(245,232,210,0.95)";
-  ctx.fill();
-
-  ctx.filter = "none";
-  heartPath(cx, cy, size * 0.15);
-  ctx.fillStyle = "rgba(250,240,222,0.95)";
-  ctx.fill();
-
-  var tex = new THREE.CanvasTexture(c);
-  tex.colorSpace = THREE.SRGBColorSpace;
-  tex.needsUpdate = true;
-  return tex;
 }
 
 function initScene(canvas) {
@@ -109,7 +38,7 @@ function initScene(canvas) {
   // A steeper downward angle than a plain side-on shot — the latte art on
   // the coffee's surface is the point, so the camera needs to actually see
   // down into the cup, matching the reference photo's angle.
-  camera.position.set(0, 3.4, 6.7);
+  camera.position.set(0, 4.3, 6.2);
   camera.lookAt(0, 0.05, 0);
 
   // ---- Lighting: warm, café-glow ----
@@ -143,49 +72,14 @@ function initScene(canvas) {
   scene.add(group);
 
   // ---- Saucer — glazed teal, matching the café's real cup color ----
-  var saucerMat = new THREE.MeshPhysicalMaterial({
-    color: 0x0d454e, roughness: 0.24, metalness: 0.0, clearcoat: 0.85, clearcoatRoughness: 0.1
-  });
-  var saucer = new THREE.Mesh(new THREE.CylinderGeometry(1.65, 1.75, 0.14, 48), saucerMat);
-  saucer.position.y = -1.25;
-  saucer.receiveShadow = true;
+  var saucer = makeSaucerMesh(0x0d454e);
+  saucer.position.y = -0.68;
   group.add(saucer);
 
-  var saucerRim = new THREE.Mesh(new THREE.TorusGeometry(1.65, 0.05, 12, 48), saucerMat);
-  saucerRim.rotation.x = Math.PI / 2;
-  saucerRim.position.y = -1.18;
-  saucerRim.receiveShadow = true;
-  group.add(saucerRim);
-
-  // ---- Cup body — a real mug silhouette (foot, belly curve, lip, hollow
-  // interior) built as one revolved profile, instead of a tapered cylinder
-  // that read as a flowerpot. ----
-  var cupMat = new THREE.MeshPhysicalMaterial({
-    color: 0x0d454e, roughness: 0.2, metalness: 0.0, clearcoat: 0.85, clearcoatRoughness: 0.1
-  });
-  var profile = [
-    [0.00, -1.10], // foot underside, center
-    [0.55, -1.10], // foot outer edge
-    [0.60, -1.02], // foot side wall
-    [0.50, -0.95], // tuck under the body
-    [0.62, -0.55], // body starts curving out
-    [0.80, -0.05], // belly — widest point
-    [0.86, 0.45],  // gentle taper back in toward the rim
-    [0.90, 0.82],  // approaching the lip
-    [0.97, 0.95],  // rim outer edge
-    [0.90, 1.00],  // across the lip thickness
-    [0.83, 0.93],  // start down the interior wall
-    [0.73, 0.55],  // interior wall
-    [0.65, 0.00],  // interior wall
-    [0.55, -0.55], // interior wall, near the bottom
-    [0.48, -0.88], // interior floor edge
-    [0.00, -0.90]  // interior floor, center (closes the surface)
-  ];
-  var cupPts = profile.map(function (p) { return new THREE.Vector2(p[0], p[1]); });
-  var cupGeo = new THREE.LatheGeometry(cupPts, 56);
-  var cup = new THREE.Mesh(cupGeo, cupMat);
-  cup.castShadow = true;
-  cup.receiveShadow = true;
+  // ---- Cup body — a wide, shallow cappuccino silhouette (foot, belly
+  // curve, rolled lip, hollow interior) matching the café's real cup
+  // photo, built as one revolved profile shared with the finale scene. ----
+  var cup = makeCupMesh(0x0d454e);
   group.add(cup);
 
   // Coffee surface — a real latte-art heart baked into the texture map,
@@ -193,10 +87,10 @@ function initScene(canvas) {
   var coffeeMat = new THREE.MeshPhysicalMaterial({
     map: makeLatteArtTexture(), roughness: 0.1, metalness: 0.0, clearcoat: 1, clearcoatRoughness: 0.05, reflectivity: 0.6
   });
-  var coffee = new THREE.Mesh(new THREE.CircleGeometry(0.78, 48), coffeeMat);
+  var coffee = new THREE.Mesh(new THREE.CircleGeometry(CUP_INTERIOR_RADIUS * 0.94, 48), coffeeMat);
   coffee.rotation.x = -Math.PI / 2;
   coffee.rotation.z = -0.4;
-  coffee.position.y = 0.87;
+  coffee.position.y = CUP_RIM_Y - 0.06;
   group.add(coffee);
 
   // A soft round highlight on the coffee's surface — the "catch light" a real glossy liquid shows
@@ -205,31 +99,17 @@ function initScene(canvas) {
     blending: THREE.AdditiveBlending, depthWrite: false
   });
   var sheen = new THREE.Sprite(sheenMat);
-  sheen.scale.set(0.55, 0.55, 1);
-  sheen.position.set(-0.32, 0.88, 0.28);
+  sheen.scale.set(0.6, 0.6, 1);
+  sheen.position.set(-0.36, coffee.position.y + 0.01, 0.3);
   group.add(sheen);
 
-  // Handle — a smooth D-shaped tube along a curve, attached to the belly and
-  // the shoulder, instead of a torus arc that read as a bolted-on ring.
-  var handleCurve = new THREE.CatmullRomCurve3([
-    new THREE.Vector3(0.78, 0.48, 0),
-    new THREE.Vector3(1.28, 0.42, 0),
-    new THREE.Vector3(1.42, 0.10, 0),
-    new THREE.Vector3(1.28, -0.22, 0),
-    new THREE.Vector3(0.74, -0.20, 0)
-  ]);
-  var handleGeo = new THREE.TubeGeometry(handleCurve, 40, 0.09, 14, false);
-  // Now that the scene carries a PMREM studio environment, this can be a
-  // true metal — it has something real to reflect.
-  var goldMat = new THREE.MeshPhysicalMaterial({
-    color: 0xd4af37, roughness: 0.22, metalness: 1, envMapIntensity: 1.4
-  });
-  var handle = new THREE.Mesh(handleGeo, goldMat);
-  handle.castShadow = true;
+  // Handle — now that the scene carries a PMREM studio environment, this
+  // can be a true metal — it has something real to reflect.
+  var handle = makeHandleMesh(0xd4af37, true);
   group.add(handle);
 
   group.position.y = -0.05;
-  group.scale.setScalar(0.86);
+  group.scale.setScalar(0.78);
 
   // ---- Steam: soft rising particles ----
   var STEAM_COUNT = 42;
@@ -241,7 +121,7 @@ function initScene(canvas) {
     var angle = Math.random() * Math.PI * 2;
     var radius = Math.random() * 0.55;
     positions[i * 3 + 0] = Math.cos(angle) * radius;
-    positions[i * 3 + 1] = 0.9 + Math.random() * 1.6;
+    positions[i * 3 + 1] = 0.6 + Math.random() * 1.5;
     positions[i * 3 + 2] = Math.sin(angle) * radius * 0.6;
     seeds[i] = Math.random();
   }
@@ -310,8 +190,8 @@ function initScene(canvas) {
       var seed = seeds[i];
       var speed = 0.35 + seed * 0.25;
       var y = pos.getY(i) + dt * speed;
-      if (y > 2.7) {
-        y = 0.85;
+      if (y > 2.4) {
+        y = 0.6;
       }
       var wobble = Math.sin(t * (0.8 + seed) + seed * 10) * 0.004;
       pos.setY(i, y);
