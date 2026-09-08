@@ -1,3 +1,16 @@
+# Two versions, for two offers
+
+- **Full site** — `index.html` at the repo root. 3D hero coffee, scroll-driven
+  bean and grinder/steam-wand scenes, language switcher, GSAP animation.
+- **Simple site** — `simple/index.html`. Same real content (menu, hours,
+  address, phone, DoorDash, Instagram, Yelp) with no JavaScript at all —
+  the mobile nav is a pure CSS checkbox toggle. No 3D, no animation, no
+  language switcher. Meant as the lower-cost option if the full build is
+  more than they want to pay for.
+
+Once deployed, the simple version sits at `/simple/` under the same
+GitHub Pages URL — no separate hosting needed.
+
 # Contact & ordering links
 
 All real:
@@ -20,7 +33,7 @@ The real logo (a teal crest with two horses and a croissant) is cropped from the
 - the footer mark (`.footer__mark`)
 - the browser favicon (`assets/favicon-32.png`, `favicon.png` at 64px, `favicon-180.png` as the Apple touch icon)
 
-The site is re-themed around the logo's teal — every color is an OKLCH token anchored to hue 215, sampled directly from the logo (`--color-accent: oklch(35% 0.061 215)`). Paper, ink, rules, and the dark footer panel all share that hue at different lightness/chroma, per `css/style.css`'s `:root` block. The 3D coffee cup in the hero keeps its literal warm ceramic/coffee coloring — that's the object's real-world color, independent of brand chrome.
+The site is re-themed around the logo's teal — every color is an OKLCH token anchored to hue 215, sampled directly from the logo (`--color-accent: oklch(35% 0.061 215)`). Paper, ink, rules, and the dark footer panel all share that hue at different lightness/chroma, per `css/style.css`'s `:root` block. The 3D hero coffee was rebuilt to match the real cup photo you sent — teal glazed ceramic, a gold handle, and an actual latte-art heart baked into the coffee's texture, instead of a plain crema ring.
 
 # Third-party code
 

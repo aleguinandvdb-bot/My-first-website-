@@ -1,0 +1,429 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Chateau de Rockville — Café</title>
+<meta name="description" content="Chateau de Rockville: stone-milled pastry, single-origin espresso, and specialty drinks in the heart of Rockville, Maryland." />
+<link rel="icon" href="../assets/favicon-32.png" type="image/png" sizes="32x32" />
+<meta name="theme-color" content="#eef7f9" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --paper:      #eef7f9;
+    --paper-2:    #e0ecef;
+    --paper-3:    #cedee2;
+    --ink:        #07161a;
+    --muted:      #3d5459;
+    --rule:       #c3d6d9;
+    --accent:     #02424e;
+    --accent-strong: #002d37;
+    --accent-ink: #f2f9fa;
+    --dark:       #040f13;
+    --dark-2:     #0d2126;
+    --dark-rule:  #1e3a3f;
+    --dark-ink:   #eaf3f4;
+    --dark-muted: #a9bfc2;
+    --font-display: "Fraunces", ui-serif, Georgia, serif;
+    --font-body: "IBM Plex Sans", ui-sans-serif, system-ui, sans-serif;
+    --radius: 10px;
+  }
+  * { box-sizing: border-box; }
+  html, body { overflow-x: clip; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--font-body);
+    line-height: 1.6;
+  }
+  img, svg { display: block; max-width: 100%; }
+  h1, h2, h3 { font-family: var(--font-display); font-weight: 600; line-height: 1.12; margin: 0; }
+  p { margin: 0; max-width: 65ch; }
+  a { color: var(--accent); text-underline-offset: 3px; }
+  ::selection { background: var(--accent); color: var(--accent-ink); }
+  :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+  .wrap { max-width: 68rem; margin: 0 auto; padding: 0 1.25rem; }
+  @media (min-width: 48rem) { .wrap { padding: 0 2rem; } }
+
+  .section { padding-block: 4rem; border-top: 1px solid var(--rule); }
+  .section--tint { background: var(--paper-2); }
+  .section__eyebrow {
+    display: block; font-size: 0.75rem; font-weight: 600; letter-spacing: 0.1em;
+    text-transform: uppercase; color: var(--accent); margin-bottom: 0.5rem;
+  }
+  .section__title { font-size: clamp(1.6rem, 3vw, 2.2rem); }
+  .section__lede { margin-top: 0.5rem; color: var(--muted); font-size: 1.1rem; max-width: 46ch; }
+  .section__head { margin-bottom: 2.5rem; }
+
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;
+    font-weight: 600; font-size: 0.92rem; padding: 0.85em 1.5em; border-radius: 999px;
+    border: 1px solid var(--ink); text-decoration: none; white-space: nowrap; line-height: 1;
+  }
+  .btn--primary { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+  .btn--primary:hover { background: var(--accent-strong); border-color: var(--accent-strong); }
+  .btn--outline { background: transparent; color: var(--ink); border-color: var(--rule); }
+  .btn--outline:hover { border-color: var(--accent); color: var(--accent-strong); }
+
+  /* ---- Header + CSS-only mobile nav (no JavaScript on this page) ---- */
+  .site-header {
+    position: sticky; top: 0; z-index: 50;
+    background: color-mix(in oklch, var(--paper) 92%, transparent);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--rule);
+  }
+  .site-header__row {
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 1rem; padding-block: 0.9rem;
+  }
+  .wordmark { display: flex; align-items: center; gap: 0.6rem; text-decoration: none; color: inherit; }
+  .wordmark img { width: 36px; height: 36px; border-radius: 50%; }
+  .wordmark span { font-family: var(--font-display); font-weight: 600; font-size: 1.1rem; }
+
+  .nav-toggle-checkbox { position: absolute; opacity: 0; pointer-events: none; }
+  .nav-toggle-label {
+    display: flex; width: 42px; height: 42px; border-radius: 999px; border: 1px solid var(--rule);
+    align-items: center; justify-content: center; cursor: pointer;
+  }
+  .nav-toggle-label svg { width: 18px; height: 18px; }
+  .nav-links {
+    list-style: none; margin: 0; padding: 0;
+    display: none;
+    position: absolute; top: 100%; left: 0; right: 0;
+    background: var(--paper); border-bottom: 1px solid var(--rule);
+    flex-direction: column;
+  }
+  .nav-links a {
+    display: block; padding: 0.9rem 1.25rem; text-decoration: none; color: var(--ink);
+    font-weight: 600; border-top: 1px solid var(--rule);
+  }
+  .nav-toggle-checkbox:checked ~ .nav-links { display: flex; }
+
+  @media (min-width: 48rem) {
+    .nav-toggle-label { display: none; }
+    .nav-links {
+      display: flex !important; position: static; flex-direction: row; background: none; border: 0;
+    }
+    .nav-links a { border-top: 0; padding: 0.5rem 0.9rem; font-weight: 500; }
+  }
+
+  /* ---- Hero ---- */
+  .hero { padding-block: 3rem 3.5rem; }
+  .hero__grid { display: grid; gap: 2.5rem; align-items: center; }
+  @media (min-width: 56rem) { .hero__grid { grid-template-columns: 1.1fr 0.9fr; } }
+  .hero__eyebrow {
+    display: inline-block; font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--accent-strong); border: 1px solid var(--rule); border-radius: 999px;
+    padding: 0.3rem 0.8rem; margin-bottom: 1.5rem;
+  }
+  .hero__title { font-size: clamp(2.2rem, 5vw, 3.4rem); line-height: 1.08; max-width: 15ch; }
+  .hero__title em { font-style: normal; color: var(--accent-strong); }
+  .hero__lede { margin-top: 1.25rem; font-size: 1.1rem; color: var(--muted); max-width: 42ch; }
+  .hero__actions { margin-top: 1.75rem; display: flex; flex-wrap: wrap; gap: 0.75rem; }
+  .hero__art {
+    aspect-ratio: 1; border-radius: var(--radius); border: 1px solid var(--rule);
+    background: radial-gradient(120% 90% at 75% 15%, color-mix(in oklch, var(--accent) 22%, transparent), transparent 60%),
+      linear-gradient(180deg, var(--paper-3), var(--paper-2));
+    display: flex; align-items: center; justify-content: center;
+  }
+  .hero__art svg { width: 55%; height: 55%; color: var(--accent); }
+
+  /* ---- Story ---- */
+  .story__grid { display: grid; gap: 2rem; align-items: start; }
+  @media (min-width: 56rem) { .story__grid { grid-template-columns: 0.8fr 1.2fr; } }
+  .story__icon { width: 6rem; height: auto; color: var(--accent); }
+  .story__body p + p { margin-top: 0.85rem; }
+  .story__body { color: var(--muted); font-size: 1.05rem; }
+  .story__quote {
+    margin-top: 1.75rem; padding-left: 1.1rem; border-left: 2px solid var(--accent);
+    font-family: var(--font-display); font-weight: 600; font-size: 1.3rem; line-height: 1.3;
+  }
+  .story__quote cite { display: block; font-style: normal; font-family: var(--font-body); font-weight: 400; font-size: 0.9rem; color: var(--muted); margin-top: 0.6rem; }
+
+  /* ---- Process (text-only, no 3D) ---- */
+  .process-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 1.5rem; }
+  @media (min-width: 40rem) { .process-list { grid-template-columns: repeat(3, 1fr); } }
+  .process-list li { border-top: 1px solid var(--rule); padding-top: 1rem; }
+  .process-list .num { font-family: var(--font-display); font-weight: 600; color: var(--accent); font-size: 1.5rem; }
+  .process-list h3 { font-size: 1.1rem; margin-top: 0.4rem; }
+  .process-list p { color: var(--muted); font-size: 0.95rem; margin-top: 0.35rem; }
+
+  /* ---- Menu ---- */
+  .menu-cat + .menu-cat { margin-top: 2.5rem; }
+  .menu-cat h3 { font-size: 1.3rem; margin-bottom: 0.75rem; }
+  .menu-row {
+    display: flex; justify-content: space-between; gap: 1rem; align-items: baseline;
+    padding-block: 0.85rem; border-top: 1px solid var(--rule);
+  }
+  .menu-cat ul { list-style: none; margin: 0; padding: 0; }
+  .menu-cat li:last-child .menu-row { border-bottom: 1px solid var(--rule); }
+  .menu-row__main { display: flex; flex-direction: column; gap: 0.15rem; }
+  .menu-row__name { font-family: var(--font-display); font-weight: 600; font-size: 1.05rem; }
+  .menu-row__desc { color: var(--muted); font-size: 0.9rem; }
+  .menu-row__price { font-weight: 600; color: var(--accent-strong); white-space: nowrap; }
+
+  /* ---- Gallery (static grid, no motion) ---- */
+  .gallery-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+  @media (min-width: 40rem) { .gallery-grid { grid-template-columns: repeat(4, 1fr); } }
+  .gallery-tile {
+    border: 1px solid var(--rule); border-radius: var(--radius); background: var(--paper-2);
+    padding: 1.5rem; display: flex; flex-direction: column; align-items: flex-start; gap: 0.75rem; min-height: 9rem;
+  }
+  .gallery-tile svg { width: 2.75rem; height: 2.75rem; color: var(--accent); }
+  .gallery-tile span { font-weight: 600; font-size: 0.95rem; }
+
+  /* ---- Visit ---- */
+  .visit__grid { display: grid; gap: 2rem; }
+  @media (min-width: 56rem) { .visit__grid { grid-template-columns: 1fr 1fr; } }
+  .hours-row { display: flex; justify-content: space-between; padding-block: 0.85rem; border-top: 1px solid var(--rule); }
+  .hours-row:last-child { border-bottom: 1px solid var(--rule); }
+  .hours-row .days { font-family: var(--font-display); font-weight: 600; }
+  .hours-row .time { color: var(--muted); }
+  .visit-card { border: 1px solid var(--rule); border-radius: var(--radius); padding: 1.75rem; background: var(--paper-2); }
+  .visit-card .venue { font-size: 0.8rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); }
+  .visit-card .address { font-family: var(--font-display); font-weight: 600; font-size: 1.1rem; margin-top: 0.4rem; }
+  .visit-card .note { color: var(--muted); font-size: 0.92rem; margin-top: 0.5rem; }
+  .visit-card .actions { margin-top: 1.25rem; display: flex; flex-wrap: wrap; gap: 0.65rem; }
+
+  /* ---- Footer ---- */
+  .site-footer { background: var(--dark); color: var(--dark-ink); padding-block: 3.5rem 1.5rem; }
+  .site-footer img { width: 44px; height: 44px; border-radius: 50%; margin-bottom: 1rem; }
+  .footer__signature { font-family: var(--font-display); font-weight: 600; font-size: 1.5rem; max-width: 20ch; }
+  .footer__contact {
+    margin-top: 2rem; padding-block: 1.5rem; border-top: 1px solid var(--dark-rule); border-bottom: 1px solid var(--dark-rule);
+    display: flex; flex-wrap: wrap; gap: 2rem;
+  }
+  .footer__item { display: flex; flex-direction: column; gap: 0.2rem; min-width: 11rem; }
+  .footer__item span:first-child { font-size: 0.72rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--dark-muted); }
+  .footer__item a, .footer__item strong { color: var(--dark-ink); font-family: var(--font-display); font-weight: 600; font-size: 1rem; text-decoration: none; }
+  .footer__socials { display: flex; gap: 0.6rem; margin-top: 0.3rem; }
+  .footer__socials a {
+    width: 38px; height: 38px; border: 1px solid var(--dark-rule); border-radius: 999px;
+    display: flex; align-items: center; justify-content: center; color: var(--dark-ink);
+  }
+  .footer__socials svg { width: 17px; height: 17px; }
+  .footer__bottom { margin-top: 1.25rem; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 0.5rem; font-size: 0.75rem; color: var(--dark-muted); }
+
+  .call-fab {
+    position: fixed; right: 1rem; bottom: 1rem; z-index: 40; width: 56px; height: 56px; border-radius: 50%;
+    background: var(--ink); color: var(--paper); display: none; align-items: center; justify-content: center;
+    box-shadow: 0 10px 24px -10px rgba(2,20,24,0.5); text-decoration: none;
+  }
+  .call-fab svg { width: 22px; height: 22px; }
+  @media (max-width: 40rem) { .call-fab { display: flex; } }
+</style>
+</head>
+<body>
+
+<svg style="display:none" aria-hidden="true">
+  <symbol id="i-phone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h3l2 5-2.5 1.5a12 12 0 006 6L16 13l5 2v3a2 2 0 01-2 2C10.5 20 4 13.5 4 5a2 2 0 012-2z"/></symbol>
+  <symbol id="i-menu" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></symbol>
+  <symbol id="i-pin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s7-7.5 7-13a7 7 0 10-14 0c0 5.5 7 13 7 13z"/><circle cx="12" cy="9" r="2.5"/></symbol>
+  <symbol id="i-bag" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8h12l1 12.5a1.5 1.5 0 01-1.5 1.5h-11A1.5 1.5 0 015 20.5L6 8z"/><path d="M9 8V6.5a3 3 0 016 0V8"/></symbol>
+  <symbol id="i-instagram" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="3.5" width="17" height="17" rx="5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17" cy="7" r="0.7" fill="currentColor" stroke="none"/></symbol>
+  <symbol id="i-star" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><path d="M12 3.5l2.6 5.4 5.9.8-4.3 4.2 1 5.9L12 16.9l-5.2 2.9 1-5.9-4.3-4.2 5.9-.8L12 3.5z"/></symbol>
+  <symbol id="m-cup" viewBox="0 0 120 120" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M32 46h56l-4 46a8 8 0 01-8 7H44a8 8 0 01-8-7l-4-46z"/><path d="M88 52h6a10 10 0 010 20h-7"/><ellipse cx="60" cy="103" rx="30" ry="5"/><path opacity="0.75" d="M46 30c-4 4-4 8 0 12M60 26c-4 4-4 8 0 12M74 30c-4 4-4 8 0 12"/></symbol>
+  <symbol id="m-croissant" viewBox="0 0 120 120" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 70c6-30 30-48 55-42 22 5 30 24 24 30-10-14-30-18-46-8-14 9-18 26-10 40-16-2-27-10-23-20z"/><path opacity="0.7" d="M40 66c8-6 18-9 28-8M46 78c8-5 18-8 26-8"/></symbol>
+  <symbol id="m-sprig" viewBox="0 0 120 120" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M60 100V34"/><path d="M60 46c-14-4-22-16-18-28 12 2 20 12 18 28zM60 64c14-4 22-16 18-28-12 2-20 12-18 28z"/><ellipse cx="44" cy="82" rx="9" ry="13" transform="rotate(-20 44 82)"/><path opacity="0.7" d="M44 70v24" transform="rotate(-20 44 82)"/><ellipse cx="76" cy="82" rx="9" ry="13" transform="rotate(20 76 82)"/><path opacity="0.7" d="M76 70v24" transform="rotate(20 76 82)"/></symbol>
+  <symbol id="m-pour" viewBox="0 0 120 120" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M32 18h56l-20 32H52z"/><path d="M60 50c-2 6 2 8 0 14"/><path d="M40 78h40l-4 26a6 6 0 01-6 5H50a6 6 0 01-6-5z"/><path opacity="0.85" d="M80 84c10 1 10 15-1 17"/><ellipse cx="60" cy="112" rx="26" ry="4"/></symbol>
+</svg>
+
+<header class="site-header">
+  <div class="wrap site-header__row">
+    <a class="wordmark" href="#top">
+      <img src="../assets/logo.png" alt="" />
+      <span>Chateau de Rockville</span>
+    </a>
+    <input type="checkbox" id="navToggle" class="nav-toggle-checkbox" />
+    <label for="navToggle" class="nav-toggle-label" aria-label="Open menu">
+      <svg aria-hidden="true"><use href="#i-menu"/></svg>
+    </label>
+    <ul class="nav-links">
+      <li><a href="#top">Home</a></li>
+      <li><a href="#story">Our Story</a></li>
+      <li><a href="#menu">Menu</a></li>
+      <li><a href="#visit">Visit</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </div>
+</header>
+
+<main id="top">
+
+  <section class="hero wrap">
+    <div class="hero__grid">
+      <div>
+        <span class="hero__eyebrow">Rockville, Maryland · Since 2024</span>
+        <h1 class="hero__title">A café built like a small <em>château</em>.</h1>
+        <p class="hero__lede">Stone-milled pastry, single-origin espresso, and specialty drinks in the heart of Rockville.</p>
+        <div class="hero__actions">
+          <a class="btn btn--primary" href="#menu">View the Menu</a>
+          <a class="btn btn--outline" href="tel:+16673247743"><svg width="16" height="16" aria-hidden="true"><use href="#i-phone"/></svg> Call to Reserve</a>
+        </div>
+      </div>
+      <div class="hero__art">
+        <svg aria-hidden="true"><use href="#m-cup"/></svg>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="story">
+    <div class="wrap story__grid">
+      <svg class="story__icon" viewBox="0 0 120 120" aria-hidden="true"><use href="#m-sprig"/></svg>
+      <div>
+        <span class="section__eyebrow">Our Story</span>
+        <h2 class="section__title">A corner of Provence in downtown Rockville</h2>
+        <div class="story__body">
+          <p>Chateau de Rockville opened as a small corner of Provence in downtown Rockville — a place for stone-milled pastry, patient espresso, and mornings that don't feel rushed.</p>
+          <p>Everything on the counter is baked, brewed, or built in-house, in small batches, every day.</p>
+        </div>
+        <blockquote class="story__quote">
+          <p>We wanted a café that felt like a doorway to somewhere slower.</p>
+          <cite>— The founders, Chateau de Rockville</cite>
+        </blockquote>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--tint">
+    <div class="wrap">
+      <div class="section__head">
+        <span class="section__eyebrow">Behind the Counter</span>
+        <h2 class="section__title">The Process</h2>
+        <p class="section__lede">Our coffee, to you.</p>
+      </div>
+      <ul class="process-list">
+        <li><span class="num">01</span><h3>Ground to order</h3><p>Whole beans, weighed and ground the moment your order comes in.</p></li>
+        <li><span class="num">02</span><h3>Pulled fresh</h3><p>Every shot pulled to order — never sitting on a warmer.</p></li>
+        <li><span class="num">03</span><h3>Steamed to silk</h3><p>Cold milk, stretched and steamed to a silky microfoam.</p></li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="section" id="menu">
+    <div class="wrap">
+      <div class="section__head">
+        <span class="section__eyebrow">On the Counter</span>
+        <h2 class="section__title">Our Menu</h2>
+        <p class="section__lede">Baked each morning. Poured to order.</p>
+      </div>
+
+      <div class="menu-cat">
+        <h3>Espresso &amp; Coffee</h3>
+        <ul>
+          <li><div class="menu-row"><div class="menu-row__main"><span class="menu-row__name">Café au Château</span><span class="menu-row__desc">House blend, steamed milk.</span></div><span class="menu-row__price">$4.50</span></div></li>
+          <li><div class="menu-row"><div class="menu-row__main"><span class="menu-row__name">Espresso</span><span class="menu-row__desc">Double shot, single-origin.</span></div><span class="menu-row__price">$3.25</span></div></li>
+          <li><div class="menu-row"><div class="menu-row__main"><span class="menu-row__name">Café Crème</span><span class="menu-row__desc">Espresso, foamed milk.</span></div><span class="menu-row__price">$4.75</span></div></li>
+          <li><div class="menu-row"><div class="menu-row__main"><span class="menu-row__name">Golden Turmeric Latte</span><span class="menu-row__desc">Oat milk, honey.</span></div><span class="menu-row__price">$5.25</span></div></li>
+        </ul>
+      </div>
+
+      <div class="menu-cat">
+        <h3>Pâtisserie</h3>
+        <ul>
+          <li><div class="menu-row"><div class="menu-row__main"><span class="menu-row__name">Croissant</span><span class="menu-row__desc">Butter-laminated, baked daily.</span></div><span class="menu-row__price">$4.00</span></div></li>
+          <li><div class="menu-row"><div class="menu-row__main"><span class="menu-row__name">Pain au Chocolat</span><span class="menu-row__desc">Dark chocolate batons.</span></div><span class="menu-row__price">$4.50</span></div></li>
+          <li><div class="menu-row"><div class="menu-row__main"><span class="menu-row__name">Tarte aux Fraises</span><span class="menu-row__desc">Almond cream, strawberries.</span></div><span class="menu-row__price">$6.50</span></div></li>
+          <li><div class="menu-row"><div class="menu-row__main"><span class="menu-row__name">Madeleines (3)</span><span class="menu-row__desc">Brown butter, lemon zest.</span></div><span class="menu-row__price">$5.00</span></div></li>
+        </ul>
+      </div>
+
+      <div class="menu-cat">
+        <h3>Tartines &amp; Light Bites</h3>
+        <ul>
+          <li><div class="menu-row"><div class="menu-row__main"><span class="menu-row__name">Jambon-Beurre</span><span class="menu-row__desc">Ham, butter, baguette.</span></div><span class="menu-row__price">$9.00</span></div></li>
+          <li><div class="menu-row"><div class="menu-row__main"><span class="menu-row__name">Croque Monsieur</span><span class="menu-row__desc">Gruyère, béchamel.</span></div><span class="menu-row__price">$11.00</span></div></li>
+          <li><div class="menu-row"><div class="menu-row__main"><span class="menu-row__name">Garden Tartine</span><span class="menu-row__desc">Whipped ricotta, seasonal vegetables.</span></div><span class="menu-row__price">$10.00</span></div></li>
+        </ul>
+      </div>
+
+      <div class="menu-cat">
+        <h3>Specialty Drinks</h3>
+        <ul>
+          <li><div class="menu-row"><div class="menu-row__main"><span class="menu-row__name">Soda Cream Latte</span><span class="menu-row__desc">Soft soda cream over rich espresso.</span></div><span class="menu-row__price">$5.75</span></div></li>
+          <li><div class="menu-row"><div class="menu-row__main"><span class="menu-row__name">Cherry Lemonade</span><span class="menu-row__desc">Sweet-tangy lemonade, cherry, butterfly pea tea.</span></div><span class="menu-row__price">$5.50</span></div></li>
+          <li><div class="menu-row"><div class="menu-row__main"><span class="menu-row__name">Cherry Blossom Latte</span><span class="menu-row__desc">Delicate cherry blossom aroma, creamy milk.</span></div><span class="menu-row__price">$5.75</span></div></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--tint">
+    <div class="wrap">
+      <div class="section__head">
+        <span class="section__eyebrow">A Look Inside</span>
+        <h2 class="section__title">Gallery</h2>
+        <p class="section__lede">A few corners of the café.</p>
+      </div>
+      <div class="gallery-grid">
+        <div class="gallery-tile"><svg aria-hidden="true"><use href="#m-cup"/></svg><span>The Espresso Bar</span></div>
+        <div class="gallery-tile"><svg aria-hidden="true"><use href="#m-croissant"/></svg><span>The Pastry Case</span></div>
+        <div class="gallery-tile"><svg aria-hidden="true"><use href="#m-sprig"/></svg><span>Single-Origin</span></div>
+        <div class="gallery-tile"><svg aria-hidden="true"><use href="#m-pour"/></svg><span>Slow Pour-Over</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="visit">
+    <div class="wrap">
+      <div class="section__head">
+        <span class="section__eyebrow">Come By</span>
+        <h2 class="section__title">Visit Us</h2>
+        <p class="section__lede">Stop by, stay a while.</p>
+      </div>
+      <div class="visit__grid">
+        <div>
+          <div class="hours-row"><span class="days">Mon – Fri</span><span class="time">7:00 – 19:00</span></div>
+          <div class="hours-row"><span class="days">Sat – Sun</span><span class="time">8:00 – 20:00</span></div>
+        </div>
+        <div class="visit-card">
+          <svg width="36" height="36" aria-hidden="true" style="color:var(--accent)"><use href="#i-pin"/></svg>
+          <p class="venue">The Shops at Congressional Village</p>
+          <p class="address">1701 Rockville Pike, Suite A-11, Rockville, MD 20852</p>
+          <p class="note">Pickup and delivery available on DoorDash.</p>
+          <div class="actions">
+            <a class="btn btn--outline" href="https://www.google.com/maps/search/?api=1&amp;query=Chateau+de+Rockville%2C+1701+Rockville+Pike+A-11%2C+Rockville%2C+MD+20852" target="_blank" rel="noopener">Get Directions</a>
+            <a class="btn btn--outline" href="https://www.doordash.com/store/chateau-de-rockville-bakery-cafe-rockville-48681921/?srsltid=AfmBOorQmGLJPCQoownV_1_bVtnaYomn2jJmXx8WT1RxkINsE0gXAuMM" target="_blank" rel="noopener"><svg width="16" height="16" aria-hidden="true"><use href="#i-bag"/></svg> Order on DoorDash</a>
+            <a class="btn btn--primary" href="tel:+16673247743"><svg width="16" height="16" aria-hidden="true"><use href="#i-phone"/></svg> Call the Café</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer" id="contact">
+  <div class="wrap">
+    <img src="../assets/logo.png" alt="" />
+    <p class="footer__signature">À bientôt — see you soon.</p>
+    <div class="footer__contact">
+      <div class="footer__item"><span>Call Us</span><a href="tel:+16673247743">(667) 324-7743</a></div>
+      <div class="footer__item"><span>Email Us</span><a href="mailto:chateauderockvillecafe@gmail.com">chateauderockvillecafe@gmail.com</a></div>
+      <div class="footer__item"><span>Address</span><strong>1701 Rockville Pike, Suite A-11, Rockville, MD 20852</strong></div>
+      <div class="footer__item">
+        <span>Follow Along</span>
+        <div class="footer__socials">
+          <a href="https://www.instagram.com/chateauderockville/" target="_blank" rel="noopener" aria-label="Instagram"><svg aria-hidden="true"><use href="#i-instagram"/></svg></a>
+          <a href="https://m.yelp.com/biz/chateau-de-rockville-cafe-rockville" target="_blank" rel="noopener" aria-label="Yelp Reviews"><svg aria-hidden="true"><use href="#i-star"/></svg></a>
+        </div>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <span>© 2026 Chateau de Rockville. All rights reserved.</span>
+      <span>Rockville, Maryland</span>
+    </div>
+  </div>
+</footer>
+
+<a class="call-fab" href="tel:+16673247743" aria-label="Call Chateau de Rockville">
+  <svg aria-hidden="true"><use href="#i-phone"/></svg>
+</a>
+
+</body>
+</html>
