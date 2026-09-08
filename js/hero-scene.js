@@ -84,56 +84,63 @@ function initScene(canvas) {
   var saucerMat = new THREE.MeshPhysicalMaterial({
     color: 0xe9d9c0, roughness: 0.32, metalness: 0.0, clearcoat: 0.5, clearcoatRoughness: 0.2
   });
-  var saucer = new THREE.Mesh(new THREE.CylinderGeometry(2.1, 2.2, 0.14, 48), saucerMat);
-  saucer.position.y = -1.05;
+  var saucer = new THREE.Mesh(new THREE.CylinderGeometry(1.65, 1.75, 0.14, 48), saucerMat);
+  saucer.position.y = -1.25;
   saucer.receiveShadow = true;
   group.add(saucer);
 
-  var saucerRim = new THREE.Mesh(new THREE.TorusGeometry(2.1, 0.05, 12, 48), saucerMat);
+  var saucerRim = new THREE.Mesh(new THREE.TorusGeometry(1.65, 0.05, 12, 48), saucerMat);
   saucerRim.rotation.x = Math.PI / 2;
-  saucerRim.position.y = -0.98;
+  saucerRim.position.y = -1.18;
   saucerRim.receiveShadow = true;
   group.add(saucerRim);
 
-  // ---- Cup body (slightly tapered cylinder, open top) — glazed ceramic ----
+  // ---- Cup body — a real mug silhouette (foot, belly curve, lip, hollow
+  // interior) built as one revolved profile, instead of a tapered cylinder
+  // that read as a flowerpot. ----
   var cupMat = new THREE.MeshPhysicalMaterial({
     color: 0xf5ead6, roughness: 0.22, metalness: 0.0, clearcoat: 0.75, clearcoatRoughness: 0.12
   });
-  var cupGeo = new THREE.CylinderGeometry(1.35, 1.05, 1.9, 48, 1, true);
+  var profile = [
+    [0.00, -1.10], // foot underside, center
+    [0.55, -1.10], // foot outer edge
+    [0.60, -1.02], // foot side wall
+    [0.50, -0.95], // tuck under the body
+    [0.62, -0.55], // body starts curving out
+    [0.80, -0.05], // belly — widest point
+    [0.86, 0.45],  // gentle taper back in toward the rim
+    [0.90, 0.82],  // approaching the lip
+    [0.97, 0.95],  // rim outer edge
+    [0.90, 1.00],  // across the lip thickness
+    [0.83, 0.93],  // start down the interior wall
+    [0.73, 0.55],  // interior wall
+    [0.65, 0.00],  // interior wall
+    [0.55, -0.55], // interior wall, near the bottom
+    [0.48, -0.88], // interior floor edge
+    [0.00, -0.90]  // interior floor, center (closes the surface)
+  ];
+  var cupPts = profile.map(function (p) { return new THREE.Vector2(p[0], p[1]); });
+  var cupGeo = new THREE.LatheGeometry(cupPts, 56);
   var cup = new THREE.Mesh(cupGeo, cupMat);
-  cup.position.y = 0;
   cup.castShadow = true;
   cup.receiveShadow = true;
   group.add(cup);
-
-  // Cup base (closes the bottom)
-  var base = new THREE.Mesh(new THREE.CircleGeometry(1.05, 48), cupMat);
-  base.rotation.x = -Math.PI / 2;
-  base.position.y = -0.95;
-  group.add(base);
-
-  // Cup rim (torus at the top edge for a finished lip)
-  var rimMesh = new THREE.Mesh(new THREE.TorusGeometry(1.35, 0.07, 16, 48), cupMat);
-  rimMesh.rotation.x = Math.PI / 2;
-  rimMesh.position.y = 0.95;
-  rimMesh.castShadow = true;
-  group.add(rimMesh);
 
   // Coffee surface — glossy espresso with a lighter crema ring at the edge
   var coffeeMat = new THREE.MeshPhysicalMaterial({
     color: 0x2b1810, roughness: 0.08, metalness: 0.0, clearcoat: 1, clearcoatRoughness: 0.04, reflectivity: 0.6
   });
-  var coffee = new THREE.Mesh(new THREE.CircleGeometry(1.22, 48), coffeeMat);
+  var coffee = new THREE.Mesh(new THREE.CircleGeometry(0.78, 48), coffeeMat);
   coffee.rotation.x = -Math.PI / 2;
-  coffee.position.y = 0.88;
+  coffee.position.y = 0.87;
   group.add(coffee);
 
   var cremaMat = new THREE.MeshPhysicalMaterial({
     color: 0xc99456, roughness: 0.3, metalness: 0.0, clearcoat: 0.7, clearcoatRoughness: 0.15
   });
-  var crema = new THREE.Mesh(new THREE.RingGeometry(0.92, 1.18, 48), cremaMat);
+  var crema = new THREE.Mesh(new THREE.RingGeometry(0.58, 0.75, 48), cremaMat);
   crema.rotation.x = -Math.PI / 2;
-  crema.position.y = 0.887;
+  crema.position.y = 0.877;
   group.add(crema);
 
   // A soft round highlight on the coffee's surface — the "catch light" a real glossy liquid shows
@@ -142,21 +149,26 @@ function initScene(canvas) {
     blending: THREE.AdditiveBlending, depthWrite: false
   });
   var sheen = new THREE.Sprite(sheenMat);
-  sheen.scale.set(0.85, 0.85, 1);
-  sheen.position.set(-0.45, 0.89, 0.4);
+  sheen.scale.set(0.55, 0.55, 1);
+  sheen.position.set(-0.32, 0.88, 0.28);
   group.add(sheen);
 
-  // Handle — a partial torus (arc) attached to the cup's side
-  var handleGeo = new THREE.TorusGeometry(0.55, 0.12, 16, 32, Math.PI * 1.5);
+  // Handle — a smooth D-shaped tube along a curve, attached to the belly and
+  // the shoulder, instead of a torus arc that read as a bolted-on ring.
+  var handleCurve = new THREE.CatmullRomCurve3([
+    new THREE.Vector3(0.78, 0.48, 0),
+    new THREE.Vector3(1.28, 0.42, 0),
+    new THREE.Vector3(1.42, 0.10, 0),
+    new THREE.Vector3(1.28, -0.22, 0),
+    new THREE.Vector3(0.74, -0.20, 0)
+  ]);
+  var handleGeo = new THREE.TubeGeometry(handleCurve, 40, 0.1, 14, false);
   var handle = new THREE.Mesh(handleGeo, cupMat);
-  handle.rotation.z = Math.PI * 0.22;
-  handle.rotation.y = Math.PI / 2;
-  handle.position.set(1.45, 0.05, 0);
   handle.castShadow = true;
   group.add(handle);
 
-  group.position.y = -0.15;
-  group.scale.setScalar(0.92);
+  group.position.y = -0.05;
+  group.scale.setScalar(0.86);
 
   // ---- Steam: soft rising particles ----
   var STEAM_COUNT = 42;
