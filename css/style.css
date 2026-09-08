@@ -755,39 +755,6 @@ section[id], footer[id] { scroll-margin-top: var(--banner-height); }
   max-width: 48ch;
 }
 
-/* The finale panel — start-to-finish cup, run by the "Make the whole
-   coffee" button rather than scroll. Framed as its own card so it reads
-   as the section's payoff, not a third grid tile. */
-.process__finale {
-  margin-block-start: var(--space-2xl);
-  display: grid;
-  grid-template-columns: minmax(0, 1fr);
-  gap: var(--space-lg);
-  padding: var(--space-xl);
-  border-radius: var(--radius-md);
-  border: var(--border-hairline);
-  background:
-    radial-gradient(120% 90% at 20% 10%, oklch(70% 0.05 215 / 0.22), transparent 60%),
-    linear-gradient(160deg, var(--color-paper-3), var(--color-paper-2));
-}
-@media (min-width: 48rem) {
-  .process__finale {
-    grid-template-columns: minmax(0, 22rem) minmax(0, 1fr);
-    align-items: center;
-  }
-}
-.process__finale-scene-wrap {
-  margin-block-end: 0;
-  max-width: 24rem;
-}
-.process__finale-copy {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-}
-.process__brew-all { margin-block-start: var(--space-md); }
-.process__brew-all:disabled { opacity: 0.6; cursor: progress; }
-
 /* ============================================================
    GALLERY — bento grid, irregular spans, custom line art
    ============================================================ */

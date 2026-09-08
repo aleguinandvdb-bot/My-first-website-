@@ -1,22 +1,18 @@
 /* Chateau de Rockville Cafe — "The Process" section.
 
-   Three scenes:
+   Two scenes:
    1. Grinder — beans drop and physically pile into each other in the
       hopper; a Grind button feeds them through the burrs and fills the
       portafilter with grounds.
-   2. Steam pitcher — milk stretched under a steam wand.
-   3. Finale cup — coffee brews, milk pours in, a sugar cube drops and
-      dissolves. Idle on its own; driven end-to-end by the "Make the whole
-      coffee" button below, which also runs the grind and the steam.
+   2. Steam pitcher — milk stretched under a steam wand, filling as you
+      scroll through the section.
 
-   All three are built from lathe profiles with real wall thickness (an
+   Both are built from lathe profiles with real wall thickness (an
    open-ended cylinder has no back wall, so front-face culling makes it
    look sliced open) and lit with a shared PMREM studio environment. */
 import * as THREE from "./vendor/three.module.min.js";
 import { makeRoastBumpTexture, makeBeanMaterial, makeCreaseMaterial, makeBeanMesh } from "./bean-mesh.js";
 import { getStudioEnvironment } from "./studio-env.js";
-import { makeCupMesh, makeSaucerMesh, CUP_INTERIOR_FLOOR_Y } from "./cup-mesh.js";
-import { makeCremaTexture, makeLatteArtTexture } from "./latte-art.js";
 
 var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
@@ -468,17 +464,6 @@ function initGrinder(canvas) {
     setLabel("process.grinding", "Grinding…");
   }
 
-  // Drives the "Make the whole coffee" sequence: always starts from a full
-  // hopper (unlike the button's own toggle) and reports back when the
-  // basket is actually full, not on a fixed timer.
-  function runGrind(onDone) {
-    resetGrinder();
-    state.grinding = true;
-    state.grindT = 0;
-    state.onGrindDone = onDone || null;
-    setLabel("process.grinding", "Grinding…");
-  }
-
   if (button) {
     button.addEventListener("click", startGrind);
   }
@@ -499,7 +484,7 @@ function initGrinder(canvas) {
     grainGeo.setDrawRange(0, GRAIN_COUNT);
     renderer.render(scene, camera);
     if (button) button.disabled = true;
-    return { runGrind: function (onDone) { if (onDone) onDone(); }, resetGrinder: function () {} };
+    return;
   }
 
   function beansLeft() {
@@ -529,11 +514,6 @@ function initGrinder(canvas) {
         state.grinding = false;
         state.fill = 1;
         setLabel("process.grindAgain", "Refill the hopper");
-        if (state.onGrindDone) {
-          var cb = state.onGrindDone;
-          state.onGrindDone = null;
-          cb();
-        }
       }
     } else {
       burr.rotation.y += dt * 0.5;
@@ -546,8 +526,6 @@ function initGrinder(canvas) {
   }
   watchVisibility(state, clock, animate);
   animate();
-
-  return { runGrind: runGrind, resetGrinder: resetGrinder };
 }
 
 /* ============================================================
@@ -683,42 +661,8 @@ function initMilk(canvas) {
     steam.visible = progress > 0.06;
   }
 
-  var state = { running: true, progress: reduceMotion ? 1 : 0, auto: false };
+  var state = { running: true, progress: reduceMotion ? 1 : 0 };
   layout(state.progress);
-
-  function resetMilk() {
-    state.progress = 0;
-    layout(0);
-  }
-
-  /* Drives the "Make the whole coffee" sequence: tweens progress from its
-     current value to 1 over durationSec, ignoring scroll for the duration
-     so the two don't fight over who owns state.progress. Scroll regains
-     control (see the ScrollTrigger onUpdate below) the moment it ends. */
-  function autoFill(durationSec, onDone) {
-    state.auto = true;
-    var from = state.progress;
-    var elapsed = 0;
-    var last = null;
-    function step(now) {
-      /* Clamp per-frame, like the grinder's dt — a stalled frame (tab
-         backgrounded, a GC pause) would otherwise hand the very next
-         callback a huge real-time gap and let the fill jump straight to
-         full instead of animating through it. */
-      if (last === null) last = now;
-      elapsed += Math.min((now - last) / 1000, 1 / 20);
-      last = now;
-      var t = Math.min(1, elapsed / durationSec);
-      state.progress = from + (1 - from) * t;
-      if (t < 1) {
-        requestAnimationFrame(step);
-      } else {
-        state.auto = false;
-        if (onDone) onDone();
-      }
-    }
-    requestAnimationFrame(step);
-  }
 
   function resize() {
     var w = container.clientWidth || 1;
@@ -732,7 +676,7 @@ function initMilk(canvas) {
 
   if (reduceMotion) {
     renderer.render(scene, camera);
-    return { autoFill: function (d, onDone) { if (onDone) onDone(); }, resetMilk: function () {} };
+    return;
   }
 
   (function bind() {
@@ -742,7 +686,7 @@ function initMilk(canvas) {
       start: "top 88%",
       end: "bottom 40%",
       scrub: 0.6,
-      onUpdate: function (self) { if (!state.auto) state.progress = self.progress; }
+      onUpdate: function (self) { state.progress = self.progress; }
     });
   })();
 
@@ -775,302 +719,9 @@ function initMilk(canvas) {
   }
   watchVisibility(state, clock, animate);
   animate();
-
-  return { autoFill: autoFill, resetMilk: resetMilk };
 }
 
-/* ============================================================
-   Scene 3 — Finale cup: coffee brews, milk pours, sugar drops
-   Idle by itself (an empty cup); every phase below is driven by the
-   "Make the whole coffee" orchestrator at the bottom of this file.
-   ============================================================ */
-function initFinale(canvas) {
-  var container = canvas.parentElement;
-  var renderer = baseRenderer(canvas);
-  if (!renderer) return null;
-
-  var scene = new THREE.Scene();
-  scene.environment = getStudioEnvironment(renderer);
-
-  var camera = new THREE.PerspectiveCamera(32, 1, 0.1, 60);
-  camera.position.set(0, 4.0, 5.6);
-  camera.lookAt(0, 0.05, 0);
-  baseLights(scene);
-  /* The coffee surface sits recessed inside the cup, past the rim's own
-     wall — baseLights' two directional lights alone leave it with almost
-     no direct light (the same recess-shadowing that affected the milk
-     pitcher), so its diffuse map barely renders and the crema/latte-art
-     texture washes out to a flat clearcoat reflection. A soft ambient
-     fill, matching the hero cup's recipe, gets light down into it. */
-  scene.add(new THREE.HemisphereLight(0xfff1de, 0x6b4a33, 0.85));
-  scene.add(new THREE.AmbientLight(0x6b4a33, 0.45));
-
-  var group = new THREE.Group();
-  scene.add(group);
-
-  var saucer = makeSaucerMesh(0x0d454e);
-  saucer.position.y = -0.68;
-  group.add(saucer);
-
-  var cup = makeCupMesh(0x0d454e);
-  group.add(cup);
-
-  var floor = new THREE.Mesh(new THREE.PlaneGeometry(24, 24), new THREE.ShadowMaterial({ opacity: 0.16 }));
-  floor.rotation.x = -Math.PI / 2;
-  floor.position.y = -1.5;
-  floor.receiveShadow = true;
-  scene.add(floor);
-
-  // --- Coffee: a liquid cylinder that grows up from the interior floor,
-  // capped with a surface disc carrying the crema texture. Radius is
-  // chosen to clear the cup's tapered interior wall at every height up to
-  // the fill target, instead of tracking the true taper exactly.
-  var COFFEE_FLOOR_Y = CUP_INTERIOR_FLOOR_Y + 0.05;
-  var COFFEE_FULL_HEIGHT = 0.92;
-  var coffeeMat = new THREE.MeshPhysicalMaterial({
-    color: 0x2b1810, roughness: 0.3, metalness: 0, clearcoat: 0.5, clearcoatRoughness: 0.25
-  });
-  /* openEnded: true — the crema/latte-art discs below are the visible
-     surface. With a closed top, the cylinder's own opaque cap sat right
-     above them at the same height and hid both completely, no matter
-     what their own opacity or draw order was. */
-  var coffeeBody = new THREE.Mesh(new THREE.CylinderGeometry(0.64, 0.48, 1, 40, 1, true), coffeeMat);
-  coffeeBody.visible = false;
-  group.add(coffeeBody);
-
-  var coffeeTopPlain = new THREE.Mesh(new THREE.CircleGeometry(0.6, 44), new THREE.MeshPhysicalMaterial({
-    map: makeCremaTexture(), roughness: 0.12, metalness: 0, clearcoat: 1, clearcoatRoughness: 0.05
-  }));
-  coffeeTopPlain.rotation.x = -Math.PI / 2;
-  coffeeTopPlain.visible = false;
-  group.add(coffeeTopPlain);
-
-  // Sits a hair above the plain crema disc, fading in as milk is poured —
-  // swapping the whole material would pop; a stacked, fading disc crossfades.
-  // depthWrite: false — a purely decorative alpha overlay that never needs
-  // to occlude anything else, and shouldn't while it's faded to invisible
-  // (see the same reasoning on milkStreamMat above).
-  var coffeeTopLatte = new THREE.Mesh(new THREE.CircleGeometry(0.6, 44), new THREE.MeshPhysicalMaterial({
-    map: makeLatteArtTexture(), roughness: 0.1, metalness: 0, clearcoat: 1, clearcoatRoughness: 0.05,
-    transparent: true, opacity: 0, depthWrite: false
-  }));
-  coffeeTopLatte.rotation.x = -Math.PI / 2;
-  coffeeTopLatte.rotation.z = -0.4;
-  coffeeTopLatte.visible = false;
-  group.add(coffeeTopLatte);
-
-  function coffeeTopY(h) {
-    return COFFEE_FLOOR_Y + COFFEE_FULL_HEIGHT * h;
-  }
-
-  function setCoffeeHeight(h) {
-    h = THREE.MathUtils.clamp(h, 0, 1);
-    coffeeBody.visible = h > 0.004;
-    coffeeBody.scale.y = Math.max(h, 0.004);
-    coffeeBody.position.y = COFFEE_FLOOR_Y + (COFFEE_FULL_HEIGHT * h) / 2;
-    var topY = coffeeTopY(h) + 0.006;
-    coffeeTopPlain.visible = h > 0.03;
-    coffeeTopPlain.position.y = topY;
-    coffeeTopLatte.visible = h > 0.03;
-    coffeeTopLatte.position.y = topY + 0.004;
-  }
-  setCoffeeHeight(0);
-
-  // --- Milk stream: a curved tube that fades in and out during the pour,
-  // arcing in from the same side a barista would pour from. It's never
-  // hidden outside the pour, only faded to opacity 0 — depthWrite: false
-  // keeps it from still writing to the depth buffer while invisible,
-  // which otherwise silently occluded the sugar cube falling behind it.
-  var milkStreamMat = new THREE.MeshPhysicalMaterial({
-    color: 0xf6efe1, roughness: 0.2, metalness: 0, transparent: true, opacity: 0, depthWrite: false
-  });
-  var milkStream = new THREE.Mesh(new THREE.TubeGeometry(new THREE.CatmullRomCurve3([
-    new THREE.Vector3(-1.7, 2.7, 0.7),
-    new THREE.Vector3(-1.0, 1.7, 0.45),
-    new THREE.Vector3(-0.15, 0.75, 0.08)
-  ]), 28, 0.05, 10, false), milkStreamMat);
-  group.add(milkStream);
-
-  // --- Sugar cube + ripple ring, for the final touch. Sized well past a
-  // literal sugar cube's true scale relative to the cup — true-to-scale
-  // projects to only a handful of pixels on this canvas and reads as
-  // nothing at all rather than a deliberate beat in the sequence.
-  var sugar = new THREE.Mesh(new THREE.BoxGeometry(0.34, 0.34, 0.34), new THREE.MeshPhysicalMaterial({
-    color: 0xfaf6ef, roughness: 0.55, metalness: 0, clearcoat: 0.2, clearcoatRoughness: 0.4
-  }));
-  sugar.castShadow = true;
-  sugar.visible = false;
-  group.add(sugar);
-
-  var ripple = new THREE.Mesh(new THREE.RingGeometry(0.05, 0.09, 32), new THREE.MeshBasicMaterial({
-    color: 0xffffff, transparent: true, opacity: 0, side: THREE.DoubleSide, depthWrite: false
-  }));
-  ripple.rotation.x = -Math.PI / 2;
-  group.add(ripple);
-
-  group.position.y = -0.05;
-  group.scale.setScalar(0.74);
-
-  function resetFinale() {
-    setCoffeeHeight(0);
-    coffeeTopLatte.material.opacity = 0;
-    milkStreamMat.opacity = 0;
-    sugar.visible = false;
-    ripple.material.opacity = 0;
-  }
-
-  function tween(durationSec, onStep, onDone) {
-    /* Clamp per-frame, like the grinder's dt — otherwise a stalled frame
-       (tab backgrounded, a GC pause) hands the next callback a huge
-       real-time gap and the whole "make the whole coffee" chain — each
-       phase completing synchronously inside the last one's onDone — can
-       cascade straight to "done" in a single frame instead of animating
-       through brew, pour and sugar in turn. */
-    var elapsed = 0;
-    var last = null;
-    function step(now) {
-      if (last === null) last = now;
-      elapsed += Math.min((now - last) / 1000, 1 / 20);
-      last = now;
-      var t = Math.min(1, elapsed / durationSec);
-      onStep(t);
-      if (t < 1) requestAnimationFrame(step);
-      else if (onDone) onDone();
-    }
-    requestAnimationFrame(step);
-  }
-
-  function brewCoffee(durationSec, onDone) {
-    tween(durationSec, function (t) { setCoffeeHeight(t); }, onDone);
-  }
-
-  function pourMilk(durationSec, onDone) {
-    tween(durationSec, function (t) {
-      milkStreamMat.opacity = Math.sin(Math.min(t, 1) * Math.PI) * 0.95;
-      coffeeTopLatte.material.opacity = t;
-    }, function () {
-      milkStreamMat.opacity = 0;
-      if (onDone) onDone();
-    });
-  }
-
-  function dropSugar(onDone) {
-    sugar.visible = true;
-    var topY = coffeeTopY(1);
-    var startX = 0.14, startZ = 0.06;
-    sugar.position.set(startX, topY + 0.95, startZ);
-    sugar.scale.setScalar(1);
-    tween(0.42, function (t) {
-      sugar.position.y = THREE.MathUtils.lerp(topY + 0.95, topY + 0.03, t * t);
-    }, function () {
-      ripple.position.set(startX, topY + 0.012, startZ);
-      ripple.material.opacity = 0.9;
-      ripple.scale.setScalar(0.3);
-      tween(0.5, function (t) {
-        ripple.scale.setScalar(0.3 + t * 1.7);
-        ripple.material.opacity = 0.9 * (1 - t);
-      });
-      tween(0.7, function (t) {
-        sugar.scale.setScalar(1 - t);
-        sugar.position.y = topY + 0.03 - t * 0.05;
-      }, function () {
-        sugar.visible = false;
-        if (onDone) onDone();
-      });
-    });
-  }
-
-  function resize() {
-    var w = container.clientWidth || 1;
-    var h = container.clientHeight || 1;
-    renderer.setSize(w, h, false);
-    camera.aspect = w / h;
-    camera.updateProjectionMatrix();
-  }
-  resize();
-  new ResizeObserver(resize).observe(container);
-
-  var state = { running: true };
-
-  if (reduceMotion) {
-    renderer.render(scene, camera);
-    return {
-      brewCoffee: function (d, cb) { if (cb) cb(); },
-      pourMilk: function (d, cb) { if (cb) cb(); },
-      dropSugar: function (cb) { if (cb) cb(); },
-      resetFinale: function () {}
-    };
-  }
-
-  var clock = new THREE.Clock();
-  function animate() {
-    if (!state.running) return;
-    requestAnimationFrame(animate);
-    clock.getDelta();
-    renderer.render(scene, camera);
-  }
-  watchVisibility(state, clock, animate);
-  animate();
-
-  return { brewCoffee: brewCoffee, pourMilk: pourMilk, dropSugar: dropSugar, resetFinale: resetFinale };
-}
-
-/* ============================================================
-   Bootstrap + "Make the whole coffee" orchestrator.
-   Runs the grinder, the steam pitcher and the finale cup back to back as
-   one sequence, driven by the button in the finale panel rather than by
-   scroll — each scene's controller (returned above) exposes exactly the
-   hooks this needs and nothing else.
-   ============================================================ */
 var grinderCanvas = document.getElementById("grinderCanvas");
 var milkCanvas = document.getElementById("milkCanvas");
-var cupCanvas = document.getElementById("cupCanvas");
-var grinder = grinderCanvas ? initGrinder(grinderCanvas) : null;
-var milk = milkCanvas ? initMilk(milkCanvas) : null;
-var finale = cupCanvas ? initFinale(cupCanvas) : null;
-
-(function wireBrewAll() {
-  var button = document.getElementById("brewAllButton");
-  if (!button || !grinder || !milk || !finale) return;
-  var label = button.querySelector("[data-brew-label]");
-  var running = false;
-
-  function setLabel(key, fallback) {
-    if (!label) return;
-    label.setAttribute("data-i18n", key);
-    var dict = window.CRCi18n && window.CRCi18n.strings;
-    var lang = document.documentElement.getAttribute("lang") || "en";
-    var text = dict && dict[lang] && dict[lang][key];
-    label.textContent = text || fallback;
-  }
-
-  function run() {
-    if (running) return;
-    running = true;
-    button.disabled = true;
-
-    finale.resetFinale();
-    milk.resetMilk();
-
-    setLabel("process.brewAllGrinding", "Grinding the beans…");
-    grinder.runGrind(function () {
-      setLabel("process.brewAllBrewing", "Brewing…");
-      finale.brewCoffee(2.2, function () {
-        setLabel("process.brewAllSteaming", "Steaming the milk…");
-        milk.autoFill(2.6, function () {
-          setLabel("process.brewAllPouring", "Pouring it in…");
-          finale.pourMilk(1.6, function () {
-            setLabel("process.brewAllSugar", "Adding sugar…");
-            finale.dropSugar(function () {
-              setLabel("process.brewAllDone", "Enjoy! Make it again?");
-              button.disabled = false;
-              running = false;
-            });
-          });
-        });
-      });
-    });
-  }
-
-  button.addEventListener("click", run);
-})();
+if (grinderCanvas) initGrinder(grinderCanvas);
+if (milkCanvas) initMilk(milkCanvas);
