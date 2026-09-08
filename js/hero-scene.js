@@ -27,6 +27,63 @@ function makeSoftDotTexture() {
   return tex;
 }
 
+// Latte-art heart poured into the espresso, painted onto the coffee
+// surface's own texture map — matching the real cup photo (heart rosetta
+// in microfoam) rather than a flat crema ring.
+function makeLatteArtTexture() {
+  var size = 512;
+  var c = document.createElement("canvas");
+  c.width = c.height = size;
+  var ctx = c.getContext("2d");
+
+  // Espresso base with soft crema mottling
+  ctx.fillStyle = "#2b1810";
+  ctx.fillRect(0, 0, size, size);
+  for (var i = 0; i < 90; i++) {
+    var r = 10 + Math.random() * 30;
+    var x = Math.random() * size;
+    var y = Math.random() * size;
+    var g = ctx.createRadialGradient(x, y, 0, x, y, r);
+    g.addColorStop(0, "rgba(120,80,50,0.10)");
+    g.addColorStop(1, "rgba(120,80,50,0)");
+    ctx.fillStyle = g;
+    ctx.beginPath();
+    ctx.arc(x, y, r, 0, Math.PI * 2);
+    ctx.fill();
+  }
+
+  function heartPath(cx, cy, s) {
+    ctx.beginPath();
+    ctx.moveTo(cx, cy + s * 0.3);
+    ctx.bezierCurveTo(cx, cy, cx - s, cy, cx - s, cy + s * 0.3);
+    ctx.bezierCurveTo(cx - s, cy + s * 0.75, cx, cy + s * 0.75, cx, cy + s * 1.15);
+    ctx.bezierCurveTo(cx, cy + s * 0.75, cx + s, cy + s * 0.75, cx + s, cy + s * 0.3);
+    ctx.bezierCurveTo(cx + s, cy, cx, cy, cx, cy + s * 0.3);
+    ctx.closePath();
+  }
+
+  var cx = size * 0.52, cy = size * 0.34;
+  ctx.filter = "blur(10px)";
+  heartPath(cx, cy, size * 0.3);
+  ctx.fillStyle = "rgba(238,222,196,0.9)";
+  ctx.fill();
+
+  ctx.filter = "blur(2px)";
+  heartPath(cx, cy, size * 0.24);
+  ctx.fillStyle = "rgba(245,232,210,0.95)";
+  ctx.fill();
+
+  ctx.filter = "none";
+  heartPath(cx, cy, size * 0.15);
+  ctx.fillStyle = "rgba(250,240,222,0.95)";
+  ctx.fill();
+
+  var tex = new THREE.CanvasTexture(c);
+  tex.colorSpace = THREE.SRGBColorSpace;
+  tex.needsUpdate = true;
+  return tex;
+}
+
 function initScene(canvas) {
   var container = canvas.parentElement;
   var renderer;
@@ -47,8 +104,11 @@ function initScene(canvas) {
   var scene = new THREE.Scene();
 
   var camera = new THREE.PerspectiveCamera(32, 1, 0.1, 50);
-  camera.position.set(0, 1.55, 6.4);
-  camera.lookAt(0, 0.5, 0);
+  // A steeper downward angle than a plain side-on shot — the latte art on
+  // the coffee's surface is the point, so the camera needs to actually see
+  // down into the cup, matching the reference photo's angle.
+  camera.position.set(0, 3.1, 5.9);
+  camera.lookAt(0, 0.15, 0);
 
   // ---- Lighting: warm, café-glow ----
   var hemi = new THREE.HemisphereLight(0xfff1de, 0x6b4a33, 0.9);
@@ -80,9 +140,9 @@ function initScene(canvas) {
   var group = new THREE.Group();
   scene.add(group);
 
-  // ---- Saucer ----
+  // ---- Saucer — glazed teal, matching the café's real cup color ----
   var saucerMat = new THREE.MeshPhysicalMaterial({
-    color: 0xe9d9c0, roughness: 0.32, metalness: 0.0, clearcoat: 0.5, clearcoatRoughness: 0.2
+    color: 0x0d454e, roughness: 0.24, metalness: 0.0, clearcoat: 0.85, clearcoatRoughness: 0.1
   });
   var saucer = new THREE.Mesh(new THREE.CylinderGeometry(1.65, 1.75, 0.14, 48), saucerMat);
   saucer.position.y = -1.25;
@@ -99,7 +159,7 @@ function initScene(canvas) {
   // interior) built as one revolved profile, instead of a tapered cylinder
   // that read as a flowerpot. ----
   var cupMat = new THREE.MeshPhysicalMaterial({
-    color: 0xf5ead6, roughness: 0.22, metalness: 0.0, clearcoat: 0.75, clearcoatRoughness: 0.12
+    color: 0x0d454e, roughness: 0.2, metalness: 0.0, clearcoat: 0.85, clearcoatRoughness: 0.1
   });
   var profile = [
     [0.00, -1.10], // foot underside, center
@@ -126,22 +186,16 @@ function initScene(canvas) {
   cup.receiveShadow = true;
   group.add(cup);
 
-  // Coffee surface — glossy espresso with a lighter crema ring at the edge
+  // Coffee surface — a real latte-art heart baked into the texture map,
+  // matching the reference photo, instead of a flat crema ring.
   var coffeeMat = new THREE.MeshPhysicalMaterial({
-    color: 0x2b1810, roughness: 0.08, metalness: 0.0, clearcoat: 1, clearcoatRoughness: 0.04, reflectivity: 0.6
+    map: makeLatteArtTexture(), roughness: 0.1, metalness: 0.0, clearcoat: 1, clearcoatRoughness: 0.05, reflectivity: 0.6
   });
   var coffee = new THREE.Mesh(new THREE.CircleGeometry(0.78, 48), coffeeMat);
   coffee.rotation.x = -Math.PI / 2;
+  coffee.rotation.z = -0.4;
   coffee.position.y = 0.87;
   group.add(coffee);
-
-  var cremaMat = new THREE.MeshPhysicalMaterial({
-    color: 0xc99456, roughness: 0.3, metalness: 0.0, clearcoat: 0.7, clearcoatRoughness: 0.15
-  });
-  var crema = new THREE.Mesh(new THREE.RingGeometry(0.58, 0.75, 48), cremaMat);
-  crema.rotation.x = -Math.PI / 2;
-  crema.position.y = 0.877;
-  group.add(crema);
 
   // A soft round highlight on the coffee's surface — the "catch light" a real glossy liquid shows
   var sheenMat = new THREE.SpriteMaterial({
@@ -162,8 +216,14 @@ function initScene(canvas) {
     new THREE.Vector3(1.28, -0.22, 0),
     new THREE.Vector3(0.74, -0.20, 0)
   ]);
-  var handleGeo = new THREE.TubeGeometry(handleCurve, 40, 0.1, 14, false);
-  var handle = new THREE.Mesh(handleGeo, cupMat);
+  var handleGeo = new THREE.TubeGeometry(handleCurve, 40, 0.09, 14, false);
+  // Without a real environment map, full metalness reads as near-black
+  // (metals only reflect light sources, not ambient) — dialed back to
+  // 0.75 so the gold color still reads under the scene's point lights.
+  var goldMat = new THREE.MeshPhysicalMaterial({
+    color: 0xd4af37, roughness: 0.25, metalness: 0.75
+  });
+  var handle = new THREE.Mesh(handleGeo, goldMat);
   handle.castShadow = true;
   group.add(handle);
 

@@ -8,17 +8,60 @@ var canvas = document.getElementById("beansCanvas");
 
 if (canvas) initScene(canvas, reduceMotion);
 
+// Procedural roast-skin bump map: real beans have a mottled, slightly
+// wrinkled surface, not a smooth plastic one. No texture asset exists for
+// this (nothing in the project's skills ships bean photos/normal maps), so
+// this fakes the height variation with layered soft noise blotches.
+function makeRoastBumpTexture() {
+  var size = 256;
+  var c = document.createElement("canvas");
+  c.width = c.height = size;
+  var ctx = c.getContext("2d");
+  ctx.fillStyle = "#808080";
+  ctx.fillRect(0, 0, size, size);
+  for (var i = 0; i < 260; i++) {
+    var r = 3 + Math.random() * 10;
+    var x = Math.random() * size;
+    var y = Math.random() * size;
+    var v = Math.floor(90 + Math.random() * 90);
+    var g = ctx.createRadialGradient(x, y, 0, x, y, r);
+    g.addColorStop(0, "rgba(" + v + "," + v + "," + v + ",0.55)");
+    g.addColorStop(1, "rgba(" + v + "," + v + "," + v + ",0)");
+    ctx.fillStyle = g;
+    ctx.beginPath();
+    ctx.arc(x, y, r, 0, Math.PI * 2);
+    ctx.fill();
+  }
+  var tex = new THREE.CanvasTexture(c);
+  tex.wrapS = tex.wrapT = THREE.RepeatWrapping;
+  tex.needsUpdate = true;
+  return tex;
+}
+
 function makeBeanMesh(material, creaseMaterial) {
   var bean = new THREE.Group();
 
-  var body = new THREE.Mesh(new THREE.SphereGeometry(0.5, 18, 14), material);
+  // Slightly asymmetric ellipsoid (real beans aren't perfectly smooth ovals)
+  var bodyGeo = new THREE.SphereGeometry(0.5, 24, 18);
+  var pos = bodyGeo.attributes.position;
+  for (var i = 0; i < pos.count; i++) {
+    var nx = pos.getX(i), ny = pos.getY(i), nz = pos.getZ(i);
+    var bulge = 1 + 0.05 * Math.sin(ny * 6) * Math.max(0, nz);
+    pos.setX(i, nx * bulge);
+    pos.setZ(i, nz * bulge);
+  }
+  bodyGeo.computeVertexNormals();
+
+  var body = new THREE.Mesh(bodyGeo, material);
   body.scale.set(1, 0.66, 0.8);
   body.castShadow = true;
   bean.add(body);
 
-  var crease = new THREE.Mesh(new THREE.CapsuleGeometry(0.05, 0.5, 4, 8), creaseMaterial);
+  // The center crease — pinched deeper via a thin dark groove plus a
+  // slightly recessed highlight-breaking capsule along the flat face.
+  var crease = new THREE.Mesh(new THREE.CapsuleGeometry(0.045, 0.48, 4, 8), creaseMaterial);
   crease.rotation.z = Math.PI / 2;
-  crease.position.z = 0.4;
+  crease.position.z = 0.39;
   bean.add(crease);
 
   return bean;
@@ -69,19 +112,28 @@ function initScene(canvas, reduceMotion) {
   floor.receiveShadow = true;
   scene.add(floor);
 
-  var beanMat = new THREE.MeshPhysicalMaterial({
-    color: 0x5a3a22, roughness: 0.38, metalness: 0.0, clearcoat: 0.45, clearcoatRoughness: 0.3
-  });
-  var beanMatDark = new THREE.MeshPhysicalMaterial({
-    color: 0x432a18, roughness: 0.4, metalness: 0.0, clearcoat: 0.4, clearcoatRoughness: 0.3
-  });
-  var creaseMat = new THREE.MeshStandardMaterial({ color: 0x241408, roughness: 0.7 });
+  var roastBump = makeRoastBumpTexture();
+  var creaseMat = new THREE.MeshStandardMaterial({ color: 0x1c0f06, roughness: 0.75 });
 
   var BEAN_COUNT = 8;
   var beans = [];
+  // Roasted beans vary bean-to-bean, not just in two fixed shades — random
+  // walk the base roast color slightly for each one, oily sheen on some.
+  var roastColors = [0x6b4527, 0x5a3a22, 0x4d3019, 0x432a18, 0x3a2314];
 
   for (var i = 0; i < BEAN_COUNT; i++) {
-    var mat = i % 2 === 0 ? beanMat : beanMatDark;
+    var baseColor = new THREE.Color(roastColors[i % roastColors.length]);
+    baseColor.offsetHSL(0, 0, (Math.random() - 0.5) * 0.05);
+    var oily = Math.random() < 0.4;
+    var mat = new THREE.MeshPhysicalMaterial({
+      color: baseColor,
+      roughness: oily ? 0.28 : 0.5,
+      metalness: 0.0,
+      clearcoat: oily ? 0.7 : 0.3,
+      clearcoatRoughness: oily ? 0.15 : 0.35,
+      bumpMap: roastBump,
+      bumpScale: 0.012
+    });
     var mesh = makeBeanMesh(mat, creaseMat);
 
     var startX = (Math.random() - 0.5) * 4.2;
@@ -156,10 +208,14 @@ function initScene(canvas, reduceMotion) {
       window.setTimeout(bindScrollTrigger, 150);
       return;
     }
+    // Bound to the panel itself, not the whole (taller) story section —
+    // otherwise the fall keeps progressing on a range longer than the
+    // panel's own transit through the viewport, and never visibly finishes
+    // before it scrolls out of view.
     window.ScrollTrigger.create({
-      trigger: "#story",
-      start: "top 85%",
-      end: "bottom 40%",
+      trigger: container,
+      start: "top 90%",
+      end: "bottom 30%",
       scrub: 0.6,
       onUpdate: function (self) {
         progress = self.progress;
