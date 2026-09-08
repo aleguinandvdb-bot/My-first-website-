@@ -70,14 +70,26 @@ export function makeSaucerMesh(color) {
 // A smooth D-shaped handle along a curve, attached to the shoulder and
 // belly of the new wider profile.
 export function makeHandleMesh(color, metal) {
+  /* TubeGeometry never caps its ends — they're open, hollow rings. The
+     outer wall at the top attachment height (y≈0.42) sits at radius
+     ≈1.01, and a curve endpoint at x=0.98 only embeds about a third of
+     the tube's own 0.095 radius into it, leaving most of that open ring
+     exposed just past the surface: a visible gap, not a flush joint. The
+     two extra points below bury each real endpoint mid-wall (radius
+     ≈0.86–0.93, between the inner and outer surfaces there) so the open
+     ends are hidden inside solid material; the curve then passes through
+     the original attachment points on its way back out, keeping the same
+     visible handle shape. */
   var curve = new THREE.CatmullRomCurve3([
+    new THREE.Vector3(0.90, 0.40, 0),
     new THREE.Vector3(0.98, 0.42, 0),
     new THREE.Vector3(1.42, 0.34, 0),
     new THREE.Vector3(1.56, 0.02, 0),
     new THREE.Vector3(1.40, -0.28, 0),
-    new THREE.Vector3(0.90, -0.24, 0)
+    new THREE.Vector3(0.90, -0.24, 0),
+    new THREE.Vector3(0.82, -0.22, 0)
   ]);
-  var geo = new THREE.TubeGeometry(curve, 40, 0.095, 14, false);
+  var geo = new THREE.TubeGeometry(curve, 48, 0.095, 14, false);
   var mat = metal
     ? new THREE.MeshPhysicalMaterial({ color: color, roughness: 0.22, metalness: 1, envMapIntensity: 1.4 })
     : new THREE.MeshPhysicalMaterial({ color: color, roughness: 0.2, metalness: 0.0, clearcoat: 0.85, clearcoatRoughness: 0.1 });

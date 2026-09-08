@@ -34,15 +34,15 @@ function initScene(canvas) {
   var scene = new THREE.Scene();
   scene.environment = getStudioEnvironment(renderer);
 
-  var camera = new THREE.PerspectiveCamera(32, 1, 0.1, 50);
-  /* Angled down enough to see the latte art on the coffee's surface, but
-     not so steep that the cup — much taller than the flat saucer beneath
-     it — visually "leans forward" off the saucer's center under
-     perspective. Pulled back a bit further than a first pass for the
-     same reason: more steepness needs more distance to keep that in
-     check. */
-  camera.position.set(0, 3.5, 7.4);
-  camera.lookAt(0, -0.1, 0);
+  var camera = new THREE.PerspectiveCamera(36, 1, 0.1, 50);
+  /* Framing solved by projecting the saucer's own near/far edges through
+     the camera and checking the resulting margins numerically (not by
+     eye) — the earlier angle put the saucer's near edge within 35px of
+     the panel's bottom edge while leaving 228px of dead space above it.
+     Aiming further below the cup, at the saucer's own level, rather than
+     just reducing the downward angle, is what actually balances that. */
+  camera.position.set(0, 5.8, 6.75);
+  camera.lookAt(0, -1.5, 0);
 
   // ---- Lighting: warm, café-glow ----
   var hemi = new THREE.HemisphereLight(0xfff1de, 0x6b4a33, 0.9);
