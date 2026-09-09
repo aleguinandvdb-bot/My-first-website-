@@ -15,7 +15,7 @@ GitHub Pages URL — no separate hosting needed.
 
 All real:
 
-- **Phone** `(667) 324-7743` → `tel:+16673247743` (header drawer, hero, visit section, footer, floating call button).
+- **Phone** `(301) 233-1654` → `tel:+13012331654` (header drawer, hero, visit section, footer, floating call button).
 - **Email** `chateauderockvillecafe@gmail.com` (footer).
 - **Address** The Shops at Congressional Village, 1701 Rockville Pike, Suite A-11, Rockville, MD 20852 (visit section, footer, "Get Directions" map-search link).
 - **DoorDash** pickup/delivery — direct store link (nav drawer, visit section, footer).
