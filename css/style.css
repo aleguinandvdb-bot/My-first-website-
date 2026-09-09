@@ -54,6 +54,9 @@ input, select { font: inherit; }
   --font-display: "Fraunces", ui-serif, Georgia, serif;
   --font-body:    "IBM Plex Sans", ui-sans-serif, system-ui, sans-serif;
   --font-outlier: "Geist Mono", ui-monospace, "SFMono-Regular", monospace;
+  /* The heavy condensed grotesque on the café's own storefront sign. Used
+     only for the CHATEAU wordmark, on the page and on the cup. */
+  --font-mark:    "Anton", "Arial Narrow", ui-sans-serif, system-ui, sans-serif;
 
   --text-xs:   0.64rem;
   --text-sm:   0.8rem;
@@ -346,10 +349,10 @@ section[id], footer[id] { scroll-margin-top: var(--banner-height); }
   .chateau-mark { display: flex; }
 }
 .chateau-mark__name {
-  font-family: var(--font-body);
-  font-weight: 700;
-  font-size: 0.95rem;
-  letter-spacing: 0.10em;
+  font-family: var(--font-mark);
+  font-weight: 400; /* Anton ships one weight; it is already heavy */
+  font-size: 1.15rem;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
   color: var(--color-ink);
 }
@@ -743,9 +746,18 @@ section[id], footer[id] { scroll-margin-top: var(--banner-height); }
    MENU — tabular spec sheet, not icon cards
    ============================================================ */
 .menu__categories {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
   gap: var(--space-2xl);
+}
+/* The board carries four drink categories on top of the food, which runs
+   far too long as one column on a wide screen. */
+@media (min-width: 60rem) {
+  .menu__categories {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: var(--space-3xl, var(--space-2xl));
+    align-items: start;
+  }
 }
 
 .menu-cat__title {
@@ -783,6 +795,20 @@ section[id], footer[id] { scroll-margin-top: var(--banner-height); }
   font-size: var(--text-sm);
   max-width: 56ch;
 }
+/* "hot only" / "iced only" — the board's own qualifiers, kept beside the
+   name rather than dropped to their own line. */
+.menu-row__note {
+  font-family: var(--font-outlier);
+  font-weight: 500;
+  font-style: normal;
+  font-size: 0.68em;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: var(--color-muted);
+}
+.menu-row__note::before { content: "("; }
+.menu-row__note::after { content: ")"; }
 
 /* ============================================================
    THE PROCESS — two scroll-scrubbed 3D stages

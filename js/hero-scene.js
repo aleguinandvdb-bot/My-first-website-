@@ -42,8 +42,12 @@ function initScene(canvas) {
      back indefinitely to chase perfect balance — that made the cup look
      small and distant. This is the closest position found that still
      keeps the top/bottom margin difference under ~35px. */
-  camera.position.set(0, 4.44, 6.12);
-  camera.lookAt(0, -1.12, 0);
+  var LATTE_VIEW = {
+    pos: new THREE.Vector3(0, 4.44, 6.12),
+    target: new THREE.Vector3(0, -1.12, 0)
+  };
+  camera.position.copy(LATTE_VIEW.pos);
+  camera.lookAt(LATTE_VIEW.target);
 
   // ---- Lighting: warm, café-glow ----
   var hemi = new THREE.HemisphereLight(0xfff1de, 0x6b4a33, 0.9);
@@ -160,28 +164,113 @@ function initScene(canvas) {
   latte.add(steam);
 
   // ---- The rest of the drinks board, one shown at a time ----
-  var stages = [{ group: latte, key: "hero.drinkLatte", name: "Latte" }];
+  var stages = [{ group: latte, key: "hero.drinkLatte", name: "Latte", view: LATTE_VIEW, fit: false }];
   DRINKS.forEach(function (d) {
     var mesh = makeDrinkMesh(d);
-    /* The camera is fixed on the latte's wide saucer, so a narrow cup placed
-       by the same rules reads as a toy floating in an empty panel. Scale and
-       offset were solved the same way the camera was — by projecting the
-       cup's own lid and near lip and searching for the pair that balances
-       the panel margins — landing on 133px top and bottom, against the
-       saucer's own 127/143. */
-    mesh.scale.setScalar(1.08);
-    mesh.position.y = -1.50;
     mesh.visible = false;
     group.add(mesh);
-    stages.push({ group: mesh, key: d.key, name: d.name });
+    stages.push({ group: mesh, key: d.key, name: d.name, view: null, fit: true });
   });
+
+  /* An iced cup is tall and narrow where the latte's saucer is wide and
+     flat. Seen from the saucer's own steep camera it is mostly lid: the
+     view looks down into the dome and the layers — the whole point of the
+     drink — are edge-on and unreadable. So each iced stage carries its own
+     camera, near side-on with just enough tilt to keep the surface visible,
+     at the distance that fits the cup with a margin.
+
+     The distance is measured off the object's real bounds rather than
+     hand-tuned, so a straw or a cream swirl re-frames itself instead of
+     being clipped, and it is re-measured on resize because the panel's
+     aspect decides whether height or width is the binding constraint.
+
+     It is solved by iteration rather than in closed form because the answer
+     is a perspective one: the cup's near-bottom edge is closer to a tilted
+     camera than its far-top edge, so it projects further out, and a formula
+     that only balances world-space offsets leaves the base clipped. Each
+     pass reprojects the silhouette, slides the look-at point to centre what
+     it sees, and rescales the distance by how far off the fit is. */
+  var ICED_ELEVATION = 0.27; // radians above the cup's own centre
+  var ICED_MARGIN = 1.10;
+  var probe = new THREE.PerspectiveCamera(camera.fov, 1, 0.01, 100);
+
+  function fitView(obj) {
+    var keepX = group.rotation.x, keepY = group.rotation.y;
+    group.rotation.set(0, 0, 0);
+    group.updateMatrixWorld(true);
+    var box = new THREE.Box3().setFromObject(obj);
+    group.rotation.set(keepX, keepY, 0);
+    group.updateMatrixWorld(true);
+    if (box.isEmpty()) return LATTE_VIEW;
+
+    // The cup is a solid of revolution about the group's own axis, so its
+    // horizontal half-extent is the radius it sweeps under the idle spin.
+    // Fit the whole swept cylinder and no angle of the turn can clip it.
+    var radius = Math.max(
+      Math.abs(box.min.x), Math.abs(box.max.x),
+      Math.abs(box.min.z), Math.abs(box.max.z)
+    );
+    var pts = [];
+    for (var i = 0; i <= 4; i++) {
+      var py = box.min.y + (box.max.y - box.min.y) * i / 4;
+      for (var a = 0; a < 16; a++) {
+        var th = a / 16 * Math.PI * 2;
+        pts.push(new THREE.Vector3(Math.cos(th) * radius, py, Math.sin(th) * radius));
+      }
+    }
+
+    var tanY = Math.tan(THREE.MathUtils.degToRad(camera.fov) / 2);
+    var goal = 1 / ICED_MARGIN;
+    var targetY = (box.min.y + box.max.y) / 2;
+    var dist = (box.max.y - box.min.y) / tanY;
+    probe.aspect = camera.aspect;
+    probe.updateProjectionMatrix();
+
+    var v = new THREE.Vector3();
+    for (var it = 0; it < 30; it++) {
+      probe.position.set(0, targetY + Math.sin(ICED_ELEVATION) * dist, Math.cos(ICED_ELEVATION) * dist);
+      probe.lookAt(0, targetY, 0);
+      probe.updateMatrixWorld(true);
+      var top = -Infinity, bot = Infinity, wide = 0;
+      for (var p = 0; p < pts.length; p++) {
+        v.copy(pts[p]).project(probe);
+        if (v.y > top) top = v.y;
+        if (v.y < bot) bot = v.y;
+        wide = Math.max(wide, Math.abs(v.x));
+      }
+      var mid = (top + bot) / 2;
+      targetY += mid * dist * tanY;
+      dist *= Math.max(top - mid, mid - bot, wide) / goal;
+    }
+
+    return {
+      pos: new THREE.Vector3(0, targetY + Math.sin(ICED_ELEVATION) * dist, Math.cos(ICED_ELEVATION) * dist),
+      target: new THREE.Vector3(0, targetY, 0)
+    };
+  }
+
+  function stageView(stage) {
+    if (stage.fit && !stage.view) stage.view = fitView(stage.group);
+    return stage.view;
+  }
 
   var current = 0;
   var label = document.getElementById("drinkLabel");
+  var camTarget = LATTE_VIEW.target.clone();
+  var camGoal = LATTE_VIEW.pos.clone();
+  var lookGoal = LATTE_VIEW.target.clone();
 
-  function showDrink(next) {
+  function showDrink(next, snap) {
     current = (next + stages.length) % stages.length;
     for (var s = 0; s < stages.length; s++) stages[s].group.visible = s === current;
+    var view = stageView(stages[current]);
+    camGoal.copy(view.pos);
+    lookGoal.copy(view.target);
+    if (snap) {
+      camera.position.copy(camGoal);
+      camTarget.copy(lookGoal);
+      camera.lookAt(camTarget);
+    }
     if (!label) return;
     // Hand the new name back to the translator rather than writing a
     // language into the DOM: applyLanguage stamps the active code onto
@@ -195,7 +284,7 @@ function initScene(canvas) {
   var nextBtn = document.getElementById("drinkNext");
   if (prevBtn) prevBtn.addEventListener("click", function () { showDrink(current - 1); });
   if (nextBtn) nextBtn.addEventListener("click", function () { showDrink(current + 1); });
-  showDrink(0);
+  showDrink(0, true);
 
   // ---- Resize handling ----
   function resize() {
@@ -204,8 +293,15 @@ function initScene(canvas) {
     renderer.setSize(w, h, false);
     camera.aspect = w / h;
     camera.updateProjectionMatrix();
+    // A fitted view is only valid for the aspect it was solved against.
+    for (var s = 0; s < stages.length; s++) if (stages[s].fit) stages[s].view = null;
+    var view = stageView(stages[current]);
+    camGoal.copy(view.pos);
+    lookGoal.copy(view.target);
   }
   resize();
+  camera.position.copy(camGoal);
+  camTarget.copy(lookGoal);
 
   var ro = new ResizeObserver(resize);
   ro.observe(container);
@@ -241,6 +337,13 @@ function initScene(canvas) {
     baseRotY += dt * 0.18;
     group.rotation.y += (baseRotY + targetRotY - group.rotation.y) * 0.06;
     group.rotation.x += (targetRotX - group.rotation.x) * 0.06;
+
+    // Ease between stage cameras. Rate is derived from dt so the glide takes
+    // the same time whether the panel is running at 60fps or 120.
+    var ease = 1 - Math.pow(0.0015, dt);
+    camera.position.lerp(camGoal, ease);
+    camTarget.lerp(lookGoal, ease);
+    camera.lookAt(camTarget);
 
     var pos = steamGeo.attributes.position;
     for (var i = 0; i < STEAM_COUNT; i++) {

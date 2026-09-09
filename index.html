@@ -12,7 +12,7 @@
 <meta name="theme-color" content="#eef7f9" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=IBM+Plex+Sans:wght@400;500;600&family=Geist+Mono:wght@500&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=IBM+Plex+Sans:wght@400;500;600&family=Geist+Mono:wght@500&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
@@ -106,9 +106,9 @@
       </span>
     </a>
 
-    <span class="chateau-mark" role="img" aria-label="Chateau Bakery and Coffee">
+    <span class="chateau-mark" role="img" aria-label="Chateau — Bakery, Cafe, Dessert">
       <span class="chateau-mark__name">Chateau</span>
-      <span class="chateau-mark__sub">Bakery &amp; Coffee</span>
+      <span class="chateau-mark__sub">Bakery &middot; Cafe &middot; Dessert</span>
     </span>
 
     <div class="header__controls">
@@ -244,27 +244,153 @@
 
       <div class="menu__categories">
         <div class="menu-cat" data-reveal>
-          <h3 class="menu-cat__title" data-i18n="menu.cat1">Espresso &amp; Coffee</h3>
+          <h3 class="menu-cat__title" data-i18n="menu.cat1">Coffee</h3>
           <ul>
             <li><div class="menu-row">
-              <span class="menu-row__name">Café au Château</span>
-              <span class="menu-row__price">$4.50</span>
-              <span class="menu-row__desc" data-i18n="menu.item1">House blend, steamed milk.</span>
+              <span class="menu-row__name">Americano</span>
+              <span class="menu-row__price">$3.95</span>
+            </div></li>
+            <li><div class="menu-row">
+              <span class="menu-row__name">Cafe Latte</span>
+              <span class="menu-row__price">$4.75</span>
+            </div></li>
+            <li><div class="menu-row">
+              <span class="menu-row__name">Cappuccino <em class="menu-row__note" data-i18n="menu.hotOnly">hot only</em></span>
+              <span class="menu-row__price">$4.25</span>
             </div></li>
             <li><div class="menu-row">
               <span class="menu-row__name">Espresso</span>
               <span class="menu-row__price">$3.25</span>
-              <span class="menu-row__desc" data-i18n="menu.item2">Double shot, single-origin.</span>
             </div></li>
             <li><div class="menu-row">
-              <span class="menu-row__name">Café Crème</span>
+              <span class="menu-row__name">Espresso Macchiato</span>
+              <span class="menu-row__price">$4.25</span>
+            </div></li>
+            <li><div class="menu-row">
+              <span class="menu-row__name">Cortado</span>
+              <span class="menu-row__price">$3.95</span>
+            </div></li>
+            <li><div class="menu-row">
+              <span class="menu-row__name">Cafe Au Lait <em class="menu-row__note" data-i18n="menu.hotOnly">hot only</em></span>
+              <span class="menu-row__price">$4.25</span>
+            </div></li>
+            <li><div class="menu-row">
+              <span class="menu-row__name">Flat White</span>
               <span class="menu-row__price">$4.75</span>
-              <span class="menu-row__desc" data-i18n="menu.item3">Espresso, foamed milk.</span>
             </div></li>
             <li><div class="menu-row">
-              <span class="menu-row__name">Golden Turmeric Latte</span>
+              <span class="menu-row__name">Drip Coffee <em class="menu-row__note" data-i18n="menu.hotOnly">hot only</em></span>
+              <span class="menu-row__price">$3.25</span>
+            </div></li>
+          </ul>
+        </div>
+
+        <div class="menu-cat" data-reveal>
+          <h3 class="menu-cat__title" data-i18n="menu.cat5">Café Latte Specialty</h3>
+          <ul>
+            <li><div class="menu-row">
+              <span class="menu-row__name">Rose Latte</span>
               <span class="menu-row__price">$5.25</span>
-              <span class="menu-row__desc" data-i18n="menu.item4">Oat milk, honey.</span>
+            </div></li>
+            <li><div class="menu-row">
+              <span class="menu-row__name">Salty Latte</span>
+              <span class="menu-row__price">$5.25</span>
+            </div></li>
+            <li><div class="menu-row">
+              <span class="menu-row__name">Tiramisu Latte</span>
+              <span class="menu-row__price">$5.75</span>
+            </div></li>
+            <li><div class="menu-row">
+              <span class="menu-row__name">Double Mocha Latte</span>
+              <span class="menu-row__price">$5.75</span>
+            </div></li>
+            <li><div class="menu-row">
+              <span class="menu-row__name">Hazelnut Mocha</span>
+              <span class="menu-row__price">$5.75</span>
+            </div></li>
+            <li><div class="menu-row">
+              <span class="menu-row__name">Mint Mocha</span>
+              <span class="menu-row__price">$5.75</span>
+            </div></li>
+            <li><div class="menu-row">
+              <span class="menu-row__name">Butterscotch Latte</span>
+              <span class="menu-row__price">$5.25</span>
+            </div></li>
+            <li><div class="menu-row">
+              <span class="menu-row__name">Periwinkle Latte</span>
+              <span class="menu-row__price">$5.25</span>
+            </div></li>
+          </ul>
+        </div>
+
+        <div class="menu-cat" data-reveal>
+          <h3 class="menu-cat__title" data-i18n="menu.cat6">Specialty Coffee</h3>
+          <ul>
+            <li><div class="menu-row">
+              <span class="menu-row__name">Cafe Saigon <em class="menu-row__note" data-i18n="menu.icedOnly">iced only</em></span>
+              <span class="menu-row__price">$5.45</span>
+            </div></li>
+            <li><div class="menu-row">
+              <span class="menu-row__name">Chateauccino <em class="menu-row__note" data-i18n="menu.icedOnly">iced only</em></span>
+              <span class="menu-row__price">$6.95</span>
+            </div></li>
+            <li><div class="menu-row">
+              <span class="menu-row__name">Crème Brûlée Cappuccino <em class="menu-row__note" data-i18n="menu.hotOnly">hot only</em></span>
+              <span class="menu-row__price">$6.45</span>
+            </div></li>
+            <li><div class="menu-row">
+              <span class="menu-row__name">Espresso Lemonade <em class="menu-row__note" data-i18n="menu.icedOnly">iced only</em></span>
+              <span class="menu-row__price">$4.95</span>
+            </div></li>
+            <li><div class="menu-row">
+              <span class="menu-row__name">Dirty Chai</span>
+              <span class="menu-row__price">$5.45</span>
+            </div></li>
+            <li><div class="menu-row">
+              <span class="menu-row__name">Caramel Macchiato</span>
+              <span class="menu-row__price">$5.45</span>
+            </div></li>
+            <li><div class="menu-row">
+              <span class="menu-row__name">Shaken Espresso</span>
+              <span class="menu-row__price">$5.45</span>
+            </div></li>
+          </ul>
+        </div>
+
+        <div class="menu-cat" data-reveal>
+          <h3 class="menu-cat__title" data-i18n="menu.cat7">Non-Coffee</h3>
+          <ul>
+            <li><div class="menu-row">
+              <span class="menu-row__name">Pistachio Latte</span>
+              <span class="menu-row__price">$6.95</span>
+            </div></li>
+            <li><div class="menu-row">
+              <span class="menu-row__name">Real Dark Chocolate</span>
+              <span class="menu-row__price">$6.45</span>
+            </div></li>
+            <li><div class="menu-row">
+              <span class="menu-row__name">Chai Latte</span>
+              <span class="menu-row__price">$5.45</span>
+            </div></li>
+            <li><div class="menu-row">
+              <span class="menu-row__name">Chai Strawberry <em class="menu-row__note" data-i18n="menu.icedOnly">iced only</em></span>
+              <span class="menu-row__price">$5.95</span>
+            </div></li>
+            <li><div class="menu-row">
+              <span class="menu-row__name">Matcha Latte</span>
+              <span class="menu-row__price">$6.25</span>
+            </div></li>
+            <li><div class="menu-row">
+              <span class="menu-row__name">Mango Matcha</span>
+              <span class="menu-row__price">$5.95</span>
+            </div></li>
+            <li><div class="menu-row">
+              <span class="menu-row__name">Strawberry Matcha <em class="menu-row__note" data-i18n="menu.icedOnly">iced only</em></span>
+              <span class="menu-row__price">$5.95</span>
+            </div></li>
+            <li><div class="menu-row">
+              <span class="menu-row__name">London Fog <em class="menu-row__note" data-i18n="menu.londonFog">Earl Grey tea latte</em></span>
+              <span class="menu-row__price">$6.95</span>
             </div></li>
           </ul>
         </div>
