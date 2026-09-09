@@ -16,27 +16,27 @@ import { getStudioEnvironment } from "./studio-env.js";
 
 var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-/* A single coffee grain: an opaque round particle, lit from the upper
-   left so a bed of them reads as texture rather than flat brown dots. */
-function makeGrainTexture() {
-  var s = 64;
-  var c = document.createElement("canvas");
-  c.width = c.height = s;
-  var ctx = c.getContext("2d");
-  var g = ctx.createRadialGradient(s * 0.36, s * 0.33, s * 0.04, s / 2, s / 2, s / 2);
-  g.addColorStop(0, "#6b4c33");
-  g.addColorStop(0.55, "#402813");
-  g.addColorStop(1, "#22150a");
-  ctx.beginPath();
-  ctx.arc(s / 2, s / 2, s / 2 - 1, 0, Math.PI * 2);
-  ctx.fillStyle = g;
-  ctx.fill();
-  var tex = new THREE.CanvasTexture(c);
-  // Canvas pixels are sRGB; untagged they'd be read as linear and the
-  // grounds would wash out to pale grey instead of roasted brown.
-  tex.colorSpace = THREE.SRGBColorSpace;
-  tex.needsUpdate = true;
-  return tex;
+/* One irregular chip, shared by every ground instance. An icosahedron with
+   its corners knocked out of true reads as a fractured grain rather than a
+   bead; the jitter is keyed on the original corner position because
+   IcosahedronGeometry is non-indexed, and jittering each face's copy
+   independently would tear the faces apart. */
+function makeChipGeometry() {
+  var geo = new THREE.IcosahedronGeometry(1, 0);
+  var pos = geo.attributes.position;
+  var jitter = {};
+  for (var i = 0; i < pos.count; i++) {
+    var x = pos.getX(i), y = pos.getY(i), z = pos.getZ(i);
+    var key = x.toFixed(3) + "," + y.toFixed(3) + "," + z.toFixed(3);
+    var j = jitter[key] || (jitter[key] = [
+      0.60 + Math.random() * 0.80,
+      0.60 + Math.random() * 0.80,
+      0.60 + Math.random() * 0.80
+    ]);
+    pos.setXYZ(i, x * j[0], y * j[1], z * j[2]);
+  }
+  geo.computeVertexNormals();
+  return geo;
 }
 
 function makeSoftDotTexture() {
@@ -395,10 +395,14 @@ function initGrinder(canvas) {
   }
 
   /* --- Grounds accumulating in the basket.
-     Sorted bottom-up, because setDrawRange reveals points in buffer order:
-     unsorted, a partial range scatters grains through the whole volume and
-     reads as noise instead of a bed of coffee filling from the floor. */
-  var GRAIN_COUNT = 1500;
+     Real grounds are angular fragments across a wide spread of sizes and
+     roast tones, so these are instanced chips with per-grain rotation,
+     non-uniform scale and colour, lit by the scene — flat round sprites all
+     the same size read as gravel. Sorted bottom-up, because the fill
+     reveals instances in buffer order: unsorted, a partial count scatters
+     grains through the whole volume and reads as noise instead of a bed of
+     coffee filling from the floor. */
+  var GRAIN_COUNT = 2600;
   var GRAIN_FLOOR = -0.95, GRAIN_TOP = -0.66;
   var grainPts = [];
   for (var g = 0; g < GRAIN_COUNT; g++) {
@@ -412,19 +416,34 @@ function initGrinder(canvas) {
     grainPts.push([Math.cos(ga) * gr, gy + lift, Math.sin(ga) * gr]);
   }
   grainPts.sort(function (p, q) { return p[1] - q[1]; });
-  var grainGeo = new THREE.BufferGeometry();
-  var grainPos = new Float32Array(GRAIN_COUNT * 3);
+
+  var grains = new THREE.InstancedMesh(
+    makeChipGeometry(),
+    new THREE.MeshStandardMaterial({ roughness: 0.95, metalness: 0.0, flatShading: true }),
+    GRAIN_COUNT
+  );
+  var gm = new THREE.Matrix4(), gq = new THREE.Quaternion(), ge = new THREE.Euler();
+  var gp = new THREE.Vector3(), gs = new THREE.Vector3(), gc = new THREE.Color();
   for (var gi = 0; gi < GRAIN_COUNT; gi++) {
-    grainPos[gi * 3] = grainPts[gi][0];
-    grainPos[gi * 3 + 1] = grainPts[gi][1];
-    grainPos[gi * 3 + 2] = grainPts[gi][2];
+    gp.set(grainPts[gi][0], grainPts[gi][1], grainPts[gi][2]);
+    ge.set(Math.random() * Math.PI * 2, Math.random() * Math.PI * 2, Math.random() * Math.PI * 2);
+    gq.setFromEuler(ge);
+    // Squared random: mostly fines, a scatter of boulders — a real grind's
+    // particle spread, not one uniform size.
+    var sc = 0.013 + Math.random() * Math.random() * 0.021;
+    gs.set(sc * (0.7 + Math.random() * 0.7), sc * (0.55 + Math.random() * 0.6), sc * (0.7 + Math.random() * 0.7));
+    gm.compose(gp, gq, gs);
+    grains.setMatrixAt(gi, gm);
+    // Roast tones: mostly near-black, with pale fines catching the light.
+    var tone = Math.random();
+    gc.setHSL(0.075, 0.46 - tone * 0.14, tone < 0.16 ? 0.29 + Math.random() * 0.11 : 0.09 + Math.random() * 0.09);
+    grains.setColorAt(gi, gc);
   }
-  grainGeo.setAttribute("position", new THREE.BufferAttribute(grainPos, 3));
-  grainGeo.setDrawRange(0, 0);
-  var grains = new THREE.Points(grainGeo, new THREE.PointsMaterial({
-    size: 0.055, sizeAttenuation: true,
-    map: makeGrainTexture(), alphaTest: 0.5, transparent: false
-  }));
+  grains.instanceMatrix.needsUpdate = true;
+  grains.instanceColor.needsUpdate = true;
+  grains.castShadow = true;
+  grains.receiveShadow = true;
+  grains.count = 0;
   group.add(grains);
 
   group.scale.setScalar(0.82);
@@ -447,7 +466,7 @@ function initGrinder(canvas) {
   function resetGrinder() {
     state.grinding = false;
     state.fill = 0;
-    grainGeo.setDrawRange(0, 0);
+    grains.count = 0;
     resetBeans();
   }
 
@@ -481,7 +500,7 @@ function initGrinder(canvas) {
   if (reduceMotion) {
     // Settle the pile without animating, then show a full basket.
     for (var w = 0; w < 240; w++) stepBeans(1 / 60, false);
-    grainGeo.setDrawRange(0, GRAIN_COUNT);
+    grains.count = GRAIN_COUNT;
     renderer.render(scene, camera);
     if (button) button.disabled = true;
     return;
@@ -521,7 +540,7 @@ function initGrinder(canvas) {
     }
 
     stepBeans(dt, state.grinding);
-    grainGeo.setDrawRange(0, Math.floor(GRAIN_COUNT * state.fill));
+    grains.count = Math.floor(GRAIN_COUNT * state.fill);
     renderer.render(scene, camera);
   }
   watchVisibility(state, clock, animate);

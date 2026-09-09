@@ -131,7 +131,9 @@ function initScene(canvas) {
     var angle = Math.random() * Math.PI * 2;
     var radius = Math.random() * 0.55;
     positions[i * 3 + 0] = Math.cos(angle) * radius;
-    positions[i * 3 + 1] = 0.6 + Math.random() * 1.5;
+    // Start above the rim (0.64): these are large additive sprites, and
+    // spawning them at the coffee surface washes the latte art out.
+    positions[i * 3 + 1] = 0.95 + Math.random() * 1.35;
     positions[i * 3 + 2] = Math.sin(angle) * radius * 0.6;
     seeds[i] = Math.random();
   }
@@ -201,7 +203,7 @@ function initScene(canvas) {
       var speed = 0.35 + seed * 0.25;
       var y = pos.getY(i) + dt * speed;
       if (y > 2.4) {
-        y = 0.6;
+        y = 0.95;
       }
       var wobble = Math.sin(t * (0.8 + seed) + seed * 10) * 0.004;
       pos.setY(i, y);

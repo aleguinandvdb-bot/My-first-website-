@@ -70,24 +70,25 @@ export function makeSaucerMesh(color) {
 // A smooth D-shaped handle along a curve, attached to the shoulder and
 // belly of the new wider profile.
 export function makeHandleMesh(color, metal) {
-  /* TubeGeometry never caps its ends — they're open, hollow rings. The
-     outer wall at the top attachment height (y≈0.42) sits at radius
-     ≈1.01, and a curve endpoint at x=0.98 only embeds about a third of
-     the tube's own 0.095 radius into it, leaving most of that open ring
-     exposed just past the surface: a visible gap, not a flush joint. The
-     two extra points below bury each real endpoint mid-wall (radius
-     ≈0.86–0.93, between the inner and outer surfaces there) so the open
-     ends are hidden inside solid material; the curve then passes through
-     the original attachment points on its way back out, keeping the same
-     visible handle shape. */
+  /* TubeGeometry never caps its ends — they're open rings, so an endpoint
+     that stops short of solid material shows as a floating gap. The lower
+     attachment is the trap: this cup tucks sharply in toward its narrow
+     foot, so at y=-0.22 the wall only spans radius 0.65..0.72 and the old
+     endpoint at x=0.82 hung clear outside the cup altogether.
+
+     Both ends now sit *inside the hollow interior* (radius below the inner
+     wall), which is hidden by the opaque wall from the side and by the
+     coffee disc from above, and the lower attachment has moved up to
+     y=-0.05 where the body is still wide. Verified by projecting each end
+     cap's rim against the lathe profile rather than by eye. */
   var curve = new THREE.CatmullRomCurve3([
-    new THREE.Vector3(0.90, 0.40, 0),
-    new THREE.Vector3(0.98, 0.42, 0),
-    new THREE.Vector3(1.42, 0.34, 0),
-    new THREE.Vector3(1.56, 0.02, 0),
-    new THREE.Vector3(1.40, -0.28, 0),
-    new THREE.Vector3(0.90, -0.24, 0),
-    new THREE.Vector3(0.82, -0.22, 0)
+    new THREE.Vector3(0.72, 0.42, 0),   // buried in the hollow interior
+    new THREE.Vector3(1.01, 0.42, 0),   // exits through the outer wall
+    new THREE.Vector3(1.42, 0.36, 0),
+    new THREE.Vector3(1.55, 0.14, 0),
+    new THREE.Vector3(1.40, -0.08, 0),
+    new THREE.Vector3(0.84, -0.05, 0),  // re-enters at the outer wall
+    new THREE.Vector3(0.58, -0.05, 0)   // buried in the hollow interior
   ]);
   var geo = new THREE.TubeGeometry(curve, 48, 0.095, 14, false);
   var mat = metal
