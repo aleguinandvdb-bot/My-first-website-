@@ -330,6 +330,43 @@ section[id], footer[id] { scroll-margin-top: var(--banner-height); }
   margin-block-start: 2px;
 }
 
+/* The café's own CHATEAU mark, set beside the site wordmark. The auto end
+   margin absorbs the row's free space, so this sits against the wordmark
+   instead of being centred by the row's space-between. */
+.chateau-mark {
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  margin-inline-end: auto;
+  padding-inline-start: var(--space-md);
+  border-inline-start: var(--border-hairline);
+  line-height: 1;
+}
+@media (min-width: 48rem) {
+  .chateau-mark { display: flex; }
+}
+.chateau-mark__name {
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 0.95rem;
+  letter-spacing: 0.10em;
+  text-transform: uppercase;
+  color: var(--color-ink);
+}
+.chateau-mark__sub {
+  width: 100%;
+  margin-block-start: 5px;
+  padding-block-start: 5px;
+  border-block-start: 1px solid currentColor;
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 0.5rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  text-align: center;
+  color: var(--color-muted);
+}
+
 .header__controls {
   display: flex;
   align-items: center;
@@ -595,6 +632,55 @@ section[id], footer[id] { scroll-margin-top: var(--banner-height); }
   .hero__visual { background:
       radial-gradient(120% 90% at 78% 15%, oklch(60% 0.09 55 / 0.45), transparent 60%),
       linear-gradient(180deg, var(--color-paper-3), var(--color-paper-2)); }
+  /* Nothing to page through once the canvas is gone. */
+  .drink-nav, .drink-label { display: none; }
+}
+
+/* Drink switcher over the hero canvas */
+.drink-nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 2;
+  display: grid;
+  place-items: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  padding: 0;
+  border: var(--border-hairline);
+  border-radius: 50%;
+  background: oklch(100% 0 0 / 0.7);
+  backdrop-filter: blur(6px);
+  color: var(--color-ink);
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+.drink-nav:hover { background: oklch(100% 0 0 / 0.92); }
+.drink-nav--prev { left: var(--space-sm); }
+.drink-nav--next { right: var(--space-sm); }
+.drink-nav__icon { fill: none; stroke: currentColor; }
+/* The shared sprite chevron points down. */
+.drink-nav--prev .drink-nav__icon { transform: rotate(90deg); }
+.drink-nav--next .drink-nav__icon { transform: rotate(-90deg); }
+
+.drink-label {
+  position: absolute;
+  left: 50%;
+  bottom: var(--space-sm);
+  transform: translateX(-50%);
+  z-index: 2;
+  margin: 0;
+  padding: 0.32rem 0.9rem;
+  border: var(--border-hairline);
+  border-radius: 999px;
+  background: oklch(100% 0 0 / 0.7);
+  backdrop-filter: blur(6px);
+  font-family: var(--font-outlier);
+  font-size: 0.62rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--color-ink);
+  white-space: nowrap;
 }
 
 /* ============================================================

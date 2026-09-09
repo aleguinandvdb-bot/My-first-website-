@@ -402,7 +402,7 @@ function initGrinder(canvas) {
      reveals instances in buffer order: unsorted, a partial count scatters
      grains through the whole volume and reads as noise instead of a bed of
      coffee filling from the floor. */
-  var GRAIN_COUNT = 2600;
+  var GRAIN_COUNT = 4200;
   var GRAIN_FLOOR = -0.95, GRAIN_TOP = -0.66;
   var grainPts = [];
   for (var g = 0; g < GRAIN_COUNT; g++) {
@@ -419,7 +419,9 @@ function initGrinder(canvas) {
 
   var grains = new THREE.InstancedMesh(
     makeChipGeometry(),
-    new THREE.MeshStandardMaterial({ roughness: 0.95, metalness: 0.0, flatShading: true }),
+    // Low env intensity: the studio map plus a 2.2-strength key washes a
+    // rough surface out to gravel grey, and roasted coffee is nearly black.
+    new THREE.MeshStandardMaterial({ roughness: 0.98, metalness: 0.0, flatShading: true, envMapIntensity: 0.3 }),
     GRAIN_COUNT
   );
   var gm = new THREE.Matrix4(), gq = new THREE.Quaternion(), ge = new THREE.Euler();
@@ -428,20 +430,23 @@ function initGrinder(canvas) {
     gp.set(grainPts[gi][0], grainPts[gi][1], grainPts[gi][2]);
     ge.set(Math.random() * Math.PI * 2, Math.random() * Math.PI * 2, Math.random() * Math.PI * 2);
     gq.setFromEuler(ge);
-    // Squared random: mostly fines, a scatter of boulders — a real grind's
-    // particle spread, not one uniform size.
-    var sc = 0.013 + Math.random() * Math.random() * 0.021;
+    /* Squared random: mostly fines, a scatter of boulders — a real grind's
+       particle spread, not one uniform size. Solid chips have to be larger
+       than the flat sprites they replace to read as a full bed: sprites
+       overlapped in screen space and hid the gaps between them. */
+    var sc = 0.016 + Math.random() * Math.random() * 0.024;
     gs.set(sc * (0.7 + Math.random() * 0.7), sc * (0.55 + Math.random() * 0.6), sc * (0.7 + Math.random() * 0.7));
     gm.compose(gp, gq, gs);
     grains.setMatrixAt(gi, gm);
-    // Roast tones: mostly near-black, with pale fines catching the light.
+    // Roast tones: mostly near-black, with a few pale fines catching light.
     var tone = Math.random();
-    gc.setHSL(0.075, 0.46 - tone * 0.14, tone < 0.16 ? 0.29 + Math.random() * 0.11 : 0.09 + Math.random() * 0.09);
+    gc.setHSL(0.072, 0.52 - tone * 0.12, tone < 0.10 ? 0.19 + Math.random() * 0.08 : 0.048 + Math.random() * 0.055);
     grains.setColorAt(gi, gc);
   }
   grains.instanceMatrix.needsUpdate = true;
   grains.instanceColor.needsUpdate = true;
-  grains.castShadow = true;
+  // Receive the basket's shadow, but don't cast: thousands of instances in
+  // the shadow pass buys nothing visible inside an already-shaded basket.
   grains.receiveShadow = true;
   grains.count = 0;
   group.add(grains);

@@ -4,6 +4,7 @@ import * as THREE from "./vendor/three.module.min.js";
 import { getStudioEnvironment } from "./studio-env.js";
 import { makeCupMesh, makeSaucerMesh, makeHandleMesh, CUP_INTERIOR_RADIUS, CUP_RIM_Y } from "./cup-mesh.js";
 import { makeSoftDotTexture, makeLatteArtTexture } from "./latte-art.js";
+import { DRINKS, makeDrinkMesh } from "./drink-mesh.js";
 
 var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 var canvas = document.getElementById("heroCanvas");
@@ -74,6 +75,12 @@ function initScene(canvas) {
   var group = new THREE.Group();
   scene.add(group);
 
+  // The hot latte is one of several drinks the hero can show, so it lives in
+  // its own subgroup that the switcher can hide as a unit — steam included,
+  // since an iced cup has none.
+  var latte = new THREE.Group();
+  group.add(latte);
+
   // ---- Saucer — glazed teal, matching the café's real cup color ----
   // The cup's own foot sits at local y=-0.78 (unmoved, origin-anchored),
   // while the saucer's flat plate top used to land at y=-1.47 with the old
@@ -84,13 +91,13 @@ function initScene(canvas) {
   // stays at the origin).
   var saucer = makeSaucerMesh(0x0d454e);
   saucer.position.y = 0.01;
-  group.add(saucer);
+  latte.add(saucer);
 
   // ---- Cup body — a wide, shallow cappuccino silhouette (foot, belly
   // curve, rolled lip, hollow interior) matching the café's real cup
   // photo, built as one revolved profile shared with the finale scene. ----
   var cup = makeCupMesh(0x0d454e);
-  group.add(cup);
+  latte.add(cup);
 
   // Coffee surface — a real latte-art heart baked into the texture map,
   // matching the reference photo, instead of a flat crema ring.
@@ -101,7 +108,7 @@ function initScene(canvas) {
   coffee.rotation.x = -Math.PI / 2;
   coffee.rotation.z = -0.4;
   coffee.position.y = CUP_RIM_Y - 0.06;
-  group.add(coffee);
+  latte.add(coffee);
 
   // A soft round highlight on the coffee's surface — the "catch light" a real glossy liquid shows
   var sheenMat = new THREE.SpriteMaterial({
@@ -111,12 +118,12 @@ function initScene(canvas) {
   var sheen = new THREE.Sprite(sheenMat);
   sheen.scale.set(0.6, 0.6, 1);
   sheen.position.set(-0.36, coffee.position.y + 0.01, 0.3);
-  group.add(sheen);
+  latte.add(sheen);
 
   // Handle — now that the scene carries a PMREM studio environment, this
   // can be a true metal — it has something real to reflect.
   var handle = makeHandleMesh(0xd4af37, true);
-  group.add(handle);
+  latte.add(handle);
 
   group.position.y = -0.05;
   group.scale.setScalar(0.78);
@@ -150,7 +157,45 @@ function initScene(canvas) {
   });
 
   var steam = new THREE.Points(steamGeo, steamMat);
-  group.add(steam);
+  latte.add(steam);
+
+  // ---- The rest of the drinks board, one shown at a time ----
+  var stages = [{ group: latte, key: "hero.drinkLatte", name: "Latte" }];
+  DRINKS.forEach(function (d) {
+    var mesh = makeDrinkMesh(d);
+    /* The camera is fixed on the latte's wide saucer, so a narrow cup placed
+       by the same rules reads as a toy floating in an empty panel. Scale and
+       offset were solved the same way the camera was — by projecting the
+       cup's own lid and near lip and searching for the pair that balances
+       the panel margins — landing on 133px top and bottom, against the
+       saucer's own 127/143. */
+    mesh.scale.setScalar(1.08);
+    mesh.position.y = -1.50;
+    mesh.visible = false;
+    group.add(mesh);
+    stages.push({ group: mesh, key: d.key, name: d.name });
+  });
+
+  var current = 0;
+  var label = document.getElementById("drinkLabel");
+
+  function showDrink(next) {
+    current = (next + stages.length) % stages.length;
+    for (var s = 0; s < stages.length; s++) stages[s].group.visible = s === current;
+    if (!label) return;
+    // Hand the new name back to the translator rather than writing a
+    // language into the DOM: applyLanguage stamps the active code onto
+    // <html lang>, so re-applying it keeps the label in the reader's language.
+    label.setAttribute("data-i18n", stages[current].key);
+    label.textContent = stages[current].name;
+    if (window.CRCi18n) window.CRCi18n.apply(document.documentElement.lang || "en");
+  }
+
+  var prevBtn = document.getElementById("drinkPrev");
+  var nextBtn = document.getElementById("drinkNext");
+  if (prevBtn) prevBtn.addEventListener("click", function () { showDrink(current - 1); });
+  if (nextBtn) nextBtn.addEventListener("click", function () { showDrink(current + 1); });
+  showDrink(0);
 
   // ---- Resize handling ----
   function resize() {
