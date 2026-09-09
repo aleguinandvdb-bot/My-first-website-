@@ -34,18 +34,15 @@ function initScene(canvas) {
   var scene = new THREE.Scene();
   scene.environment = getStudioEnvironment(renderer);
 
-  var camera = new THREE.PerspectiveCamera(34, 1, 0.1, 50);
-  /* Framing solved by projecting the saucer's own near/far edges through
-     the camera and checking the resulting panel margins numerically. A
-     steeper angle balanced those margins better but made the opaque cup
-     occlude nearly all of the saucer behind it — an effect no camera
-     angle removes entirely (any downward-looking shot of a tall object
-     on a flat plate shows more of the plate in front than behind; that's
-     real occlusion, not a framing bug), but a shallower angle keeps it
-     from being severe. This is the balance point within that shallower
-     range. */
-  camera.position.set(0, 3.5, 9.5);
-  camera.lookAt(0, -1.1, 0);
+  var camera = new THREE.PerspectiveCamera(42, 1, 0.1, 50);
+  /* Framing solved by projecting the saucer's own near/far/left/right
+     edges through the camera and searching for the closest camera that
+     keeps the panel margins within a set tolerance, rather than pulling
+     back indefinitely to chase perfect balance — that made the cup look
+     small and distant. This is the closest position found that still
+     keeps the top/bottom margin difference under ~35px. */
+  camera.position.set(0, 4.44, 6.12);
+  camera.lookAt(0, -1.12, 0);
 
   // ---- Lighting: warm, café-glow ----
   var hemi = new THREE.HemisphereLight(0xfff1de, 0x6b4a33, 0.9);
