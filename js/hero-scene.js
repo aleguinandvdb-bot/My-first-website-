@@ -75,8 +75,15 @@ function initScene(canvas) {
   scene.add(group);
 
   // ---- Saucer — glazed teal, matching the café's real cup color ----
+  // The cup's own foot sits at local y=-0.78 (unmoved, origin-anchored),
+  // while the saucer's flat plate top used to land at y=-1.47 with the old
+  // -0.68 offset — a ~0.69-unit gap that read as the cup floating above
+  // the saucer. Raising the saucer to 0.01 puts the plate's top surface
+  // flush with the cup's foot instead, without touching the cup, coffee,
+  // handle or steam (whose vertical framing was tuned assuming the cup
+  // stays at the origin).
   var saucer = makeSaucerMesh(0x0d454e);
-  saucer.position.y = -0.68;
+  saucer.position.y = 0.01;
   group.add(saucer);
 
   // ---- Cup body — a wide, shallow cappuccino silhouette (foot, belly
@@ -175,16 +182,7 @@ function initScene(canvas) {
   // ---- Animation loop ----
   var clock = new THREE.Clock();
   var running = true;
-  /* Turn the handle to point straight back, away from the camera, so it
-     tucks behind the cup body instead of sticking out to one side. Every
-     angle that showed it — even ones measured to keep the saucer's own
-     left/right edges perfectly even — still put a bright gold lobe on one
-     side of an otherwise round, radially symmetric silhouette, which reads
-     as "off-center" regardless of what the underlying pixel math says.
-     Hiding it removes the asymmetry outright instead of trying to balance
-     it. Mouse parallax still eases around this, so the scene stays
-     interactive. */
-  var baseRotY = Math.PI / 2;
+  var baseRotY = 0;
 
   function animate() {
     if (!running) return;
@@ -193,6 +191,7 @@ function initScene(canvas) {
     var dt = clock.getDelta();
     var t = clock.elapsedTime;
 
+    baseRotY += dt * 0.18;
     group.rotation.y += (baseRotY + targetRotY - group.rotation.y) * 0.06;
     group.rotation.x += (targetRotX - group.rotation.x) * 0.06;
 
