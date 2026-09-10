@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Evil Fantasy Tattoo | Tattoo Studio in Rockville, MD</title>
+    <meta name="description" content="Custom tattoo designs and expert ink work in Rockville, MD. Experienced artists, clean studio, custom consultations. Book your next tattoo.">
+    <style>
+        :root {
+            --color-text: #f5f5f5;
+            --color-text-light: #b0b0b0;
+            --color-accent: #ff6b35;
+            --color-accent-dark: #e55a25;
+            --color-accent-light: #ff8c5a;
+            --color-bg: #0a0a0a;
+            --color-surface: #1a1a1a;
+            --color-surface-2: #2a2a2a;
+            --color-border: #333333;
+            --space-xs: 0.5rem;
+            --space-sm: 1rem;
+            --space-md: 1.5rem;
+            --space-lg: 2rem;
+            --space-xl: 3rem;
+            --font-display: 'Courier New', monospace;
+            --font-body: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            height: 100%;
+            color: var(--color-text);
+            font-family: var(--font-body);
+            line-height: 1.6;
+        }
+
+        body {
+            background-color: var(--color-bg);
+            overflow-x: clip;
+        }
+
+        section {
+            padding: var(--space-lg);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 var(--space-md);
+        }
+
+        /* ============ HEADER ============ */
+        header {
+            background-color: var(--color-surface);
+            border-bottom: 2px solid var(--color-accent);
+            padding: var(--space-md) var(--space-lg);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: var(--font-display);
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--color-accent);
+            letter-spacing: 0.05em;
+        }
+
+        header nav a {
+            color: var(--color-text-light);
+            text-decoration: none;
+            margin-left: var(--space-lg);
+            transition: color 0.3s ease;
+            font-size: 0.9rem;
+        }
+
+        header nav a:hover {
+            color: var(--color-accent);
+        }
+
+        /* ============ HERO ============ */
+        .hero {
+            background: linear-gradient(135deg, #1a1a1a 0%, #0a0a0a 100%);
+            border-bottom: 2px solid var(--color-accent);
+            padding: var(--space-xl) var(--space-lg);
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-family: var(--font-display);
+            font-size: clamp(2rem, 10vw, 3.5rem);
+            margin-bottom: var(--space-md);
+            letter-spacing: 0.1em;
+            color: var(--color-accent);
+            font-weight: 700;
+        }
+
+        .hero p {
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto var(--space-lg);
+            color: var(--color-text-light);
+            line-height: 1.8;
+        }
+
+        .cta-primary {
+            display: inline-block;
+            background-color: var(--color-accent);
+            color: #000;
+            padding: 0.85rem 2rem;
+            border-radius: 0.25rem;
+            text-decoration: none;
+            font-weight: 700;
+            border: 2px solid var(--color-accent);
+            transition: all 0.3s ease;
+            font-size: 1rem;
+            margin-top: var(--space-md);
+            letter-spacing: 0.05em;
+            cursor: pointer;
+        }
+
+        .cta-primary:hover, .cta-primary:focus-visible {
+            background-color: transparent;
+            color: var(--color-accent);
+            outline: none;
+        }
+
+        /* ============ ABOUT ============ */
+        .about {
+            background-color: var(--color-surface);
+            padding: var(--space-xl) var(--space-lg);
+        }
+
+        .about-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .about h2 {
+            font-size: 1.8rem;
+            margin-bottom: var(--space-lg);
+            color: var(--color-accent);
+            font-weight: 600;
+            border-bottom: 2px solid var(--color-accent);
+            padding-bottom: var(--space-md);
+        }
+
+        .about p {
+            margin-bottom: var(--space-md);
+            font-size: 1rem;
+            color: var(--color-text-light);
+            line-height: 1.9;
+        }
+
+        .values-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: var(--space-lg);
+            margin-top: var(--space-xl);
+            background-color: var(--color-surface-2);
+            padding: var(--space-lg);
+            border-radius: 0.5rem;
+            border-left: 4px solid var(--color-accent);
+        }
+
+        .value-item h4 {
+            color: var(--color-accent);
+            font-weight: 600;
+            margin-bottom: var(--space-sm);
+        }
+
+        .value-item p {
+            font-size: 0.9rem;
+            color: var(--color-text-light);
+        }
+
+        /* ============ ARTISTS ============ */
+        .artists {
+            background-color: var(--color-bg);
+            padding: var(--space-xl) var(--space-lg);
+        }
+
+        .section-head {
+            font-size: clamp(1.5rem, 5vw, 2.2rem);
+            text-align: center;
+            margin-bottom: var(--space-xl);
+            color: var(--color-accent);
+            font-weight: 600;
+            letter-spacing: 0.05em;
+        }
+
+        .artists-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: var(--space-lg);
+        }
+
+        .artist-card {
+            background-color: var(--color-surface);
+            border: 1px solid var(--color-border);
+            border-top: 3px solid var(--color-accent);
+            padding: var(--space-lg);
+            border-radius: 0.5rem;
+            text-align: center;
+        }
+
+        .artist-card h3 {
+            color: var(--color-accent);
+            font-size: 1.2rem;
+            margin-bottom: var(--space-sm);
+            font-weight: 600;
+        }
+
+        .artist-card .specialty {
+            color: var(--color-accent-light);
+            font-size: 0.9rem;
+            margin-bottom: var(--space-md);
+            font-style: italic;
+        }
+
+        .artist-card p {
+            color: var(--color-text-light);
+            font-size: 0.9rem;
+            line-height: 1.7;
+        }
+
+        /* ============ STYLES ============ */
+        .styles {
+            background-color: var(--color-surface);
+            padding: var(--space-xl) var(--space-lg);
+        }
+
+        .styles-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: var(--space-lg);
+            margin-top: var(--space-lg);
+        }
+
+        .style-tag {
+            background-color: var(--color-surface-2);
+            border-left: 3px solid var(--color-accent);
+            padding: var(--space-md);
+            border-radius: 0.35rem;
+            text-align: center;
+        }
+
+        .style-tag h4 {
+            color: var(--color-accent-light);
+            font-weight: 600;
+            margin-bottom: var(--space-xs);
+        }
+
+        .style-tag p {
+            color: var(--color-text-light);
+            font-size: 0.85rem;
+        }
+
+        /* ============ PROCESS ============ */
+        .process {
+            background-color: var(--color-bg);
+            padding: var(--space-xl) var(--space-lg);
+        }
+
+        .process-steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: var(--space-lg);
+            margin-top: var(--space-lg);
+        }
+
+        .process-step {
+            background-color: var(--color-surface);
+            padding: var(--space-lg);
+            border-radius: 0.5rem;
+            border-top: 3px solid var(--color-accent);
+        }
+
+        .step-number {
+            display: inline-block;
+            width: 2.5rem;
+            height: 2.5rem;
+            background-color: var(--color-accent);
+            color: #000;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 2.5rem;
+            font-weight: 700;
+            font-size: 1.2rem;
+            margin-bottom: var(--space-md);
+        }
+
+        .process-step h4 {
+            color: var(--color-text);
+            font-weight: 600;
+            margin-bottom: var(--space-sm);
+        }
+
+        .process-step p {
+            color: var(--color-text-light);
+            font-size: 0.9rem;
+        }
+
+        /* ============ CONTACT ============ */
+        .contact {
+            background-color: var(--color-surface);
+            border-top: 2px solid var(--color-accent);
+            padding: var(--space-xl) var(--space-lg);
+            text-align: center;
+        }
+
+        .contact h2 {
+            font-size: 2rem;
+            margin-bottom: var(--space-lg);
+            color: var(--color-accent);
+            font-weight: 600;
+        }
+
+        .contact-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: var(--space-lg);
+            margin-bottom: var(--space-xl);
+        }
+
+        .contact-item h3 {
+            color: var(--color-accent-light);
+            margin-bottom: var(--space-sm);
+            font-weight: 600;
+        }
+
+        .contact-item p {
+            color: var(--color-text-light);
+        }
+
+        .contact-item a {
+            color: var(--color-accent);
+            text-decoration: none;
+            font-weight: 600;
+            transition: opacity 0.3s ease;
+        }
+
+        .contact-item a:hover {
+            opacity: 0.8;
+        }
+
+        /* ============ FOOTER ============ */
+        footer {
+            background-color: #000000;
+            border-top: 2px solid var(--color-accent);
+            color: var(--color-text-light);
+            padding: var(--space-lg);
+            text-align: center;
+            font-size: 0.85rem;
+        }
+
+        footer p {
+            margin: 0;
+        }
+
+        /* ============ RESPONSIVE ============ */
+        @media (max-width: 768px) {
+            header .container {
+                flex-direction: column;
+                gap: var(--space-md);
+            }
+
+            header nav a {
+                margin-left: var(--space-md);
+            }
+
+            .values-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .artists-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .styles-list {
+                grid-template-columns: 1fr;
+            }
+
+            .process-steps {
+                grid-template-columns: 1fr;
+            }
+
+            .contact-info {
+                grid-template-columns: 1fr;
+            }
+
+            .hero h1 {
+                font-size: 1.8rem;
+            }
+
+            .section-head {
+                font-size: 1.4rem;
+            }
+        }
+
+        @media (max-width: 414px) {
+            :root {
+                --space-lg: 1.5rem;
+                --space-xl: 2rem;
+            }
+
+            .hero {
+                padding: var(--space-lg) var(--space-sm);
+            }
+
+            .hero h1 {
+                font-size: 1.3rem;
+            }
+
+            .cta-primary {
+                padding: 0.65rem 1.2rem;
+                font-size: 0.85rem;
+            }
+
+            .section-head {
+                font-size: 1.2rem;
+            }
+
+            .contact h2 {
+                font-size: 1.4rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- HEADER -->
+    <header>
+        <div class="container">
+            <div class="logo">EVIL FANTASY</div>
+            <nav>
+                <a href="#artists">Artists</a>
+                <a href="#styles">Styles</a>
+                <a href="#contact">Contact</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- HERO -->
+    <section class="hero">
+        <div class="container">
+            <h1>EVIL FANTASY</h1>
+            <p>Custom tattoo design and expert ink work in Rockville, MD</p>
+            <p style="font-size: 0.95rem; color: var(--color-accent-light);">Clean studio • Experienced artists • Your vision, brought to life</p>
+            <a href="#contact" class="cta-primary">Book a Consultation</a>
+        </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section class="about">
+        <div class="about-content">
+            <h2>About Evil Fantasy</h2>
+            <p>Evil Fantasy is a full-service tattoo studio in Rockville's Flint Hill Plaza. We specialize in custom designs across all styles and sizes. Every piece starts with understanding your vision—what you want to express, where you want it, and how it fits your story.</p>
+            
+            <div class="values-grid">
+                <div class="value-item">
+                    <h4>Custom Work</h4>
+                    <p>No stencils. No shortcuts. We design every tattoo specifically for you.</p>
+                </div>
+                <div class="value-item">
+                    <h4>Expert Hygiene</h4>
+                    <p>Sterile equipment, professional protocols, your safety first.</p>
+                </div>
+                <div class="value-item">
+                    <h4>All Styles</h4>
+                    <p>Realism, traditional, blackwork, color, fine line—we do it all.</p>
+                </div>
+                <div class="value-item">
+                    <h4>Experienced</h4>
+                    <p>Seasoned artists. Thousands of satisfied clients.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ARTISTS -->
+    <section class="artists" id="artists">
+        <div class="container">
+            <h2 class="section-head">Our Artists</h2>
+            <div class="artists-grid">
+                <div class="artist-card">
+                    <h3>Alex Rivera</h3>
+                    <div class="specialty">Realism & Portraiture</div>
+                    <p>Hyper-realistic ink work and portrait-quality detail. If you need a face or photorealistic scene, Alex is your artist.</p>
+                </div>
+                <div class="artist-card">
+                    <h3>Marcus Stone</h3>
+                    <div class="specialty">Traditional & Blackwork</div>
+                    <p>Bold lines, solid fills, timeless designs. Traditional American and Japanese blackwork done right.</p>
+                </div>
+                <div class="artist-card">
+                    <h3>Jordan Cross</h3>
+                    <div class="specialty">Fine Line & Geometric</div>
+                    <p>Delicate linework, geometric patterns, minimal designs with maximum impact.</p>
+                </div>
+                <div class="artist-card">
+                    <h3>Casey Lee</h3>
+                    <div class="specialty">Color & Abstract</div>
+                    <p>Full-color pieces, watercolor effects, abstract and surreal designs that pop.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- STYLES -->
+    <section class="styles" id="styles">
+        <div class="container">
+            <h2 class="section-head">Tattoo Styles We Offer</h2>
+            <div class="styles-list">
+                <div class="style-tag">
+                    <h4>Realism</h4>
+                    <p>Photo-quality detail and dimension</p>
+                </div>
+                <div class="style-tag">
+                    <h4>Traditional</h4>
+                    <p>Bold lines, timeless designs</p>
+                </div>
+                <div class="style-tag">
+                    <h4>Blackwork</h4>
+                    <p>Solid blacks, high contrast</p>
+                </div>
+                <div class="style-tag">
+                    <h4>Japanese</h4>
+                    <p>Dragons, waves, traditional motifs</p>
+                </div>
+                <div class="style-tag">
+                    <h4>Fine Line</h4>
+                    <p>Delicate, minimal linework</p>
+                </div>
+                <div class="style-tag">
+                    <h4>Geometric</h4>
+                    <p>Patterns and clean geometry</p>
+                </div>
+                <div class="style-tag">
+                    <h4>Watercolor</h4>
+                    <p>Painted, flowing color work</p>
+                </div>
+                <div class="style-tag">
+                    <h4>Abstract</h4>
+                    <p>Surreal and artistic expression</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PROCESS -->
+    <section class="process">
+        <div class="container">
+            <h2 class="section-head">Our Process</h2>
+            <div class="process-steps">
+                <div class="process-step">
+                    <div class="step-number">1</div>
+                    <h4>Consultation</h4>
+                    <p>Discuss your idea, style, size, placement, and budget. No pressure, no rush.</p>
+                </div>
+                <div class="process-step">
+                    <div class="step-number">2</div>
+                    <h4>Design</h4>
+                    <p>Custom artwork created just for you. Revisions until it's perfect.</p>
+                </div>
+                <div class="process-step">
+                    <div class="step-number">3</div>
+                    <h4>Setup</h4>
+                    <p>Sterile prep, final approval of placement and size.</p>
+                </div>
+                <div class="process-step">
+                    <div class="step-number">4</div>
+                    <h4>Ink</h4>
+                    <p>Expert application with precision and care.</p>
+                </div>
+                <div class="process-step">
+                    <div class="step-number">5</div>
+                    <h4>Aftercare</h4>
+                    <p>Complete instructions to keep your new ink looking perfect.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section class="contact" id="contact">
+        <div class="container">
+            <h2>Ready for Your Next Tattoo?</h2>
+            <div class="contact-info">
+                <div class="contact-item">
+                    <h3>📍 Location</h3>
+                    <p>11617 Nebel Street<br>Flint Hill Plaza<br>Rockville, MD 20852</p>
+                </div>
+                <div class="contact-item">
+                    <h3>📞 Book Now</h3>
+                    <p><a href="tel:+13015554567">(301) 555-4567</a></p>
+                    <p style="font-size: 0.85rem; margin-top: 0.5rem;">Call or text for availability</p>
+                </div>
+                <div class="contact-item">
+                    <h3>⏰ Hours</h3>
+                    <p>Mon–Fri: 12pm–9pm<br>Sat: 11am–8pm<br>Sun: 12pm–6pm</p>
+                </div>
+            </div>
+            <p style="color: var(--color-text-light); font-size: 0.9rem;">Walk-ins welcome • No appointment needed for consultations</p>
+        </div>
+    </section>
+
+    <footer>
+        <p>Evil Fantasy Tattoo © 2026. Custom ink in Rockville's Flint Hill Plaza.</p>
+    </footer>
+</body>
+</html>
