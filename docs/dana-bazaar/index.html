@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dana Bazaar | International Grocery & Specialty Foods in Rockville, MD</title>
+    <meta name="description" content="International grocery store in Rockville. Fresh produce, specialty foods, pantry staples from around the world. Quality ingredients, fair prices.">
+    <style>
+        :root {
+            --color-text: #1a1a1a;
+            --color-text-light: #666;
+            --color-accent: #d97706;
+            --color-accent-dark: #92400e;
+            --color-accent-light: #fef3c7;
+            --color-bg: #fffbf0;
+            --color-surface: #ffffff;
+            --color-border: #fde68a;
+            --space-lg: 2rem;
+            --space-xl: 3rem;
+            --font-body: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html, body { height: 100%; color: var(--color-text); font-family: var(--font-body); line-height: 1.6; }
+        body { background-color: var(--color-bg); overflow-x: clip; }
+        section { padding: var(--space-lg); }
+        .container { max-width: 1100px; margin: 0 auto; padding: 0 1.5rem; }
+
+        header { background: linear-gradient(135deg, var(--color-accent-dark) 0%, var(--color-accent) 100%); color: #ffffff; padding: 1rem 2rem; position: sticky; top: 0; z-index: 100; }
+        header .container { display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-size: 1.3rem; font-weight: 700; }
+        header nav a { color: rgba(255, 255, 255, 0.95); text-decoration: none; margin-left: 2rem; font-size: 0.9rem; }
+
+        .hero { background: linear-gradient(135deg, var(--color-accent-dark) 0%, var(--color-accent) 100%); color: #ffffff; padding: 3rem 2rem; text-align: center; }
+        .hero h1 { font-size: clamp(2rem, 8vw, 3rem); margin-bottom: 1.5rem; font-weight: 700; }
+        .hero p { font-size: 1.1rem; max-width: 600px; margin: 0 auto 2rem; line-height: 1.8; }
+        .cta-primary { display: inline-block; background-color: #ffffff; color: var(--color-accent-dark); padding: 0.8rem 1.8rem; border-radius: 0.35rem; text-decoration: none; font-weight: 700; border: 2px solid #ffffff; margin-top: 1.5rem; }
+
+        .services { background-color: var(--color-surface); }
+        .section-head { font-size: clamp(1.6rem, 5vw, 2.2rem); text-align: center; margin-bottom: 3rem; color: var(--color-accent-dark); font-weight: 700; }
+        .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 2rem; }
+        .service-card { background: linear-gradient(135deg, var(--color-accent-light) 0%, var(--color-surface) 100%); border: 1px solid var(--color-border); padding: 2rem; border-radius: 0.5rem; text-align: center; }
+        .service-icon { font-size: 2.5rem; margin-bottom: 1.5rem; }
+        .service-card h3 { color: var(--color-accent); font-weight: 700; margin-bottom: 0.5rem; }
+        .service-card p { color: var(--color-text-light); font-size: 0.95rem; }
+
+        .about { background-color: var(--color-accent-light); padding: 3rem 2rem; }
+        .about-content { max-width: 800px; margin: 0 auto; text-align: center; }
+        .about h2 { font-size: 1.8rem; margin-bottom: 2rem; color: var(--color-accent-dark); font-weight: 700; }
+        .about p { margin-bottom: 1.5rem; font-size: 1rem; color: var(--color-text-light); line-height: 1.9; }
+
+        .contact { background: linear-gradient(135deg, var(--color-accent-dark) 0%, var(--color-accent) 100%); color: #ffffff; padding: 3rem 2rem; text-align: center; }
+        .contact h2 { font-size: 2rem; margin-bottom: 2rem; font-weight: 700; }
+        .contact-info { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 2rem; margin-bottom: 3rem; }
+        .contact-item h3 { font-weight: 700; margin-bottom: 0.5rem; }
+        .contact-item a { color: #ffffff; text-decoration: none; font-weight: 600; }
+
+        footer { background-color: #1a1a1a; color: rgba(255, 255, 255, 0.7); padding: 2rem; text-align: center; font-size: 0.85rem; }
+
+        @media (max-width: 768px) {
+            header .container { flex-direction: column; gap: 1rem; }
+            header nav a { display: inline-block; margin-left: 0; margin-right: 1rem; }
+            .services-grid { grid-template-columns: 1fr; }
+            .contact-info { grid-template-columns: 1fr; }
+            .hero h1 { font-size: 1.8rem; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="logo">🌍 Dana Bazaar</div>
+            <nav>
+                <a href="#products">Products</a>
+                <a href="#contact">Contact</a>
+            </nav>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <h1>Dana Bazaar</h1>
+            <p>International groceries & specialty foods. Fresh, authentic, quality.</p>
+            <a href="#contact" class="cta-primary">Visit Us Today</a>
+        </div>
+    </section>
+
+    <section class="services" id="products">
+        <div class="container">
+            <h2 class="section-head">What We Offer</h2>
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon">🥬</div>
+                    <h3>Fresh Produce</h3>
+                    <p>Seasonal vegetables and fruits from around the world. Quality guaranteed.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">🍛</div>
+                    <h3>Specialty Spices</h3>
+                    <p>Authentic spices, herbs, and seasonings for traditional cooking.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">🥘</div>
+                    <h3>Pantry Staples</h3>
+                    <p>Grains, oils, sauces, and dry goods from international brands.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">🧈</div>
+                    <h3>Dairy & Frozen</h3>
+                    <p>Specialty cheeses, yogurts, and frozen prepared foods.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">🍞</div>
+                    <h3>Baked Goods</h3>
+                    <p>Fresh bread, pastries, and traditional baked items daily.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">🛒</div>
+                    <h3>More Every Day</h3>
+                    <p>New items arriving regularly. Ask staff for seasonal specials.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="about">
+        <div class="about-content">
+            <h2>Your Global Kitchen</h2>
+            <p>Dana Bazaar brings the world's finest ingredients to your table. We source quality products from around the globe to help you cook authentic, delicious meals at home.</p>
+        </div>
+    </section>
+
+    <section class="contact" id="contact">
+        <div class="container">
+            <h2>Come Explore</h2>
+            <div class="contact-info">
+                <div class="contact-item">
+                    <h3>📍 Location</h3>
+                    <p>12215 Nebel St<br>Rockville, MD 20852</p>
+                </div>
+                <div class="contact-item">
+                    <h3>📞 Questions?</h3>
+                    <p><a href="tel:+13015553456">(301) 555-3456</a></p>
+                </div>
+                <div class="contact-item">
+                    <h3>⏰ Hours</h3>
+                    <p>Daily: 9am–8pm<br>Sun: 10am–7pm</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>Dana Bazaar © 2026. International groceries in Rockville, MD.</p>
+    </footer>
+</body>
+</html>

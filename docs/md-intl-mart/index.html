@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MD International Mart | Halal Grocery Store in Rockville, MD</title>
+    <meta name="description" content="Halal grocery store in Rockville, MD. Fresh halal meat, international groceries, specialty products. Certified halal. Family-owned.">
+    <style>
+        :root {
+            --color-text: #1a1a1a;
+            --color-text-light: #666;
+            --color-accent: #059669;
+            --color-accent-dark: #065f46;
+            --color-accent-light: #d1fae5;
+            --color-bg: #f0fdf4;
+            --color-surface: #ffffff;
+            --color-border: #a7f3d0;
+            --space-lg: 2rem;
+            --space-xl: 3rem;
+            --font-body: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html, body { height: 100%; color: var(--color-text); font-family: var(--font-body); line-height: 1.6; }
+        body { background-color: var(--color-bg); overflow-x: clip; }
+        section { padding: var(--space-lg); }
+        .container { max-width: 1100px; margin: 0 auto; padding: 0 1.5rem; }
+
+        header { background: linear-gradient(135deg, var(--color-accent-dark) 0%, var(--color-accent) 100%); color: #ffffff; padding: 1rem 2rem; position: sticky; top: 0; z-index: 100; }
+        header .container { display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-size: 1.3rem; font-weight: 700; }
+        header nav a { color: rgba(255, 255, 255, 0.95); text-decoration: none; margin-left: 2rem; font-size: 0.9rem; }
+
+        .hero { background: linear-gradient(135deg, var(--color-accent-dark) 0%, var(--color-accent) 100%); color: #ffffff; padding: 3rem 2rem; text-align: center; }
+        .hero h1 { font-size: clamp(2rem, 8vw, 3rem); margin-bottom: 1.5rem; font-weight: 700; }
+        .hero p { font-size: 1.1rem; max-width: 600px; margin: 0 auto 2rem; line-height: 1.8; }
+        .cta-primary { display: inline-block; background-color: #ffffff; color: var(--color-accent-dark); padding: 0.8rem 1.8rem; border-radius: 0.35rem; text-decoration: none; font-weight: 700; border: 2px solid #ffffff; margin-top: 1.5rem; }
+
+        .services { background-color: var(--color-surface); }
+        .section-head { font-size: clamp(1.6rem, 5vw, 2.2rem); text-align: center; margin-bottom: 3rem; color: var(--color-accent-dark); font-weight: 700; }
+        .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 2rem; }
+        .service-card { background: linear-gradient(135deg, var(--color-accent-light) 0%, var(--color-surface) 100%); border: 1px solid var(--color-border); padding: 2rem; border-radius: 0.5rem; text-align: center; }
+        .service-icon { font-size: 2.5rem; margin-bottom: 1.5rem; }
+        .service-card h3 { color: var(--color-accent); font-weight: 700; margin-bottom: 0.5rem; }
+        .service-card p { color: var(--color-text-light); font-size: 0.95rem; }
+
+        .about { background-color: var(--color-accent-light); padding: 3rem 2rem; }
+        .about-content { max-width: 800px; margin: 0 auto; text-align: center; }
+        .about h2 { font-size: 1.8rem; margin-bottom: 2rem; color: var(--color-accent-dark); font-weight: 700; }
+        .about p { margin-bottom: 1.5rem; font-size: 1rem; color: var(--color-text-light); line-height: 1.9; }
+
+        .contact { background: linear-gradient(135deg, var(--color-accent-dark) 0%, var(--color-accent) 100%); color: #ffffff; padding: 3rem 2rem; text-align: center; }
+        .contact h2 { font-size: 2rem; margin-bottom: 2rem; font-weight: 700; }
+        .contact-info { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 2rem; margin-bottom: 3rem; }
+        .contact-item h3 { font-weight: 700; margin-bottom: 0.5rem; }
+        .contact-item a { color: #ffffff; text-decoration: none; font-weight: 600; }
+
+        footer { background-color: #1a1a1a; color: rgba(255, 255, 255, 0.7); padding: 2rem; text-align: center; font-size: 0.85rem; }
+
+        @media (max-width: 768px) {
+            header .container { flex-direction: column; gap: 1rem; }
+            header nav a { display: inline-block; margin-left: 0; margin-right: 1rem; }
+            .services-grid { grid-template-columns: 1fr; }
+            .contact-info { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="logo">☪️ MD International Mart</div>
+            <nav>
+                <a href="#products">Products</a>
+                <a href="#contact">Contact</a>
+            </nav>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <h1>MD International Mart</h1>
+            <p>Certified halal groceries & specialty foods in Rockville. Fresh halal meat, international staples, quality guaranteed.</p>
+            <a href="#contact" class="cta-primary">Visit Today</a>
+        </div>
+    </section>
+
+    <section class="services" id="products">
+        <div class="container">
+            <h2 class="section-head">Our Products</h2>
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon">🥩</div>
+                    <h3>Halal Meat</h3>
+                    <p>Certified halal beef, lamb, chicken. Fresh daily. USDA inspected.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">🍲</div>
+                    <h3>International Groceries</h3>
+                    <p>Staples from Middle East, South Asia, Africa. Authentic brands.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">🥙</div>
+                    <h3>Fresh Bakery</h3>
+                    <p>Naan, pita, flatbreads, and traditional baked items daily.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">🥤</div>
+                    <h3>Beverages</h3>
+                    <p>Specialty drinks, juices, and traditional beverages.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">🧂</div>
+                    <h3>Spices & Condiments</h3>
+                    <p>Premium spices, sauces, oils, and seasonings.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">👨‍👩‍👧‍👦</div>
+                    <h3>Family Owned</h3>
+                    <p>Serving the community with integrity and quality since 2010.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="about">
+        <div class="about-content">
+            <h2>Certified Halal. Community Trusted.</h2>
+            <p>MD International Mart is a family-owned business dedicated to providing the community with quality halal products and authentic international groceries. We understand the importance of certified halal meat and maintain the highest standards of quality and cleanliness.</p>
+        </div>
+    </section>
+
+    <section class="contact" id="contact">
+        <div class="container">
+            <h2>Come Shop With Us</h2>
+            <div class="contact-info">
+                <div class="contact-item">
+                    <h3>📍 Location</h3>
+                    <p>12213 Nebel St<br>Rockville, MD 20852</p>
+                </div>
+                <div class="contact-item">
+                    <h3>📞 Phone</h3>
+                    <p><a href="tel:+13015554789">(301) 555-4789</a></p>
+                </div>
+                <div class="contact-item">
+                    <h3>⏰ Hours</h3>
+                    <p>Daily: 9am–8pm<br>Fri: 12pm–8pm</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>MD International Mart © 2026. Certified halal groceries in Rockville, MD.</p>
+    </footer>
+</body>
+</html>

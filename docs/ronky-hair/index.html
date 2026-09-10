@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ronky Hair Salon | Hair Salon in Gaithersburg, MD</title>
+    <meta name="description" content="Professional hair salon in Gaithersburg. Cuts, colors, styling, relaxers. Expert stylists, affordable prices. Walk-ins welcome.">
+    <style>
+        :root {
+            --color-text: #1a1a1a;
+            --color-text-light: #666;
+            --color-accent: #d946a6;
+            --color-accent-dark: #a21d7a;
+            --color-accent-light: #f3e8ff;
+            --color-bg: #faf6fb;
+            --color-surface: #ffffff;
+            --color-border: #e9d5ff;
+            --space-xs: 0.5rem;
+            --space-sm: 1rem;
+            --space-md: 1.5rem;
+            --space-lg: 2rem;
+            --space-xl: 3rem;
+            --font-body: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            height: 100%;
+            color: var(--color-text);
+            font-family: var(--font-body);
+            line-height: 1.6;
+        }
+
+        body {
+            background-color: var(--color-bg);
+            overflow-x: clip;
+        }
+
+        section {
+            padding: var(--space-lg);
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 var(--space-md);
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--color-accent-dark) 0%, var(--color-accent) 100%);
+            color: #ffffff;
+            padding: var(--space-md) var(--space-lg);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.3rem;
+            font-weight: 700;
+        }
+
+        header nav a {
+            color: rgba(255, 255, 255, 0.95);
+            text-decoration: none;
+            margin-left: var(--space-lg);
+            transition: color 0.3s ease;
+            font-size: 0.9rem;
+        }
+
+        header nav a:hover {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .hero {
+            background: linear-gradient(135deg, var(--color-accent-dark) 0%, var(--color-accent) 100%);
+            color: #ffffff;
+            padding: var(--space-xl) var(--space-lg);
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: clamp(2rem, 8vw, 3rem);
+            margin-bottom: var(--space-md);
+            font-weight: 700;
+        }
+
+        .hero p {
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto var(--space-lg);
+            line-height: 1.8;
+        }
+
+        .cta-primary {
+            display: inline-block;
+            background-color: #ffffff;
+            color: var(--color-accent-dark);
+            padding: 0.8rem 1.8rem;
+            border-radius: 0.35rem;
+            text-decoration: none;
+            font-weight: 700;
+            border: 2px solid #ffffff;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+            margin-top: var(--space-md);
+        }
+
+        .cta-primary:hover {
+            background-color: transparent;
+            color: #ffffff;
+        }
+
+        .services {
+            background-color: var(--color-surface);
+        }
+
+        .section-head {
+            font-size: clamp(1.6rem, 5vw, 2.2rem);
+            text-align: center;
+            margin-bottom: var(--space-xl);
+            color: var(--color-accent-dark);
+            font-weight: 700;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: var(--space-lg);
+        }
+
+        .service-card {
+            background: linear-gradient(135deg, var(--color-accent-light) 0%, var(--color-surface) 100%);
+            border: 1px solid var(--color-border);
+            padding: var(--space-lg);
+            border-radius: 0.5rem;
+            text-align: center;
+        }
+
+        .service-icon {
+            font-size: 2.5rem;
+            margin-bottom: var(--space-md);
+        }
+
+        .service-card h3 {
+            color: var(--color-accent-dark);
+            font-weight: 700;
+            margin-bottom: var(--space-sm);
+        }
+
+        .service-card p {
+            color: var(--color-text-light);
+            font-size: 0.95rem;
+        }
+
+        .about {
+            background-color: var(--color-accent-light);
+            padding: var(--space-xl) var(--space-lg);
+        }
+
+        .about-content {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .about h2 {
+            font-size: 1.8rem;
+            margin-bottom: var(--space-lg);
+            color: var(--color-accent-dark);
+            font-weight: 700;
+        }
+
+        .about p {
+            margin-bottom: var(--space-md);
+            font-size: 1rem;
+            color: var(--color-text-light);
+            line-height: 1.9;
+        }
+
+        .contact {
+            background: linear-gradient(135deg, var(--color-accent-dark) 0%, var(--color-accent) 100%);
+            color: #ffffff;
+            padding: var(--space-xl) var(--space-lg);
+            text-align: center;
+        }
+
+        .contact h2 {
+            font-size: 2rem;
+            margin-bottom: var(--space-lg);
+            font-weight: 700;
+        }
+
+        .contact-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: var(--space-lg);
+            margin-bottom: var(--space-xl);
+        }
+
+        .contact-item h3 {
+            font-weight: 700;
+            margin-bottom: var(--space-sm);
+        }
+
+        .contact-item p {
+            opacity: 0.95;
+            font-size: 0.95rem;
+        }
+
+        .contact-item a {
+            color: #ffffff;
+            text-decoration: none;
+            font-weight: 600;
+            transition: opacity 0.3s ease;
+        }
+
+        .contact-item a:hover {
+            opacity: 0.8;
+        }
+
+        footer {
+            background-color: #1a1a1a;
+            color: rgba(255, 255, 255, 0.7);
+            padding: var(--space-lg);
+            text-align: center;
+            font-size: 0.85rem;
+        }
+
+        @media (max-width: 768px) {
+            header .container {
+                flex-direction: column;
+                gap: var(--space-md);
+            }
+
+            header nav a {
+                display: inline-block;
+                margin-left: 0;
+                margin-right: var(--space-md);
+            }
+
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .contact-info {
+                grid-template-columns: 1fr;
+            }
+
+            .hero h1 {
+                font-size: 1.8rem;
+            }
+        }
+
+        @media (max-width: 414px) {
+            :root {
+                --space-lg: 1.5rem;
+            }
+
+            .hero h1 {
+                font-size: 1.4rem;
+            }
+
+            .cta-primary {
+                padding: 0.7rem 1.4rem;
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="logo">✂️ Ronky Hair Salon</div>
+            <nav>
+                <a href="#services">Services</a>
+                <a href="#contact">Contact</a>
+            </nav>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <h1>Ronky Hair Salon</h1>
+            <p>Professional hair care in Gaithersburg. Cuts, colors, styling, relaxers. Expert stylists, affordable prices.</p>
+            <a href="#contact" class="cta-primary">Book an Appointment</a>
+        </div>
+    </section>
+
+    <section class="services" id="services">
+        <div class="container">
+            <h2 class="section-head">Our Services</h2>
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon">✂️</div>
+                    <h3>Haircuts</h3>
+                    <p>Professional cuts for all hair types and styles. Precision grooming.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">🎨</div>
+                    <h3>Color & Highlights</h3>
+                    <p>Full color, highlights, balayage. Vibrant and natural results.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">💇</div>
+                    <h3>Styling</h3>
+                    <p>Blow-outs, waves, curls. Ready for any occasion.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">✨</div>
+                    <h3>Hair Treatments</h3>
+                    <p>Deep conditioning, keratin, relaxers. Restore and strengthen.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">💇‍♀️</div>
+                    <h3>Braids & Extensions</h3>
+                    <p>Box braids, knotless braids, weaves. Expert installation.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">💅</div>
+                    <h3>Grooming</h3>
+                    <p>Eyebrow shaping, threading, facial. Complete look.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="about">
+        <div class="about-content">
+            <h2>Quality You Can Trust</h2>
+            <p>At Ronky Hair Salon, we're passionate about making you feel beautiful. Our expert stylists have years of experience with all hair types and textures. Whether you're looking for a fresh cut, bold color, or specialized treatments, you're in good hands.</p>
+        </div>
+    </section>
+
+    <section class="contact" id="contact">
+        <div class="container">
+            <h2>Ready for a Transformation?</h2>
+            <div class="contact-info">
+                <div class="contact-item">
+                    <h3>📍 Location</h3>
+                    <p>562 N Frederick Ave<br>Gaithersburg, MD 20877</p>
+                </div>
+                <div class="contact-item">
+                    <h3>📞 Call or Book</h3>
+                    <p><a href="tel:+13015559988">(301) 555-9988</a></p>
+                    <p style="font-size: 0.85rem; margin-top: 0.5rem;">Walk-ins welcome</p>
+                </div>
+                <div class="contact-item">
+                    <h3>⏰ Hours</h3>
+                    <p>Mon–Fri: 10am–8pm<br>Sat: 9am–7pm<br>Sun: 11am–6pm</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>Ronky Hair Salon © 2026. Professional hair care in Gaithersburg, MD.</p>
+    </footer>
+</body>
+</html>

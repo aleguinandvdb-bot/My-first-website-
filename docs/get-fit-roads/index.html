@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Get Fit By Many Roads | Fitness & Wellness in Rockville, MD</title>
+    <meta name="description" content="Personal training, group fitness classes, and wellness coaching in Rockville, MD. Expert trainers, affordable membership, all fitness levels welcome.">
+    <style>
+        :root {
+            --color-text: #1a1a1a;
+            --color-text-light: #666;
+            --color-accent: #2563eb;
+            --color-accent-dark: #1e40af;
+            --color-accent-light: #dbeafe;
+            --color-bg: #f0f9ff;
+            --color-surface: #ffffff;
+            --color-border: #bfdbfe;
+            --space-lg: 2rem;
+            --space-xl: 3rem;
+            --font-body: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html, body { height: 100%; color: var(--color-text); font-family: var(--font-body); line-height: 1.6; }
+        body { background-color: var(--color-bg); overflow-x: clip; }
+        section { padding: var(--space-lg); }
+        .container { max-width: 1100px; margin: 0 auto; padding: 0 1.5rem; }
+
+        header { background: linear-gradient(135deg, var(--color-accent-dark) 0%, var(--color-accent) 100%); color: #ffffff; padding: 1rem 2rem; position: sticky; top: 0; z-index: 100; }
+        header .container { display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-size: 1.3rem; font-weight: 700; }
+        header nav a { color: rgba(255, 255, 255, 0.95); text-decoration: none; margin-left: 2rem; font-size: 0.9rem; }
+
+        .hero { background: linear-gradient(135deg, var(--color-accent-dark) 0%, var(--color-accent) 100%); color: #ffffff; padding: 3rem 2rem; text-align: center; }
+        .hero h1 { font-size: clamp(2rem, 8vw, 3rem); margin-bottom: 1.5rem; font-weight: 700; }
+        .hero p { font-size: 1.1rem; max-width: 600px; margin: 0 auto 2rem; line-height: 1.8; }
+        .cta-primary { display: inline-block; background-color: #ffffff; color: var(--color-accent-dark); padding: 0.8rem 1.8rem; border-radius: 0.35rem; text-decoration: none; font-weight: 700; border: 2px solid #ffffff; margin-top: 1.5rem; }
+
+        .services { background-color: var(--color-surface); }
+        .section-head { font-size: clamp(1.6rem, 5vw, 2.2rem); text-align: center; margin-bottom: 3rem; color: var(--color-accent-dark); font-weight: 700; }
+        .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 2rem; }
+        .service-card { background: linear-gradient(135deg, var(--color-accent-light) 0%, var(--color-surface) 100%); border: 1px solid var(--color-border); padding: 2rem; border-radius: 0.5rem; text-align: center; }
+        .service-icon { font-size: 2.5rem; margin-bottom: 1.5rem; }
+        .service-card h3 { color: var(--color-accent); font-weight: 700; margin-bottom: 0.5rem; }
+        .service-card p { color: var(--color-text-light); font-size: 0.95rem; }
+
+        .about { background-color: var(--color-accent-light); padding: 3rem 2rem; }
+        .about-content { max-width: 800px; margin: 0 auto; text-align: center; }
+        .about h2 { font-size: 1.8rem; margin-bottom: 2rem; color: var(--color-accent-dark); font-weight: 700; }
+        .about p { margin-bottom: 1.5rem; font-size: 1rem; color: var(--color-text-light); line-height: 1.9; }
+
+        .contact { background: linear-gradient(135deg, var(--color-accent-dark) 0%, var(--color-accent) 100%); color: #ffffff; padding: 3rem 2rem; text-align: center; }
+        .contact h2 { font-size: 2rem; margin-bottom: 2rem; font-weight: 700; }
+        .contact-info { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 2rem; margin-bottom: 3rem; }
+        .contact-item h3 { font-weight: 700; margin-bottom: 0.5rem; }
+        .contact-item a { color: #ffffff; text-decoration: none; font-weight: 600; }
+
+        footer { background-color: #1a1a1a; color: rgba(255, 255, 255, 0.7); padding: 2rem; text-align: center; font-size: 0.85rem; }
+
+        @media (max-width: 768px) {
+            header .container { flex-direction: column; gap: 1rem; }
+            header nav a { display: inline-block; margin-left: 0; margin-right: 1rem; }
+            .services-grid { grid-template-columns: 1fr; }
+            .contact-info { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="logo">💪 Get Fit By Many Roads</div>
+            <nav>
+                <a href="#services">Services</a>
+                <a href="#contact">Join</a>
+            </nav>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <h1>Get Fit By Many Roads</h1>
+            <p>Personal training, group fitness, and wellness coaching. All fitness levels. All ages. Your path to better health starts here.</p>
+            <a href="#contact" class="cta-primary">Start Your Journey</a>
+        </div>
+    </section>
+
+    <section class="services" id="services">
+        <div class="container">
+            <h2 class="section-head">Our Programs</h2>
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon">👤</div>
+                    <h3>Personal Training</h3>
+                    <p>One-on-one coaching customized to your goals and fitness level.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">🏋️</div>
+                    <h3>Group Classes</h3>
+                    <p>HIIT, yoga, strength, cardio, pilates. New classes daily.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">🥗</div>
+                    <h3>Nutrition Coaching</h3>
+                    <p>Expert guidance on diet and nutrition for your fitness goals.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">📊</div>
+                    <h3>Progress Tracking</h3>
+                    <p>Regular assessments and goal adjustments. Accountability and support.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">🧘</div>
+                    <h3>Wellness Coaching</h3>
+                    <p>Holistic health. Stress management, sleep, and lifestyle optimization.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">👥</div>
+                    <h3>Community</h3>
+                    <p>Supportive environment. Motivation and friendship from like-minded people.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="about">
+        <div class="about-content">
+            <h2>Your Fitness Journey Starts Here</h2>
+            <p>Whether you're just beginning your fitness journey or pushing toward advanced goals, Get Fit By Many Roads has expert trainers and programs to support you every step of the way. We believe there are many roads to fitness—we'll help you find yours.</p>
+        </div>
+    </section>
+
+    <section class="contact" id="contact">
+        <div class="container">
+            <h2>Ready to Get Fit?</h2>
+            <div class="contact-info">
+                <div class="contact-item">
+                    <h3>📍 Location</h3>
+                    <p>11601 Nebel St<br>Rockville, MD 20852</p>
+                </div>
+                <div class="contact-item">
+                    <h3>📞 Free Consultation</h3>
+                    <p><a href="tel:+13015556543">(301) 555-6543</a></p>
+                </div>
+                <div class="contact-item">
+                    <h3>⏰ Hours</h3>
+                    <p>Mon–Fri: 5am–9pm<br>Sat–Sun: 7am–6pm</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>Get Fit By Many Roads © 2026. Fitness & wellness in Rockville, MD.</p>
+    </footer>
+</body>
+</html>

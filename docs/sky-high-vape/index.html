@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sky High Smoke & Vape | Vape Shop in Rockville, MD</title>
+    <meta name="description" content="Premium vape products and accessories in Rockville, MD. Wide selection, expert staff, competitive prices, and best brands. 21+.">
+    <style>
+        :root {
+            --color-text: #f5f5f5;
+            --color-text-light: #b0b0b0;
+            --color-accent: #06b6d4;
+            --color-accent-dark: #0891b2;
+            --color-accent-light: #06b6d4;
+            --color-bg: #0f172a;
+            --color-surface: #1e293b;
+            --color-surface-2: #334155;
+            --color-border: #475569;
+            --space-lg: 2rem;
+            --space-xl: 3rem;
+            --font-body: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html, body { height: 100%; color: var(--color-text); font-family: var(--font-body); line-height: 1.6; }
+        body { background-color: var(--color-bg); overflow-x: clip; }
+        section { padding: var(--space-lg); }
+        .container { max-width: 1100px; margin: 0 auto; padding: 0 1.5rem; }
+
+        header { background-color: var(--color-surface); border-bottom: 2px solid var(--color-accent); padding: 1rem 2rem; position: sticky; top: 0; z-index: 100; }
+        header .container { display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-size: 1.3rem; font-weight: 700; color: var(--color-accent); letter-spacing: 0.05em; }
+        header nav a { color: var(--color-text-light); text-decoration: none; margin-left: 2rem; font-size: 0.9rem; }
+        header nav a:hover { color: var(--color-accent); }
+
+        .hero { background: linear-gradient(135deg, var(--color-surface) 0%, var(--color-surface-2) 100%); border-bottom: 2px solid var(--color-accent); padding: 3rem 2rem; text-align: center; }
+        .hero h1 { font-size: clamp(2rem, 8vw, 3rem); margin-bottom: 1.5rem; font-weight: 700; color: var(--color-accent); }
+        .hero p { font-size: 1.1rem; max-width: 600px; margin: 0 auto 2rem; color: var(--color-text-light); line-height: 1.8; }
+        .cta-primary { display: inline-block; background-color: var(--color-accent); color: #000; padding: 0.8rem 1.8rem; border-radius: 0.35rem; text-decoration: none; font-weight: 700; border: 2px solid var(--color-accent); margin-top: 1.5rem; }
+
+        .services { background-color: var(--color-bg); }
+        .section-head { font-size: clamp(1.6rem, 5vw, 2.2rem); text-align: center; margin-bottom: 3rem; color: var(--color-accent); font-weight: 700; }
+        .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 2rem; }
+        .service-card { background-color: var(--color-surface); border: 2px solid var(--color-accent); padding: 2rem; border-radius: 0.5rem; text-align: center; }
+        .service-icon { font-size: 2.5rem; margin-bottom: 1.5rem; }
+        .service-card h3 { color: var(--color-accent); font-weight: 700; margin-bottom: 0.5rem; }
+        .service-card p { color: var(--color-text-light); font-size: 0.95rem; }
+
+        .about { background-color: var(--color-surface); padding: 3rem 2rem; }
+        .about-content { max-width: 800px; margin: 0 auto; text-align: center; }
+        .about h2 { font-size: 1.8rem; margin-bottom: 2rem; color: var(--color-accent); font-weight: 700; }
+        .about p { margin-bottom: 1.5rem; font-size: 1rem; color: var(--color-text-light); line-height: 1.9; }
+
+        .contact { background: linear-gradient(135deg, var(--color-surface) 0%, var(--color-surface-2) 100%); border-top: 2px solid var(--color-accent); padding: 3rem 2rem; text-align: center; }
+        .contact h2 { font-size: 2rem; margin-bottom: 2rem; color: var(--color-accent); font-weight: 700; }
+        .contact-info { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 2rem; margin-bottom: 3rem; }
+        .contact-item h3 { color: var(--color-accent); font-weight: 700; margin-bottom: 0.5rem; }
+        .contact-item p { opacity: 0.95; font-size: 0.95rem; }
+        .contact-item a { color: var(--color-accent); text-decoration: none; font-weight: 600; }
+
+        footer { background-color: #000; color: var(--color-text-light); padding: 2rem; text-align: center; font-size: 0.85rem; }
+
+        @media (max-width: 768px) {
+            header .container { flex-direction: column; gap: 1rem; }
+            header nav a { display: inline-block; margin-left: 0; margin-right: 1rem; }
+            .services-grid { grid-template-columns: 1fr; }
+            .contact-info { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="logo">☁️ SKY HIGH SMOKE & VAPE</div>
+            <nav>
+                <a href="#products">Products</a>
+                <a href="#contact">Visit</a>
+            </nav>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <h1>Sky High Smoke & Vape</h1>
+            <p>Premium vape products, accessories, and expertise. Best selection, best prices, best service in Rockville. 21+ only.</p>
+            <a href="#contact" class="cta-primary">Stop By Today</a>
+        </div>
+    </section>
+
+    <section class="services" id="products">
+        <div class="container">
+            <h2 class="section-head">What We Carry</h2>
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon">💨</div>
+                    <h3>Premium E-Liquids</h3>
+                    <p>Top brands, all flavors, nicotine strengths, and nic salts in stock.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">🎯</div>
+                    <h3>Vape Mods & Devices</h3>
+                    <p>Latest equipment from leading manufacturers. All experience levels.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">🔋</div>
+                    <h3>Batteries & Chargers</h3>
+                    <p>Quality batteries, chargers, cases. Safety certified.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">🧴</div>
+                    <h3>Coils & Tanks</h3>
+                    <p>Replacement coils, tanks, atomizers. All major brands available.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">🎨</div>
+                    <h3>Accessories</h3>
+                    <p>Cases, drip tips, carrying kits, stands, and custom gear.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">👨‍💼</div>
+                    <h3>Expert Staff</h3>
+                    <p>Knowledgeable team ready to answer questions and help you find the right setup.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="about">
+        <div class="about-content">
+            <h2>Your Vape Shop Experts</h2>
+            <p>Sky High Smoke & Vape is dedicated to providing quality products, competitive pricing, and expert guidance. Whether you're a beginner looking to switch or an experienced vaper seeking new gear, our team has you covered.</p>
+        </div>
+    </section>
+
+    <section class="contact" id="contact">
+        <div class="container">
+            <h2>Visit Sky High Today</h2>
+            <div class="contact-info">
+                <div class="contact-item">
+                    <h3>📍 Location</h3>
+                    <p>11623 Nebel St<br>Rockville, MD 20852</p>
+                </div>
+                <div class="contact-item">
+                    <h3>📞 Questions?</h3>
+                    <p><a href="tel:+13015557654">(301) 555-7654</a></p>
+                </div>
+                <div class="contact-item">
+                    <h3>⏰ Hours</h3>
+                    <p>Mon–Sat: 10am–9pm<br>Sun: 12pm–7pm</p>
+                </div>
+            </div>
+            <p style="color: var(--color-text-light); font-size: 0.9rem;">21+ with valid ID. We check every purchase.</p>
+        </div>
+    </section>
+
+    <footer>
+        <p>Sky High Smoke & Vape © 2026. Premium vape products in Rockville, MD.</p>
+    </footer>
+</body>
+</html>

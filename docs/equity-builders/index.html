@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Equity Builders | Home Remodeling in Rockville, MD</title>
+    <meta name="description" content="Professional home remodeling and renovation services in Rockville, MD. Kitchens, bathrooms, additions, custom carpentry. Licensed, insured, quality work.">
+    <style>
+        :root {
+            --color-text: #1a1a1a;
+            --color-text-light: #666;
+            --color-accent: #0f6b3f;
+            --color-accent-dark: #0a4527;
+            --color-accent-light: #d1f2e8;
+            --color-bg: #f5faf8;
+            --color-surface: #ffffff;
+            --color-border: #d0dcd7;
+            --space-xs: 0.5rem;
+            --space-sm: 1rem;
+            --space-md: 1.5rem;
+            --space-lg: 2rem;
+            --space-xl: 3rem;
+            --font-display: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            --font-body: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            height: 100%;
+            color: var(--color-text);
+            font-family: var(--font-body);
+            line-height: 1.6;
+        }
+
+        body {
+            background-color: var(--color-bg);
+            overflow-x: clip;
+        }
+
+        section {
+            padding: var(--space-lg);
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 var(--space-md);
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--color-accent-dark) 0%, var(--color-accent) 100%);
+            color: #ffffff;
+            padding: var(--space-md) var(--space-lg);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.3rem;
+            font-weight: 700;
+        }
+
+        header nav a {
+            color: rgba(255, 255, 255, 0.95);
+            text-decoration: none;
+            margin-left: var(--space-lg);
+            transition: color 0.3s ease;
+            font-size: 0.9rem;
+        }
+
+        header nav a:hover {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .hero {
+            background: linear-gradient(135deg, var(--color-accent-dark) 0%, var(--color-accent) 100%);
+            color: #ffffff;
+            padding: var(--space-xl) var(--space-lg);
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: clamp(2rem, 8vw, 3rem);
+            margin-bottom: var(--space-md);
+            font-weight: 700;
+        }
+
+        .hero p {
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto var(--space-lg);
+            line-height: 1.8;
+        }
+
+        .cta-primary {
+            display: inline-block;
+            background-color: #ffffff;
+            color: var(--color-accent-dark);
+            padding: 0.8rem 1.8rem;
+            border-radius: 0.35rem;
+            text-decoration: none;
+            font-weight: 700;
+            border: 2px solid #ffffff;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+            margin-top: var(--space-md);
+        }
+
+        .cta-primary:hover {
+            background-color: transparent;
+            color: #ffffff;
+        }
+
+        .services {
+            background-color: var(--color-surface);
+        }
+
+        .section-head {
+            font-size: clamp(1.6rem, 5vw, 2.2rem);
+            text-align: center;
+            margin-bottom: var(--space-xl);
+            color: var(--color-accent-dark);
+            font-weight: 700;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: var(--space-lg);
+        }
+
+        .service-card {
+            background: linear-gradient(135deg, var(--color-accent-light) 0%, var(--color-surface) 100%);
+            border: 1px solid var(--color-border);
+            padding: var(--space-lg);
+            border-radius: 0.5rem;
+            text-align: center;
+        }
+
+        .service-icon {
+            font-size: 2.5rem;
+            margin-bottom: var(--space-md);
+        }
+
+        .service-card h3 {
+            color: var(--color-accent);
+            font-weight: 700;
+            margin-bottom: var(--space-sm);
+        }
+
+        .service-card p {
+            color: var(--color-text-light);
+            font-size: 0.95rem;
+        }
+
+        .about {
+            background-color: var(--color-accent-light);
+            padding: var(--space-xl) var(--space-lg);
+        }
+
+        .about-content {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .about h2 {
+            font-size: 1.8rem;
+            margin-bottom: var(--space-lg);
+            color: var(--color-accent-dark);
+            font-weight: 700;
+        }
+
+        .about p {
+            margin-bottom: var(--space-md);
+            font-size: 1rem;
+            color: var(--color-text-light);
+            line-height: 1.9;
+        }
+
+        .contact {
+            background: linear-gradient(135deg, var(--color-accent-dark) 0%, var(--color-accent) 100%);
+            color: #ffffff;
+            padding: var(--space-xl) var(--space-lg);
+            text-align: center;
+        }
+
+        .contact h2 {
+            font-size: 2rem;
+            margin-bottom: var(--space-lg);
+            font-weight: 700;
+        }
+
+        .contact-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: var(--space-lg);
+            margin-bottom: var(--space-xl);
+        }
+
+        .contact-item h3 {
+            font-weight: 700;
+            margin-bottom: var(--space-sm);
+        }
+
+        .contact-item p {
+            opacity: 0.95;
+            font-size: 0.95rem;
+        }
+
+        .contact-item a {
+            color: #ffffff;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        footer {
+            background-color: #1a1a1a;
+            color: rgba(255, 255, 255, 0.7);
+            padding: var(--space-lg);
+            text-align: center;
+            font-size: 0.85rem;
+        }
+
+        @media (max-width: 768px) {
+            header .container { flex-direction: column; gap: var(--space-md); }
+            header nav a { display: inline-block; margin-left: 0; margin-right: var(--space-md); }
+            .services-grid { grid-template-columns: 1fr; }
+            .contact-info { grid-template-columns: 1fr; }
+            .hero h1 { font-size: 1.8rem; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="logo">🏗️ Equity Builders</div>
+            <nav>
+                <a href="#services">Services</a>
+                <a href="#contact">Contact</a>
+            </nav>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <h1>Equity Builders</h1>
+            <p>Expert home remodeling and renovation in Rockville. Licensed. Insured. Quality work.</p>
+            <a href="#contact" class="cta-primary">Get a Free Quote</a>
+        </div>
+    </section>
+
+    <section class="services" id="services">
+        <div class="container">
+            <h2 class="section-head">What We Build</h2>
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon">🍳</div>
+                    <h3>Kitchen Remodels</h3>
+                    <p>Complete kitchen renovations. Cabinets, counters, appliances, layout optimization.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">🛁</div>
+                    <h3>Bathroom Remodels</h3>
+                    <p>Spa-quality bathrooms. Fixtures, tile, vanities, accessibility upgrades.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">🏠</div>
+                    <h3>Additions</h3>
+                    <p>Room additions, sunrooms, decks. Expert design and construction.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">🪟</div>
+                    <h3>Windows & Doors</h3>
+                    <p>Energy-efficient replacement windows and doors. Professional installation.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">🎨</div>
+                    <h3>Interior Finishing</h3>
+                    <p>Drywall, flooring, paint, trim. Meticulous attention to detail.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">🔧</div>
+                    <h3>Custom Carpentry</h3>
+                    <p>Built-ins, shelving, architectural details. Hand-crafted quality.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="about">
+        <div class="about-content">
+            <h2>Trusted Craftsmanship</h2>
+            <p>Equity Builders brings years of experience to every project. We're licensed, insured, and committed to exceeding expectations. From initial consultation to final walkthrough, you're working with professionals who care about your home.</p>
+        </div>
+    </section>
+
+    <section class="contact" id="contact">
+        <div class="container">
+            <h2>Ready to Invest in Your Home?</h2>
+            <div class="contact-info">
+                <div class="contact-item">
+                    <h3>📍 Location</h3>
+                    <p>12111 Nebel St<br>Rockville, MD 20852</p>
+                </div>
+                <div class="contact-item">
+                    <h3>📞 Free Estimate</h3>
+                    <p><a href="tel:+13015552847">(301) 555-2847</a></p>
+                    <p style="font-size: 0.85rem; margin-top: 0.5rem;">No-pressure consultation</p>
+                </div>
+                <div class="contact-item">
+                    <h3>⏰ Hours</h3>
+                    <p>Mon–Fri: 8am–5pm<br>Sat: 9am–2pm<br>Sun: Closed</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>Equity Builders © 2026. Home remodeling in Rockville, MD. Licensed & Insured.</p>
+    </footer>
+</body>
+</html>
