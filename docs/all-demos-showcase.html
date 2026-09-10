@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>13 Demo Sites Showcase</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --color-text: #1a1a1a;
+            --color-text-light: #666;
+            --color-bg: #f8f6f3;
+            --color-surface: #ffffff;
+            --color-accent: #0f6b3f;
+            --space-lg: 2rem;
+            --space-xl: 3rem;
+        }
+
+        html, body {
+            height: 100%;
+            color: var(--color-text);
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            line-height: 1.6;
+        }
+
+        body {
+            background-color: var(--color-bg);
+            overflow-x: clip;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+
+        header {
+            background: linear-gradient(135deg, #0a4527 0%, var(--color-accent) 100%);
+            color: #ffffff;
+            padding: var(--space-xl) var(--space-lg);
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+        }
+
+        header p {
+            font-size: 1.1rem;
+            opacity: 0.95;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+            text-align: center;
+        }
+
+        .stat {
+            background-color: rgba(255, 255, 255, 0.15);
+            padding: 1rem;
+            border-radius: 0.5rem;
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 700;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        .intro {
+            background-color: var(--color-surface);
+            padding: var(--space-xl) var(--space-lg);
+            margin: var(--space-lg) auto;
+            max-width: 900px;
+            border-radius: 0.75rem;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        }
+
+        .intro h2 {
+            color: var(--color-accent);
+            font-size: 1.6rem;
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+
+        .intro p {
+            margin-bottom: 1rem;
+            color: var(--color-text-light);
+            line-height: 1.8;
+        }
+
+        section {
+            padding: var(--space-xl) var(--space-lg);
+        }
+
+        h2 {
+            font-size: 2rem;
+            text-align: center;
+            margin-bottom: var(--space-xl);
+            color: var(--color-accent);
+            font-weight: 700;
+        }
+
+        .category {
+            margin-bottom: var(--space-xl);
+        }
+
+        .category-title {
+            font-size: 1.5rem;
+            color: var(--color-accent);
+            margin-bottom: 1.5rem;
+            font-weight: 700;
+            padding-left: 1rem;
+            border-left: 4px solid var(--color-accent);
+        }
+
+        .demos-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .demo-card {
+            background-color: var(--color-surface);
+            border: 1px solid #e0ddd6;
+            border-radius: 0.75rem;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .demo-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .demo-header {
+            padding: 1.5rem;
+            background-color: #f9f7f4;
+            border-bottom: 1px solid #e0ddd6;
+        }
+
+        .demo-icon {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .demo-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--color-text);
+            margin-bottom: 0.5rem;
+        }
+
+        .demo-category-tag {
+            display: inline-block;
+            background-color: var(--color-accent);
+            color: #ffffff;
+            padding: 0.25rem 0.75rem;
+            border-radius: 0.25rem;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .demo-body {
+            padding: 1.5rem;
+        }
+
+        .demo-description {
+            color: var(--color-text-light);
+            margin-bottom: 1rem;
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        .demo-details {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            font-size: 0.85rem;
+            color: var(--color-text-light);
+        }
+
+        .demo-detail-item {
+            padding-bottom: 0.5rem;
+        }
+
+        .demo-detail-label {
+            font-weight: 700;
+            color: var(--color-accent);
+            display: block;
+            margin-bottom: 0.25rem;
+        }
+
+        .demo-link {
+            display: inline-block;
+            background-color: var(--color-accent);
+            color: #ffffff;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.35rem;
+            text-decoration: none;
+            font-weight: 700;
+            transition: opacity 0.3s ease;
+        }
+
+        .demo-link:hover {
+            opacity: 0.9;
+        }
+
+        footer {
+            background-color: #1a1a1a;
+            color: rgba(255, 255, 255, 0.7);
+            padding: var(--space-xl) var(--space-lg);
+            text-align: center;
+            font-size: 0.85rem;
+            margin-top: var(--space-xl);
+        }
+
+        footer p {
+            margin: 0;
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.8rem;
+            }
+
+            h2 {
+                font-size: 1.5rem;
+            }
+
+            .demos-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .demo-details {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>13 Demo Business Sites</h1>
+            <p>Complete portfolio of responsive, production-ready demo websites for local Rockville & Gaithersburg businesses</p>
+            <div class="stats">
+                <div class="stat">
+                    <div class="stat-number">13</div>
+                    <div class="stat-label">Total Demos</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">8</div>
+                    <div class="stat-label">Categories</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">100%</div>
+                    <div class="stat-label">Responsive</div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <section class="intro">
+        <div class="container">
+            <h2>What This Is</h2>
+            <p><strong>13 production-ready demo sites for local businesses</strong> with zero or minimal web presence. Each demo is a fully functional, responsive HTML website optimized for mobile (320–1440px) and desktop, ready to be handed to a real business owner as a starting point.</p>
+            <p>Built using <strong>Hallmark design principles</strong>—anti-AI-slop design methodology ensuring each site has unique structure, genuine copy, and business-specific visual identity instead of template homogeneity.</p>
+        </div>
+    </section>
+
+    <section class="demos">
+        <div class="container">
+            <h2>The Collection</h2>
+
+            <div class="category">
+                <div class="category-title">🍷 Beverages & Food Retail</div>
+                <div class="demos-grid">
+                    <div class="demo-card">
+                        <div class="demo-header">
+                            <div class="demo-icon">🍷</div>
+                            <div class="demo-title">Cleveland Park Fine Wines & Spirits</div>
+                            <span class="demo-category-tag">Wine Shop</span>
+                        </div>
+                        <div class="demo-body">
+                            <p class="demo-description">Neighborhood wine, spirits, and beer shop. Classical serif, warm burgundy palette emphasizing heritage and expertise.</p>
+                            <div class="demo-details">
+                                <div class="demo-detail-item">
+                                    <span class="demo-detail-label">Location</span>
+                                    Connecticut Ave, Washington DC area
+                                </div>
+                                <div class="demo-detail-item">
+                                    <span class="demo-detail-label">Vibe</span>
+                                    Wine cellar, antique gold
+                                </div>
+                            </div>
+                            <a href="https://cdn.jsdelivr.net/gh/aleguinandvdb-bot/My-first-website-@claude/install-ui-ux-pro-max-kmpj3m/docs/cleveland-park/index.html" class="demo-link">View Site →</a>
+                        </div>
+                    </div>
+
+                    <div class="demo-card">
+                        <div class="demo-header">
+                            <div class="demo-icon">🥟</div>
+                            <div class="demo-title">DMV Empanadas</div>
+                            <span class="demo-category-tag">Food/Takeout</span>
+                        </div>
+                        <div class="demo-body">
+                            <p class="demo-description">Homemade empanadas made fresh daily. Warm red/gold palette, 6-empanada menu grid, emphasis on handmade quality.</p>
+                            <div class="demo-details">
+                                <div class="demo-detail-item">
+                                    <span class="demo-detail-label">Location</span>
+                                    560 N Frederick Ave, Gaithersburg
+                                </div>
+                                <div class="demo-detail-item">
+                                    <span class="demo-detail-label">Web Presence</span>
+                                    Zero (new demo)
+                                </div>
+                            </div>
+                            <a href="https://cdn.jsdelivr.net/gh/aleguinandvdb-bot/My-first-website-@claude/install-ui-ux-pro-max-kmpj3m/docs/dmv-empanadas/index.html" class="demo-link">View Site →</a>
+                        </div>
+                    </div>
+
+                    <div class="demo-card">
+                        <div class="demo-header">
+                            <div class="demo-icon">🏮</div>
+                            <div class="demo-title">Kung Fu 12 Szechuan</div>
+                            <span class="demo-category-tag">Restaurant</span>
+                        </div>
+                        <div class="demo-body">
+                            <p class="demo-description">Authentic Szechuan restaurant. Red/gold palette, signature dish cards, dual CTA (order + menu). Emphasizes fresh-to-order.</p>
+                            <div class="demo-details">
+                                <div class="demo-detail-item">
+                                    <span class="demo-detail-label">Location</span>
+                                    14921 Shady Grove Rd, Rockville
+                                </div>
+                                <div class="demo-detail-item">
+                                    <span class="demo-detail-label">Web Presence</span>
+                                    Domain cited, not indexed
+                                </div>
+                            </div>
+                            <a href="https://cdn.jsdelivr.net/gh/aleguinandvdb-bot/My-first-website-@claude/install-ui-ux-pro-max-kmpj3m/docs/kung-fu-12/index.html" class="demo-link">View Site →</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="category">
+                <div class="category-title">🛍️ Grocery & International</div>
+                <div class="demos-grid">
+                    <div class="demo-card">
+                        <div class="demo-header">
+                            <div class="demo-icon">🌍</div>
+                            <div class="demo-title">Dana Bazaar</div>
+                            <span class="demo-category-tag">International Grocery</span>
+                        </div>
+                        <div class="demo-body">
+                            <p class="demo-description">International grocery with fresh produce, specialty spices, pantry staples. Warm amber palette, product-focused grid.</p>
+                            <div class="demo-details">
+                                <div class="demo-detail-item">
+                                    <span class="demo-detail-label">Location</span>
+                                    12215 Nebel St, Rockville
+                                </div>
+                                <div class="demo-detail-item">
+                                    <span class="demo-detail-label">Web Presence</span>
+                                    None (directory only)
+                                </div>
+                            </div>
+                            <a href="https://cdn.jsdelivr.net/gh/aleguinandvdb-bot/My-first-website-@claude/install-ui-ux-pro-max-kmpj3m/docs/dana-bazaar/index.html" class="demo-link">View Site →</a>
+                        </div>
+                    </div>
+
+                    <div class="demo-card">
+                        <div class="demo-header">
+                            <div class="demo-icon">☪️</div>
+                            <div class="demo-title">MD International Mart</div>
+                            <span class="demo-category-tag">Halal Grocery</span>
+                        </div>
+                        <div class="demo-body">
+                            <p class="demo-description">Certified halal grocery, family-owned. Fresh halal meat, international groceries. Green palette, trust-focused messaging.</p>
+                            <div class="demo-details">
+                                <div class="demo-detail-item">
+                                    <span class="demo-detail-label">Location</span>
+                                    12213 Nebel St, Rockville
+                                </div>
+                                <div class="demo-detail-item">
+                                    <span class="demo-detail-label">Web Presence</span>
+                                    Directory listings only
+                                </div>
+                            </div>
+                            <a href="https://cdn.jsdelivr.net/gh/aleguinandvdb-bot/My-first-website-@claude/install-ui-ux-pro-max-kmpj3m/docs/md-intl-mart/index.html" class="demo-link">View Site →</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="category">
+                <div class="category-title">💼 Services & Trades</div>
+                <div class="demos-grid">
+                    <div class="demo-card">
+                        <div class="demo-header">
+                            <div class="demo-icon">👞</div>
+                            <div class="demo-title">Master Shoe Repair</div>
+                            <span class="demo-category-tag">Shoe Repair</span>
+                        </div>
+                        <div class="demo-body">
+                            <p class="demo-description">Established 1985, 92+ Yelp reviews. Warm leather tones, reputation badge, 6-service grid. Heritage + craftsmanship.</p>
+                            <div class="demo-details">
+                                <div class="demo-detail-item">
+                                    <span class="demo-detail-label">Location</span>
+                                    11619 Nebel St, Rockville
+                                </div>
+                                <div class="demo-detail-item">
+                                    <span class="demo-detail-label">Web Presence</span>
+                                    92+ reviews, no website
+                                </div>
+                            </div>
+                            <a href="https://cdn.jsdelivr.net/gh/aleguinandvdb-bot/My-first-website-@claude/install-ui-ux-pro-max-kmpj3m/docs/master-shoe-repair/index.html" class="demo-link">View Site →</a>
+                        </div>
+                    </div>
+
+                    <div class="demo-card">
+                        <div class="demo-header">
+                            <div class="demo-icon">👔</div>
+                            <div class="demo-title">3 Hr Shirts</div>
+                            <span class="demo-category-tag">Dry Cleaning</span>
+                        </div>
+                        <div class="demo-body">
+                            <p class="demo-description">Zero web presence dry cleaner. Clean blue modern-minimal, sticky nav, speed + accessibility focus. "No clutter, just info."</p>
+                            <div class="demo-details">
+                                <div class="demo-detail-item">
+                                    <span class="demo-detail-label">Location</span>
+                                    11623 Nebel St, Rockville
+                                </div>
+                                <div class="demo-detail-item">
+                                    <span class="demo-detail-label">Web Presence</span>
+                                    Completely invisible online
+                                </div>
+                            </div>
+                            <a href="https://cdn.jsdelivr.net/gh/aleguinandvdb-bot/My-first-website-@claude/install-ui-ux-pro-max-kmpj3m/docs/3-hr-shirts/index.html" class="demo-link">View Site →</a>
+                        </div>
+                    </div>
+
+                    <div class="demo-card">
+                        <div class="demo-header">
+                            <div class="demo-icon">🏗️</div>
+                            <div class="demo-title">Equity Builders</div>
+                            <span class="demo-category-tag">Contracting</span>
+                        </div>
+                        <div class="demo-body">
+                            <p class="demo-description">Home remodeling contractor. Professional green palette, 6-service grid (kitchens, bathrooms, additions, custom work).</p>
+                            <div class="demo-details">
+                                <div class="demo-detail-item">
+                                    <span class="demo-detail-label">Location</span>
+                                    12111 Nebel St, Rockville
+                                </div>
+                                <div class="demo-detail-item">
+                                    <span class="demo-detail-label">Web Presence</span>
+                                    No owned website
+                                </div>
+                            </div>
+                            <a href="https://cdn.jsdelivr.net/gh/aleguinandvdb-bot/My-first-website-@claude/install-ui-ux-pro-max-kmpj3m/docs/equity-builders/index.html" class="demo-link">View Site →</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="category">
+                <div class="category-title">💇 Personal Care & Beauty</div>
+                <div class="demos-grid">
+                    <div class="demo-card">
+                        <div class="demo-header">
+                            <div class="demo-icon">✂️</div>
+                            <div class="demo-title">Ronky Hair Salon</div>
+                            <span class="demo-category-tag">Hair Salon</span>
+                        </div>
+                        <div class="demo-body">
+                            <p class="demo-description">Professional hair care. Magenta gradient, 6-service card grid (cuts, color, styling, braids, treatments). Walk-ins welcome.</p>
+                            <div class="demo-details">
+                                <div class="demo-detail-item">
+                                    <span class="demo-detail-label">Location</span>
+                                    562 N Frederick Ave, Gaithersburg
+                                </div>
+                                <div class="demo-detail-item">
+                                    <span class="demo-detail-label">Web Presence</span>
+                                    Zero (directory only)
+                                </div>
+                            </div>
+                            <a href="https://cdn.jsdelivr.net/gh/aleguinandvdb-bot/My-first-website-@claude/install-ui-ux-pro-max-kmpj3m/docs/ronky-hair/index.html" class="demo-link">View Site →</a>
+                        </div>
+                    </div>
+
+                    <div class="demo-card">
+                        <div class="demo-header">
+                            <div class="demo-icon">💅</div>
+                            <div class="demo-title">Mirage Nails & Waxing</div>
+                            <span class="demo-category-tag">Beauty Salon</span>
+                        </div>
+                        <div class="demo-body">
+                            <p class="demo-description">Vibrant pink/purple palette with glassmorphism. 6-service cards, 4-highlight grid. Upscale-yet-accessible positioning.</p>
+                            <div class="demo-details">
+                                <div class="demo-detail-item">
+                                    <span class="demo-detail-label">Location</span>
+                                    14933 Shady Grove Rd, Rockville
+                                </div>
+                                <div class="demo-detail-item">
+                                    <span class="demo-detail-label">Web Presence</span>
+                                    Generic booking platform only
+                                </div>
+                            </div>
+                            <a href="https://cdn.jsdelivr.net/gh/aleguinandvdb-bot/My-first-website-@claude/install-ui-ux-pro-max-kmpj3m/docs/mirage-nails/index.html" class="demo-link">View Site →</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="category">
+                <div class="category-title">💪 Health & Wellness</div>
+                <div class="demos-grid">
+                    <div class="demo-card">
+                        <div class="demo-header">
+                            <div class="demo-icon">💪</div>
+                            <div class="demo-title">Get Fit By Many Roads</div>
+                            <span class="demo-category-tag">Fitness</span>
+                        </div>
+                        <div class="demo-body">
+                            <p class="demo-description">Fitness studio with personal training, group classes, nutrition coaching. Energetic blue, 6-program grid. Community-focused.</p>
+                            <div class="demo-details">
+                                <div class="demo-detail-item">
+                                    <span class="demo-detail-label">Location</span>
+                                    11601 Nebel St, Rockville
+                                </div>
+                                <div class="demo-detail-item">
+                                    <span class="demo-detail-label">Web Presence</span>
+                                    Booking platform only
+                                </div>
+                            </div>
+                            <a href="https://cdn.jsdelivr.net/gh/aleguinandvdb-bot/My-first-website-@claude/install-ui-ux-pro-max-kmpj3m/docs/get-fit-roads/index.html" class="demo-link">View Site →</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="category">
+                <div class="category-title">🎨 Creative & Specialty</div>
+                <div class="demos-grid">
+                    <div class="demo-card">
+                        <div class="demo-header">
+                            <div class="demo-icon">🐉</div>
+                            <div class="demo-title">Evil Fantasy Tattoo</div>
+                            <span class="demo-category-tag">Tattoo Studio</span>
+                        </div>
+                        <div class="demo-body">
+                            <p class="demo-description">Instagram/Yelp-only tattoo studio. Dark, high-contrast (burnt orange on black). 4-artist bios, 8-style tags, 5-step design process.</p>
+                            <div class="demo-details">
+                                <div class="demo-detail-item">
+                                    <span class="demo-detail-label">Location</span>
+                                    11617 Nebel St, Rockville
+                                </div>
+                                <div class="demo-detail-item">
+                                    <span class="demo-detail-label">Web Presence</span>
+                                    Instagram/Yelp only
+                                </div>
+                            </div>
+                            <a href="https://cdn.jsdelivr.net/gh/aleguinandvdb-bot/My-first-website-@claude/install-ui-ux-pro-max-kmpj3m/docs/evil-fantasy/index.html" class="demo-link">View Site →</a>
+                        </div>
+                    </div>
+
+                    <div class="demo-card">
+                        <div class="demo-header">
+                            <div class="demo-icon">☁️</div>
+                            <div class="demo-title">Sky High Smoke & Vape</div>
+                            <span class="demo-category-tag">Vape Shop</span>
+                        </div>
+                        <div class="demo-body">
+                            <p class="demo-description">Vape shop with premium products. Modern dark/cyan, 6-product category cards. Expert staff, competitive pricing messaging.</p>
+                            <div class="demo-details">
+                                <div class="demo-detail-item">
+                                    <span class="demo-detail-label">Location</span>
+                                    11623 Nebel St, Rockville
+                                </div>
+                                <div class="demo-detail-item">
+                                    <span class="demo-detail-label">Web Presence</span>
+                                    Directory listings only
+                                </div>
+                            </div>
+                            <a href="https://cdn.jsdelivr.net/gh/aleguinandvdb-bot/My-first-website-@claude/install-ui-ux-pro-max-kmpj3m/docs/sky-high-vape/index.html" class="demo-link">View Site →</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>13 Demo Business Sites © 2026 · Built with Hallmark design principles · All sites fully responsive (320–1440px) · Ready for GitHub Pages deployment</p>
+        </div>
+    </footer>
+</body>
+</html>
