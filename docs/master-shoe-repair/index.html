@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Master Shoe Repair | Professional Shoe & Leather Services in Rockville</title>
+    <meta name="description" content="Expert shoe repair, leather restoration, and maintenance services in Rockville, MD. Fast turnaround, quality craftsmanship since 1985.">
+    <style>
+        :root {
+            --color-text: #1a1a1a;
+            --color-text-dim: #666;
+            --color-accent: #8B5A2B;
+            --color-accent-light: #D2B48C;
+            --color-accent-dark: #5C3817;
+            --color-bg: #f5f3f0;
+            --color-bg-dark: #e8e4df;
+            --color-surface: #ffffff;
+            --color-border: #d4ccc3;
+            --space-xs: 0.5rem;
+            --space-sm: 1rem;
+            --space-md: 1.5rem;
+            --space-lg: 2rem;
+            --space-xl: 3rem;
+            --font-display: 'Georgia', 'Garamond', serif;
+            --font-body: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            --font-mono: 'Courier New', monospace;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            height: 100%;
+            color: var(--color-text);
+            font-family: var(--font-body);
+            line-height: 1.6;
+        }
+
+        body {
+            background-color: var(--color-bg);
+            overflow-x: clip;
+        }
+
+        section {
+            padding: var(--space-lg);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 var(--space-md);
+        }
+
+        /* ============ HERO ============ */
+        .hero {
+            background: linear-gradient(135deg, #5C3817 0%, #8B5A2B 100%);
+            color: #ffffff;
+            padding: var(--space-xl) var(--space-lg);
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-family: var(--font-display);
+            font-size: clamp(2.5rem, 8vw, 4rem);
+            margin-bottom: var(--space-md);
+            font-weight: normal;
+            letter-spacing: 0.05em;
+        }
+
+        .hero p {
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto var(--space-lg);
+            opacity: 0.95;
+            line-height: 1.8;
+        }
+
+        .tagline {
+            font-family: var(--font-display);
+            font-size: 1.3rem;
+            color: var(--color-accent-light);
+            margin-bottom: var(--space-md);
+            font-style: normal;
+        }
+
+        .cta-primary {
+            display: inline-block;
+            background-color: var(--color-accent-light);
+            color: var(--color-accent-dark);
+            padding: var(--space-sm) var(--space-lg);
+            border-radius: 0.25rem;
+            text-decoration: none;
+            font-weight: 600;
+            border: 2px solid var(--color-accent-light);
+            transition: all 0.3s ease;
+            font-family: var(--font-body);
+            font-size: 1rem;
+        }
+
+        .cta-primary:hover, .cta-primary:focus-visible {
+            background-color: transparent;
+            color: var(--color-accent-light);
+            outline: none;
+        }
+
+        /* ============ SERVICES GRID ============ */
+        .services {
+            background-color: var(--color-surface);
+            padding: var(--space-xl) var(--space-lg);
+        }
+
+        .section-head {
+            font-family: var(--font-display);
+            font-size: clamp(1.8rem, 5vw, 2.5rem);
+            text-align: center;
+            margin-bottom: var(--space-xl);
+            color: var(--color-text);
+            font-weight: normal;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: var(--space-lg);
+            margin-bottom: var(--space-lg);
+        }
+
+        .service-card {
+            background-color: var(--color-bg);
+            border: 1px solid var(--color-border);
+            padding: var(--space-lg);
+            border-radius: 0.5rem;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .service-card:hover {
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+            border-color: var(--color-accent);
+        }
+
+        .service-icon {
+            font-size: 2.5rem;
+            margin-bottom: var(--space-md);
+        }
+
+        .service-card h3 {
+            font-family: var(--font-display);
+            font-size: 1.3rem;
+            margin-bottom: var(--space-sm);
+            color: var(--color-accent-dark);
+            font-weight: normal;
+        }
+
+        .service-card p {
+            color: var(--color-text-dim);
+            font-size: 0.95rem;
+        }
+
+        /* ============ ABOUT / REPUTATION ============ */
+        .about {
+            background-color: var(--color-bg);
+            padding: var(--space-xl) var(--space-lg);
+        }
+
+        .about-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .about h2 {
+            font-family: var(--font-display);
+            font-size: 2rem;
+            margin-bottom: var(--space-lg);
+            color: var(--color-accent-dark);
+            font-weight: normal;
+        }
+
+        .about p {
+            margin-bottom: var(--space-md);
+            font-size: 1rem;
+            color: var(--color-text);
+            line-height: 1.8;
+        }
+
+        .reviews-badge {
+            background-color: var(--color-surface);
+            border: 2px solid var(--color-accent);
+            border-radius: 0.5rem;
+            padding: var(--space-md);
+            text-align: center;
+            margin: var(--space-xl) 0;
+        }
+
+        .reviews-badge .stars {
+            font-size: 1.5rem;
+            margin-bottom: var(--space-sm);
+            letter-spacing: 0.1em;
+        }
+
+        .reviews-badge .count {
+            font-family: var(--font-display);
+            font-size: 1.2rem;
+            color: var(--color-accent-dark);
+            font-weight: normal;
+        }
+
+        /* ============ CONTACT ============ */
+        .contact {
+            background: linear-gradient(135deg, #5C3817 0%, #8B5A2B 100%);
+            color: #ffffff;
+            padding: var(--space-xl) var(--space-lg);
+            text-align: center;
+        }
+
+        .contact h2 {
+            font-family: var(--font-display);
+            font-size: 2.2rem;
+            margin-bottom: var(--space-lg);
+            font-weight: normal;
+        }
+
+        .contact-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: var(--space-lg);
+            margin-bottom: var(--space-xl);
+        }
+
+        .contact-item h3 {
+            font-family: var(--font-body);
+            font-weight: 600;
+            margin-bottom: var(--space-sm);
+            color: var(--color-accent-light);
+        }
+
+        .contact-item p {
+            font-size: 0.95rem;
+            line-height: 1.7;
+        }
+
+        .contact-item a {
+            color: var(--color-accent-light);
+            text-decoration: none;
+            border-bottom: 1px solid var(--color-accent-light);
+            transition: opacity 0.3s ease;
+        }
+
+        .contact-item a:hover {
+            opacity: 0.8;
+        }
+
+        /* ============ FOOTER ============ */
+        footer {
+            background-color: #3c2415;
+            color: rgba(255,255,255,0.8);
+            padding: var(--space-lg);
+            text-align: center;
+            font-size: 0.9rem;
+        }
+
+        footer p {
+            margin: 0;
+        }
+
+        /* ============ RESPONSIVE ============ */
+        @media (max-width: 768px) {
+            section {
+                padding: var(--space-lg) var(--space-sm);
+            }
+
+            .hero {
+                padding: var(--space-xl) var(--space-sm);
+            }
+
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .contact-info {
+                grid-template-columns: 1fr;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .section-head {
+                font-size: 1.5rem;
+            }
+        }
+
+        @media (max-width: 414px) {
+            :root {
+                --space-lg: 1.5rem;
+                --space-xl: 2rem;
+            }
+
+            .hero h1 {
+                font-size: 1.5rem;
+            }
+
+            .cta-primary {
+                padding: 0.75rem 1.5rem;
+                font-size: 0.9rem;
+            }
+
+            .section-head {
+                font-size: 1.3rem;
+            }
+
+            .about h2, .contact h2 {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- HERO SECTION -->
+    <section class="hero">
+        <div class="container">
+            <h1>Master Shoe Repair</h1>
+            <p class="tagline">Est. 1985 • Expert Craftsmanship • Real Results</p>
+            <p>Where your favorite shoes get a second life. Professional repair, leather restoration, and expert maintenance for all your footwear needs.</p>
+            <a href="#contact" class="cta-primary">Get in Touch</a>
+        </div>
+    </section>
+
+    <!-- SERVICES SECTION -->
+    <section class="services">
+        <div class="container">
+            <h2 class="section-head">Our Services</h2>
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon">👞</div>
+                    <h3>Sole & Heel Repair</h3>
+                    <p>Complete sole replacement, heel rebuilding, and tread restoration for leather, rubber, and specialty materials.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">🧥</div>
+                    <h3>Leather Restoration</h3>
+                    <p>Deep cleaning, conditioning, color restoration, and treatment for bags, belts, jackets, and all leather goods.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">⚡</div>
+                    <h3>Quick Repairs</h3>
+                    <p>Zipper replacement, stitching, heel caps, sole touch-ups, and other fast fixes. Most done while you wait.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">👔</div>
+                    <h3>Specialty Work</h3>
+                    <p>Orthopedic modifications, boot fitting, stretch services, and custom alterations for professional shoes.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">💍</div>
+                    <h3>Purse & Bag Repair</h3>
+                    <p>Handle replacement, lining repair, corner reinforcement, and restoration for designer and everyday bags.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">⏱️</div>
+                    <h3>Fast Turnaround</h3>
+                    <p>Most repairs completed within 1–3 days. Emergency rush service available for important events.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ABOUT / REPUTATION SECTION -->
+    <section class="about">
+        <div class="about-content">
+            <h2>Why Choose Master Shoe Repair?</h2>
+            <p>For over 40 years, Master Shoe Repair has been the trusted choice for Rockville's most discerning customers. We believe in quality, honesty, and the value of doing things right the first time.</p>
+            
+            <div class="reviews-badge">
+                <div class="stars">★★★★★</div>
+                <div class="count">92+ Customer Reviews</div>
+                <p style="margin-top: 0.5rem; font-size: 0.9rem;">Loved by our Rockville community for quality work and fair prices.</p>
+            </div>
+
+            <p>Every pair of shoes that walks through our door gets the attention it deserves. We use time-tested techniques combined with modern materials to breathe new life into your footwear. Whether it's a beloved work boot that's seen you through seasons, a designer shoe that deserves another chance, or an everyday pair that's earned a refresh—we treat it like it matters.</p>
+            
+            <p><strong>Same-day quotes. Transparent pricing. No surprises.</strong> We'll give you an honest assessment and fair price before we start work.</p>
+        </div>
+    </section>
+
+    <!-- CONTACT SECTION -->
+    <section class="contact" id="contact">
+        <div class="container">
+            <h2>Let's Fix Your Shoes</h2>
+            <div class="contact-info">
+                <div class="contact-item">
+                    <h3>📍 Location</h3>
+                    <p>11619 Nebel Street<br>Flint Hill Plaza<br>Rockville, MD 20852</p>
+                </div>
+                <div class="contact-item">
+                    <h3>📞 Phone</h3>
+                    <p><a href="tel:+13015551234">(301) 555-1234</a></p>
+                    <p style="font-size: 0.85rem; margin-top: 0.5rem;">Quick quotes & inquiries</p>
+                </div>
+                <div class="contact-item">
+                    <h3>⏰ Hours</h3>
+                    <p>Mon–Fri: 9am–6pm<br>Sat: 10am–4pm<br>Sun: Closed</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>Master Shoe Repair © 1985–2026. Nestled in Rockville's Flint Hill Plaza. Real shoes. Real repairs. Real people.</p>
+    </footer>
+</body>
+</html>
